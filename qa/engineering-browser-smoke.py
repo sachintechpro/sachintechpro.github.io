@@ -42,7 +42,7 @@ def check(browser,name,slug,url):
         for attempt in range(3):
             try:
                 page.goto(url,wait_until="domcontentloaded",timeout=85000)
-                page.wait_for_selector("#app .tech-hero",timeout=60000)
+                page.wait_for_selector("#app h2",timeout=60000)
                 last_error=None
                 break
             except Exception as err:
@@ -52,7 +52,10 @@ def check(browser,name,slug,url):
         tabs=page.locator("[data-tab]").evaluate_all("(nodes)=>nodes.map(n=>n.getAttribute('data-tab'))")
         assert set(tabs)==CANONICAL, f"Existing or new tabs missing: {tabs}"
         assert len(tabs)==10
-        result["checked"].append("ten tabs, original six preserved")
+        assert "Requirements analysis" in page.locator("#app h2").first.inner_text(), "Original QA process must open first"
+        result["checked"].append("ten tabs, original six preserved; requirements-first default")
+        page.locator("[data-tab=engineering]").click()
+        page.wait_for_selector("#app .tech-hero",timeout=12000)
         # Presentation must inherit the application's design rather than a generic QA theme.
         assert page.locator(".qa-site-header").is_visible()
         assert page.locator(".qa-site-brand").is_visible()
@@ -176,11 +179,13 @@ def check(browser,name,slug,url):
         assert not errors, f"JavaScript runtime errors: {errors}"
 
         # Show evidence of the new engineering dashboard at mobile and desktop widths.
-        page.locator("[data-tab=engineering]").click()
+        page.locator("[data-tab=requirements]").click()
         page.screenshot(path=str(OUT/(safe_name+"-mobile.png")),full_page=True)
+        page.locator("[data-tab=engineering]").click()
+        page.screenshot(path=str(OUT/(safe_name+"-engineering-mobile.png")),full_page=True)
         page.set_viewport_size({"width":1280,"height":850})
         page.reload(wait_until="domcontentloaded")
-        page.wait_for_selector("#app .tech-hero",timeout=35000)
+        page.wait_for_selector("#app h2",timeout=35000)
         page.screenshot(path=str(OUT/(safe_name+"-desktop.png")),full_page=True)
         result["checked"].append("mobile and desktop screenshots")
         result["status"]="passed"
