@@ -66,7 +66,7 @@
       found.push(...batch);
       if (batch.length < 100) break;
     }
-    const publicRepos = found.filter(repo => repo && repo.owner && repo.owner.login.toLowerCase() === OWNER && !repo.private && !excluded.has(repo.name.toLowerCase()) && !repo.archived);
+    const publicRepos = found.filter(repo => repo && repo.owner && repo.owner.login.toLowerCase() === OWNER && !repo.private && !excluded.has(repo.name.toLowerCase()));
     const names = new Set(publicRepos.map(repo => repo.name.toLowerCase()));
     // Public API is the authority. Remove cards for repositories no longer public.
     for (const card of grid.querySelectorAll('.card[data-repo]')) {
