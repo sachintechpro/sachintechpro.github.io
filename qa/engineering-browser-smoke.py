@@ -94,6 +94,21 @@ def check(browser,name,slug,url):
             home.close()
         result["checked"].append("site-matched fonts, colors, and new-tab QA menu")
 
+        # Mobile technical nav must wrap into a legible two-column grid.
+        tabs_style=page.locator(".qa-eng-tabs").evaluate("""el=>{
+          const style=getComputedStyle(el);
+          return {display:style.display,buttons:[...el.querySelectorAll('button')].map(b=>{
+            const r=b.getBoundingClientRect(); return {x:r.x,right:r.right,width:r.width}
+          })};
+        }""")
+        assert tabs_style["display"]=="grid",f"Mobile technical tabs are clipped or scrolling: {tabs_style}"
+        assert len(tabs_style["buttons"])==4
+        assert all(b["x"]>=-2 and b["right"]<=392 and b["width"]>100 for b in tabs_style["buttons"]),f"Technical tab overflow: {tabs_style}"
+        source_color=page.locator("#source-link").evaluate("(el)=>getComputedStyle(el).color")
+        assert source_color!= "rgb(205, 229, 255)",f"Source link has inadequate contrast: {source_color}"
+        result["checked"].append("two-column mobile evidence navigation and readable source links")
+
+
         initial=page.locator("#app .tech-hero h2").inner_text()
         assert "Actual tests" in initial
         result["checked"].append("technical evidence overview rendered")
