@@ -1,0 +1,29 @@
+name: Verify Portfolio QA Benches on Render
+on:
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "qa/verify-live.mjs"
+      - ".github/workflows/verify-qa-benches.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-live-qa-benches:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Check all 10 live QA Bench pages
+        run: node qa/verify-live.mjs
+      - name: Retain live HTTP verification evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-qa-live-verification
+          path: artifacts/qa-live-deploy-verification.json
+          if-no-files-found: warn
