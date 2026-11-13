@@ -1,0 +1,30 @@
+name: Portfolio QA Engineering Browser Verification
+on:
+  push:
+    branches: [main]
+    paths:
+      - "qa/engineering-browser-smoke.py"
+      - ".github/workflows/engineering-browser.yml"
+  workflow_dispatch:
+jobs:
+  verify-real-browser-qa:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install isolated Chromium automation
+        run: |
+          python -m pip install playwright==1.56.0
+          python -m playwright install --with-deps chromium
+      - name: Test all 10 deployed QA workbenches in a real browser
+        run: python qa/engineering-browser-smoke.py
+      - name: Publish browser traces, screen captures and real safe-run results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-qa-engineering-browser-evidence
+          path: artifacts/qa-engineering-browser/
+          if-no-files-found: warn
