@@ -53,6 +53,44 @@ def check(browser,name,slug,url):
         assert set(tabs)==CANONICAL, f"Existing or new tabs missing: {tabs}"
         assert len(tabs)==10
         result["checked"].append("ten tabs, original six preserved")
+        # Presentation must inherit the application's design rather than a generic QA theme.
+        assert page.locator(".qa-site-header").is_visible()
+        assert page.locator(".qa-site-brand").is_visible()
+        assert page.locator(".qa-site-menu [aria-current=page]").inner_text() == "QA Bench"
+        assert page.locator(".qa-site-brand").get_attribute("href") == url.replace("/qa-bench.html","/")
+        assert page.locator(".qa-site-menu").get_attribute("aria-label")
+        style=page.evaluate("""() => {
+          const body=getComputedStyle(document.body);
+          const hero=getComputedStyle(document.querySelector('.tech-hero'));
+          const head=getComputedStyle(document.querySelector('.qa-site-bar'));
+          return {font:body.fontFamily,color:body.color,background:body.backgroundColor,
+                  heroImage:hero.backgroundImage,headBackground:head.backgroundColor};
+        }""")
+        assert style["heroImage"]=="none",f"Decorative gradient still present: {style}"
+        assert page.locator(".qa-site-header").get_attribute("class") == "qa-site-header"
+        if slug in ("project-program-manager","frameops-window-door-operations"):
+            assert page.locator(".qa-sidebar .qa-side-link.active").is_visible() or page.locator(".qa-site-menu [aria-current=page]").is_visible()
+        if slug=="commercedesk":
+            assert style["headBackground"]=="rgb(41, 83, 162)",f"CommerceDesk storefront header colors differ: {style}"
+
+        # Verify the parent application's own menu offers a separate-tab QA Bench link.
+        home=ctx.new_page()
+        try:
+            home.goto(url.replace("/qa-bench.html","/"),wait_until="domcontentloaded",timeout=85000)
+            nav=home.locator('a[href="/qa-bench.html"]')
+            assert nav.count()>0,f"No QA Bench menu in {name}"
+            assert any(nav.nth(i).get_attribute("target")=="_blank" for i in range(nav.count())),f"QA link must open a new tab in {name}"
+            body_style=home.evaluate("""() => {
+              let x=getComputedStyle(document.body);
+              return {font:x.fontFamily,color:x.color,background:x.backgroundColor};
+            }""")
+            assert style["color"]==body_style["color"],f"Text color mismatch: QA {style} App {body_style}"
+            assert style["font"]==body_style["font"],f"Font mismatch: QA {style} App {body_style}"
+            assert style["background"]==body_style["background"],f"Canvas background mismatch: QA {style} App {body_style}"
+        finally:
+            home.close()
+        result["checked"].append("site-matched fonts, colors, and new-tab QA menu")
+
         initial=page.locator("#app .tech-hero h2").inner_text()
         assert "Actual tests" in initial
         result["checked"].append("technical evidence overview rendered")
