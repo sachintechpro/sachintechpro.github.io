@@ -39,22 +39,30 @@ main{padding-top:0}.hero{padding:82px 0 65px;display:grid;grid-template-columns:
 .contact .form-note{margin:0;font-size:11px}
 @media(max-width:850px){.contact-intro{display:block}.contact-intro p{margin-top:10px;max-width:660px}.contact form{padding:21px}}
 @media(max-width:620px){.contact{padding:18px}.contact-intro{margin-bottom:16px}.contact form{grid-template-columns:1fr;padding:17px;gap:12px}.contact .field{grid-column:1/-1}.contact .form-status{grid-column:1/-1}.contact .send{width:100%}.contact .phone-group select{width:120px;flex-basis:120px}}
-.thumb{position:relative}.project-thumbnail{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:2;background:#fff} .card .thumb-label{z-index:1}/* Hero: actual application previews replace the decorative blank skeleton. */
-.hero-visual{background:#eef3f9;padding:16px;border-radius:16px}
-.hero-preview-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 2px 12px}
+.thumb{position:relative}.project-thumbnail{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:2;background:#fff} .card .thumb-label{z-index:1}/* Home hero carousel: working application thumbnails, 2.7-second rotation. */
+.hero-visual{background:#eef3f9;border:1px solid #d7e2ed;border-radius:16px;padding:14px;min-width:0;box-shadow:0 24px 60px -36px #405577}
+.hero-preview-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:2px 4px 12px}
 .hero-preview-heading span{font-size:10px;letter-spacing:1px;font-weight:800;color:#526681}
 .hero-preview-heading a{font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap}
-.hero-demo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.hero-demo{display:block;min-width:0;overflow:hidden;border-radius:10px;border:1px solid #dbe3ed;background:#fff;color:var(--ink);text-decoration:none;transition:transform .15s ease,box-shadow .15s ease}
-.hero-demo:hover,.hero-demo:focus-visible{transform:translateY(-2px);box-shadow:0 9px 20px -16px #203b58}
-.hero-demo-featured{grid-column:1/-1}
-.hero-demo img{display:block;width:100%;aspect-ratio:1.85;object-fit:cover;object-position:center top;background:#e6edf6}
-.hero-demo>span{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:9px 11px;font-size:12px;font-weight:750}
-.hero-demo-featured>span{font-size:13px}
-@media(max-width:680px){.hero-visual{padding:12px;margin-top:6px}.hero-preview-heading{padding-bottom:10px}.hero-demo-grid{gap:8px}.hero-demo>span{font-size:12px;padding:8px}.hero-demo-featured>span{font-size:13px}}
-@media(prefers-reduced-motion:reduce){.hero-demo{transition:none}}
+.hero-carousel{min-width:0}
+.hero-carousel-viewport{overflow:hidden;border:1px solid #dbe3ed;border-radius:11px;background:#fff}
+.hero-carousel-track{display:flex;align-items:stretch;transition:transform .5s ease;will-change:transform}
+.hero-carousel-slide{display:flex;flex-direction:column;flex:0 0 100%;width:100%;min-width:0;color:var(--ink);text-decoration:none;background:#fff}
+.hero-carousel-slide img{display:block;width:100%;aspect-ratio:1.85;object-fit:contain;object-position:center;background:#fff}
+.hero-slide-label{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:12px 15px;border-top:1px solid #e7edf3}
+.hero-slide-label strong{font-size:15px;line-height:1.25;overflow-wrap:anywhere}
+.hero-slide-label small{color:var(--accent);font-size:11px;font-weight:700;white-space:nowrap}
+.hero-carousel-slide:hover .hero-slide-label strong,.hero-carousel-slide:focus-visible .hero-slide-label strong{color:var(--accent)}
+.hero-carousel-controls{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:12px 2px 0}
+.hero-carousel-count{font-size:12px;font-weight:800;color:#51657f;font-variant-numeric:tabular-nums}
+.hero-carousel-buttons{display:flex;align-items:center;gap:8px}
+.hero-carousel-buttons button{cursor:pointer;border:1px solid #cbd9e8;background:#fff;border-radius:8px;color:#203b58;height:35px;min-width:36px;padding:0 9px;font-size:21px;font-weight:700}
+.hero-carousel-buttons #carousel-toggle{font-size:11px;min-width:56px;font-weight:750}
+.hero-carousel-buttons button:hover,.hero-carousel-buttons button:focus-visible{border-color:#3765a8;background:#f7faff}
+@media(max-width:680px){.hero-visual{padding:12px;margin-top:6px}.hero-preview-heading{padding-bottom:10px}.hero-slide-label{padding:10px 12px}.hero-slide-label strong{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.hero-carousel-track{transition:none}}
 </style></head><body><header class="site-header"><div class="wrap nav"><div class="brand">SachinTechpro</div><nav class="site-nav" aria-label="Primary navigation"><a href="#capabilities">Capabilities</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a class="cta" href="#contact">Discuss a Project</a></nav></div></header>
-<main class="wrap"><section class="hero" aria-label="Introduction"><div><div class="kicker">Forward Deployed Engineering · Solution Delivery</div><h1>From business problems to working software.</h1><p class="lead">I design, build, integrate, test, and deliver practical applications that connect people, systems, and business processes. Explore working projects, examine the engineering, and see how the solutions behave.</p><div class="hero-links"><a class="primary" href="#projects">Explore Live Projects ↓</a><a href="#contact">Discuss Your Project</a></div></div><div class="hero-visual"><div class="hero-preview-heading"><span>EXPLORE WORKING APPLICATIONS</span><a href="#projects">All projects ↗</a></div><div class="hero-demo-grid"><a class="hero-demo hero-demo-featured" href="https://cedarline-insurance.onrender.com/" target="_blank" rel="noopener noreferrer" aria-label="Open Cedarline Insurance live demo"><img src="assets/thumbnails/Cedarline%20Insurance.webp" alt="Cedarline Insurance interface preview" decoding="async" fetchpriority="high"><span>Cedarline Insurance <span aria-hidden="true">↗</span></span></a><a class="hero-demo" href="https://frameops-operations.onrender.com/" target="_blank" rel="noopener noreferrer" aria-label="Open FrameOps live demo"><img src="assets/thumbnails/FrameOps.webp" alt="FrameOps operations interface preview" decoding="async"><span>FrameOps <span aria-hidden="true">↗</span></span></a><a class="hero-demo" href="https://commercedesk.onrender.com/" target="_blank" rel="noopener noreferrer" aria-label="Open CommerceDesk live demo"><img src="assets/thumbnails/CommerceDesk.webp" alt="CommerceDesk interface preview" decoding="async"><span>CommerceDesk <span aria-hidden="true">↗</span></span></a></div></div></section><section class="section" id="capabilities"><div class="section-head"><div class="eyebrow">Capabilities in practice</div><h2>Engineering you can explore, not just read about.</h2><p>From understanding a business problem to shipping and validating a solution, each capability is connected to working examples.</p></div><div class="cap-grid"><article class="cap"><b>Business discovery &amp; requirements</b><p>Translate operational needs into traceable workflows, rules, and usable software.</p><a href="#projects" data-search-for="ScopePilot">Explore scope solutions ↗</a></article><article class="cap"><b>Full-stack solution engineering</b><p>Build responsive interfaces, backend services, application logic, and data flows.</p><a href="#projects" data-search-for="CommerceDesk">Explore commerce solutions ↗</a></article><article class="cap"><b>Enterprise workflows &amp; integration</b><p>Connect roles, decisions, approvals, and transaction lifecycles across systems.</p><a href="#projects" data-search-for="Insurance">Explore insurance workflows ↗</a></article><article class="cap"><b>Identity &amp; security</b><p>Role-based application access, authentication, recovery flows, and testable controls.</p><a href="#projects" data-search-for="IdentityFlow">Explore IAM ↗</a></article><article class="cap"><b>Quality &amp; automation</b><p>Automated checks, API and UI coverage, regression evidence, and QA test benches.</p><a href="#projects" data-search-for="Quality">Explore QA solutions ↗</a></article><article class="cap"><b>Delivery &amp; value realization</b><p>Manage dependencies, delivery risks, backlog priorities, and release decisions.</p><a href="#projects" data-search-for="Delivery">Explore delivery solutions ↗</a></article></div></section><section class="section" id="portfolio"><div class="section-head"><div class="eyebrow">Interactive portfolio</div><h2>Explore the applications</h2><p>Open a live application, follow its business flow, inspect its code, or run the QA bench where available.</p></div><div class="heading" id="projects"><h2>Live projects &amp; source</h2><span>12 live Demos</span></div><div class="project-tools"><div class="filter-set" role="group" aria-label="Project filters"><button class="filter active" type="button" data-filter="all">All Projects</button><button class="filter" type="button" data-filter="insurance">Insurance</button><button class="filter" type="button" data-filter="operations">Operations</button><button class="filter" type="button" data-filter="quality">QA &amp; IAM</button><button class="filter" type="button" data-filter="delivery">Delivery</button></div><input class="search" id="project-search" type="search" placeholder="Find a project..." aria-label="Search projects"></div><div class="grid"><article class="card" data-repo="cedarline-insurance"><div class="type">Personal lines insurance operations</div><h3>Cedarline Insurance</h3><p>Interactive California-focused insurance workflow spanning customer quotes, producer submissions, underwriting decisions, policy servicing, billing, claims, rating settings, and an executable QA bench. External data checks and transactions are simulated.</p><div class="links"><a href="https://cedarline-insurance.onrender.com/" target="_blank" rel="noopener noreferrer">Live demo ↗</a><a class="secondary" href="https://github.com/sachintechpro/cedarline-insurance" target="_blank" rel="noopener noreferrer">Source code</a></div></article>
+<main class="wrap"><section class="hero" aria-label="Introduction"><div><div class="kicker">Forward Deployed Engineering · Solution Delivery</div><h1>From business problems to working software.</h1><p class="lead">I design, build, integrate, test, and deliver practical applications that connect people, systems, and business processes. Explore working projects, examine the engineering, and see how the solutions behave.</p><div class="hero-links"><a class="primary" href="#projects">Explore Live Projects ↓</a><a href="#contact">Discuss Your Project</a></div></div><div class="hero-visual"><div class="hero-preview-heading"><span>EXPLORE WORKING APPLICATIONS</span><a href="#projects">All projects ↗</a></div><div class="hero-carousel" id="portfolio-carousel" role="region" aria-roledescription="carousel" aria-label="Explore portfolio application previews"><div class="hero-carousel-viewport"><div class="hero-carousel-track" id="portfolio-carousel-track"><a class="hero-carousel-slide" href="https://cedarline-insurance.onrender.com/" target="_blank" rel="noopener noreferrer"><img src="assets/thumbnails/Cedarline%20Insurance.webp" alt="Cedarline Insurance interface preview" decoding="async" fetchpriority="high"><span class="hero-slide-label"><strong>Cedarline Insurance</strong><small>Open live demo ↗</small></span></a></div></div><div class="hero-carousel-controls"><span class="hero-carousel-count" aria-label="Current slide"><span id="carousel-current">01</span> / <span id="carousel-total">15</span></span><div class="hero-carousel-buttons"><button type="button" id="carousel-prev" aria-label="Previous project" title="Previous project">‹</button><button type="button" id="carousel-toggle" aria-label="Pause slideshow" title="Pause slideshow">Pause</button><button type="button" id="carousel-next" aria-label="Next project" title="Next project">›</button></div></div></div></div></section><section class="section" id="capabilities"><div class="section-head"><div class="eyebrow">Capabilities in practice</div><h2>Engineering you can explore, not just read about.</h2><p>From understanding a business problem to shipping and validating a solution, each capability is connected to working examples.</p></div><div class="cap-grid"><article class="cap"><b>Business discovery &amp; requirements</b><p>Translate operational needs into traceable workflows, rules, and usable software.</p><a href="#projects" data-search-for="ScopePilot">Explore scope solutions ↗</a></article><article class="cap"><b>Full-stack solution engineering</b><p>Build responsive interfaces, backend services, application logic, and data flows.</p><a href="#projects" data-search-for="CommerceDesk">Explore commerce solutions ↗</a></article><article class="cap"><b>Enterprise workflows &amp; integration</b><p>Connect roles, decisions, approvals, and transaction lifecycles across systems.</p><a href="#projects" data-search-for="Insurance">Explore insurance workflows ↗</a></article><article class="cap"><b>Identity &amp; security</b><p>Role-based application access, authentication, recovery flows, and testable controls.</p><a href="#projects" data-search-for="IdentityFlow">Explore IAM ↗</a></article><article class="cap"><b>Quality &amp; automation</b><p>Automated checks, API and UI coverage, regression evidence, and QA test benches.</p><a href="#projects" data-search-for="Quality">Explore QA solutions ↗</a></article><article class="cap"><b>Delivery &amp; value realization</b><p>Manage dependencies, delivery risks, backlog priorities, and release decisions.</p><a href="#projects" data-search-for="Delivery">Explore delivery solutions ↗</a></article></div></section><section class="section" id="portfolio"><div class="section-head"><div class="eyebrow">Interactive portfolio</div><h2>Explore the applications</h2><p>Open a live application, follow its business flow, inspect its code, or run the QA bench where available.</p></div><div class="heading" id="projects"><h2>Live projects &amp; source</h2><span>12 live Demos</span></div><div class="project-tools"><div class="filter-set" role="group" aria-label="Project filters"><button class="filter active" type="button" data-filter="all">All Projects</button><button class="filter" type="button" data-filter="insurance">Insurance</button><button class="filter" type="button" data-filter="operations">Operations</button><button class="filter" type="button" data-filter="quality">QA &amp; IAM</button><button class="filter" type="button" data-filter="delivery">Delivery</button></div><input class="search" id="project-search" type="search" placeholder="Find a project..." aria-label="Search projects"></div><div class="grid"><article class="card" data-repo="cedarline-insurance"><div class="type">Personal lines insurance operations</div><h3>Cedarline Insurance</h3><p>Interactive California-focused insurance workflow spanning customer quotes, producer submissions, underwriting decisions, policy servicing, billing, claims, rating settings, and an executable QA bench. External data checks and transactions are simulated.</p><div class="links"><a href="https://cedarline-insurance.onrender.com/" target="_blank" rel="noopener noreferrer">Live demo ↗</a><a class="secondary" href="https://github.com/sachintechpro/cedarline-insurance" target="_blank" rel="noopener noreferrer">Source code</a></div></article>
 <article class="card" data-repo="workercomp-insurance"><div class="type">Workers’ Compensation Insurance · Guidewire workflows</div><h3>WorkerComp Insurance</h3><p>Role-based California workers’ compensation workspace that connects employer policy and payroll data with producer submissions, underwriting referrals, claims, billing, and premium audits. Explore how a renewal or injury claim moves across PolicyCenter, ClaimCenter, BillingCenter, and the people handling each step.</p><div class="links"><a href="https://workercomp-insurance.onrender.com/" target="_blank" rel="noopener noreferrer">Try the demo ↗</a><a class="secondary" href="https://github.com/sachintechpro/workercomp-insurance" target="_blank" rel="noopener noreferrer">Review the source</a></div></article>
 <article class="card" data-repo="Project-Program-Manager"><div class="type">IT Project &amp; Program Management</div><h3>ValueStream HQ</h3><p>Interactive SAFe Agile delivery and training workspace covering project controls, value-stream coordination, risks, financials, dependencies, and an insurance portal scenario.</p><div class="links"><a href="https://project-program-manager.onrender.com/qa-bench.html" target="_blank" rel="noopener noreferrer">QA Bench ↗</a><a href="https://project-program-manager.onrender.com/" target="_blank" rel="noopener noreferrer">Live demo ↗</a><a class="secondary" href="https://github.com/sachintechpro/Project-Program-Manager" target="_blank" rel="noopener noreferrer">View repository</a></div></article>
 
@@ -156,4 +164,111 @@ if(inquiryParams.get('inquiry')==='success'){
 // Native FormSubmit POST deliberately avoids client-side AJAX/CORS failures.
 // The provider displays the activation/confirmation result directly.
 })();
-</script></body></html>
+</script>
+<script>
+/* Carousel uses the actual gallery thumbnails and project links, not a separate demo list. */
+(() => {
+  const root = document.getElementById('portfolio-carousel');
+  const gallery = document.querySelector('.grid');
+  if (!root || !gallery) return;
+  const track = document.getElementById('portfolio-carousel-track');
+  const current = document.getElementById('carousel-current');
+  const total = document.getElementById('carousel-total');
+  const previous = document.getElementById('carousel-prev');
+  const next = document.getElementById('carousel-next');
+  const toggle = document.getElementById('carousel-toggle');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let slides = [], index = 0, timer = null, pausedByUser = false;
+  const formatNumber = n => String(n).padStart(2, '0');
+
+  function collect() {
+    return [...gallery.querySelectorAll('.card[data-repo]')].map(card => {
+      const thumbnail = card.querySelector('img.project-thumbnail');
+      const title = card.querySelector('h3')?.textContent?.trim();
+      if (!thumbnail || !title) return null;
+      const links = [...card.querySelectorAll('.links a[href]')];
+      const live = links.find(a => /onrender\.com/i.test(a.href) && !/qa-bench|#\/quality/i.test(a.href));
+      const link = live || links.find(a => /github\.com|github\.io/i.test(a.href)) || links[0];
+      if (!link) return null;
+      return { key:card.dataset.repo.toLowerCase(), name:title, src:thumbnail.getAttribute('src'), href:link.href, isLive:!!live };
+    }).filter(Boolean);
+  }
+
+  function render() {
+    if (!slides.length) return;
+    track.style.transform = 'translate3d(-' + (index * 100) + '%,0,0)';
+    current.textContent = formatNumber(index + 1);
+    total.textContent = formatNumber(slides.length);
+  }
+
+  function build() {
+    const found = collect();
+    if (!found.length) return;
+    const selected = slides[index]?.key;
+    slides = found;
+    const existingIndex = found.findIndex(s => s.key === selected);
+    index = existingIndex >= 0 ? existingIndex : 0;
+    const nodes = found.map((s, i) => {
+      const anchor = document.createElement('a');
+      anchor.className = 'hero-carousel-slide';
+      anchor.href = s.href;
+      anchor.target = '_blank';
+      anchor.rel = 'noopener noreferrer';
+      anchor.setAttribute('aria-label', 'Open ' + s.name + (s.isLive ? ' live demo' : ' repository'));
+      const img = document.createElement('img');
+      img.src = s.src;
+      img.alt = s.name + ' project thumbnail';
+      img.decoding = 'async';
+      img.loading = i === 0 ? 'eager' : 'lazy';
+      if (i === 0) img.fetchPriority = 'high';
+      const label = document.createElement('span');
+      label.className = 'hero-slide-label';
+      const heading = document.createElement('strong');
+      heading.textContent = s.name;
+      const action = document.createElement('small');
+      action.textContent = s.isLive ? 'Open live demo ↗' : 'View project ↗';
+      label.append(heading, action);
+      anchor.append(img, label);
+      return anchor;
+    });
+    track.replaceChildren(...nodes);
+    render();
+  }
+
+  function stop() { if (timer !== null) { clearInterval(timer); timer = null; } }
+  function start() {
+    stop();
+    if (pausedByUser || reducedMotion.matches || document.hidden || slides.length < 2) return;
+    timer = setInterval(() => { index = (index + 1) % slides.length; render(); }, 2700);
+  }
+  function go(direction) { if (!slides.length) return; index = (index + direction + slides.length) % slides.length; render(); start(); }
+  previous.addEventListener('click', () => go(-1));
+  next.addEventListener('click', () => go(1));
+  toggle.addEventListener('click', () => {
+    pausedByUser = !pausedByUser;
+    toggle.textContent = pausedByUser ? 'Play' : 'Pause';
+    toggle.setAttribute('aria-label', pausedByUser ? 'Play slideshow' : 'Pause slideshow');
+    toggle.title = pausedByUser ? 'Play slideshow' : 'Pause slideshow';
+    start();
+  });
+  root.addEventListener('mouseenter', stop);
+  root.addEventListener('mouseleave', start);
+  root.addEventListener('focusin', stop);
+  root.addEventListener('focusout', e => { if (!root.contains(e.relatedTarget)) start(); });
+  document.addEventListener('visibilitychange', start);
+  reducedMotion.addEventListener?.('change', start);
+  let touchX = null;
+  const viewport = root.querySelector('.hero-carousel-viewport');
+  viewport.addEventListener('touchstart', e => { touchX = e.touches[0]?.clientX ?? null; }, { passive:true });
+  viewport.addEventListener('touchend', e => {
+    if (touchX === null) return;
+    const distance = (e.changedTouches[0]?.clientX ?? touchX) - touchX;
+    touchX = null;
+    if (Math.abs(distance) > 50) go(distance < 0 ? 1 : -1);
+  }, { passive:true });
+  build();
+  start();
+  new MutationObserver(() => { build(); start(); }).observe(gallery, { childList:true });
+})();
+</script>
+</body></html>
