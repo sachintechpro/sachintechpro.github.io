@@ -190,8 +190,9 @@ if(inquiryParams.get('inquiry')==='success'){
       const links = [...card.querySelectorAll('.links a[href]')];
       const live = links.find(a => /onrender\.com/i.test(a.href) && !/qa-bench|#\/quality/i.test(a.href));
       const link = live || links.find(a => /github\.com|github\.io/i.test(a.href)) || links[0];
-      if (!link) return null;
-      return { key:card.dataset.repo.toLowerCase(), name:title, src:thumbnail.getAttribute('src'), href:link.href, isLive:!!live };
+      const planBridgeDemo = card.dataset.repo.toLowerCase() === 'planbridge-retirement-ops' ? 'https://planbridge-retirement-ops.onrender.com/' : null;
+      if (!link && !planBridgeDemo) return null;
+      return { key:card.dataset.repo.toLowerCase(), name:title, src:thumbnail.getAttribute('src'), href:planBridgeDemo || link.href, isLive:!!(planBridgeDemo || live) };
     }).filter(Boolean);
   }
 
