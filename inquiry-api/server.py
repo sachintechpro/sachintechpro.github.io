@@ -86,15 +86,15 @@ class Handler(BaseHTTPRequestHandler):
         msg["To"] = os.environ["INQUIRY_TO"]
         msg["Reply-To"] = email
         msg.set_content(
-            f"Name: {name}\\n"
-            f"Email: {email}\\n"
-            f"Organization: {company}\\n"
-            f"Website: {company_website or '(not provided)'}\\n"
-            f"Address: {address or '(not provided)'}\\n"
-            f"Phone: {country_code} {phone or '(not provided)'}\\n"
-            f"Opportunity: {kind}\\n"
-            f"Timeline: {timeline}\\n\\n"
-            f"Project / request:\\n{project}\\n"
+            f"Name: {name}\n"
+            f"Email: {email}\n"
+            f"Organization: {company}\n"
+            f"Website: {company_website or '(not provided)'}\n"
+            f"Address: {address or '(not provided)'}\n"
+            f"Phone: {country_code} {phone or '(not provided)'}\n"
+            f"Opportunity: {kind}\n"
+            f"Timeline: {timeline}\n\n"
+            f"Project / request:\n{project}\n"
         )
         try:
             with smtplib.SMTP(os.environ["SMTP_HOST"], int(os.getenv("SMTP_PORT", "587")), timeout=15) as smtp:
