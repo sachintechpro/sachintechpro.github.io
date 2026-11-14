@@ -108,12 +108,12 @@ main{padding-top:0}.hero{padding:82px 0 65px;display:grid;grid-template-columns:
   }
   function makeCard(repo) {
     const card = document.createElement('article'); card.className = 'card'; card.dataset.repo = repo.name;
-    const type = document.createElement('div'); type.className = 'type'; type.textContent = repo.language ? repo.language + ' · Public repository' : 'Public repository';
-    const title = document.createElement('h3'); title.textContent = repo.name;
+    const type = document.createElement('div'); type.className = 'type'; type.textContent = repo.name.toLowerCase() === 'planbridge-retirement-ops' ? 'Retirement operations · Workflow engineering' : (repo.language ? repo.language + ' · Public repository' : 'Public repository');
+    const title = document.createElement('h3'); title.textContent = repo.name.toLowerCase() === 'planbridge-retirement-ops' ? 'PlanBridge Retirement Ops' : repo.name;
     const description = document.createElement('p');
-    description.textContent = repo.description || (repo.size === 0 ? 'Public project repository. No application files have been published yet.' : 'Public project repository. Explore the source code and documentation.');
+    description.textContent = repo.name.toLowerCase() === 'planbridge-retirement-ops' ? 'Interactive retirement operations application spanning employer onboarding, participant elections, payroll validation, exception resolution, role-based workflows, and executable QA evidence.' : (repo.description || (repo.size === 0 ? 'Public project repository. No application files have been published yet.' : 'Public project repository. Explore the source code and documentation.'));
     const links = document.createElement('div'); links.className = 'links';
-    const demo = safeHttps(repo.homepage);
+    const demo = safeHttps(repo.name.toLowerCase() === 'planbridge-retirement-ops' ? 'https://planbridge-retirement-ops.onrender.com/' : repo.homepage);
     if (demo && !demo.startsWith('https://github.com/')) addLink(links, 'Live demo ↗', demo, false);
     addLink(links, 'View repository', 'https://github.com/' + OWNER + '/' + encodeURIComponent(repo.name), true);
     card.append(type, title, description, links);
