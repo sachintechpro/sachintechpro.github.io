@@ -67,13 +67,15 @@ class Handler(BaseHTTPRequestHandler):
         name = str(data.get("name", "")).strip()
         email = str(data.get("email", "")).strip()
         company = str(data.get("company", "")).strip()
+        company_website = str(data.get("companyWebsite", "")).strip()
+        address = str(data.get("address", "")).strip()
         country_code = str(data.get("countryCode", "+1")).strip()
         phone = str(data.get("phone", "")).strip()
         kind = str(data.get("type", "")).strip()
         project = str(data.get("project", "")).strip()
         timeline = str(data.get("timeline", "")).strip()
         allowed_types = {"Employment opportunity", "Contract engineering engagement", "Project-based development", "Technical consultation"}
-        if not (1 <= len(name) <= 120 and len(email) <= 180 and EMAIL_RE.fullmatch(email) and len(company) <= 160 and re.fullmatch(r"\+[1-9]\d{0,3}", country_code) and (not phone or (7 <= len(re.sub(r"\D", "", phone)) <= 15 and re.fullmatch(r"[0-9 ()+.-]+", phone))) and kind in allowed_types and 15 <= len(project) <= 4000 and len(timeline) <= 100):
+        if not (1 <= len(name) <= 120 and len(email) <= 180 and EMAIL_RE.fullmatch(email) and len(company) <= 160 and len(company_website) <= 300 and (not company_website or re.fullmatch(r"https?://[^\\s/]+(?:/[^\\s]*)?", company_website)) and len(address) <= 500 and re.fullmatch(r"\+[1-9]\d{0,3}", country_code) and (not phone or (7 <= len(re.sub(r"\D", "", phone)) <= 15 and re.fullmatch(r"[0-9 ()+.-]+", phone))) and kind in allowed_types and 15 <= len(project) <= 4000 and len(timeline) <= 100):
             return self.respond(400, {"error": "Please check your form fields"})
         fields = ("SMTP_HOST", "SMTP_USER", "SMTP_PASSWORD", "INQUIRY_TO")
         if not all(os.getenv(k) for k in fields):
@@ -83,7 +85,17 @@ class Handler(BaseHTTPRequestHandler):
         msg["From"] = os.environ["SMTP_USER"]
         msg["To"] = os.environ["INQUIRY_TO"]
         msg["Reply-To"] = email
-        msg.set_content(f"Name: {name}\nEmail: {email}\nOrganization: {company}\nPhone: {country_code} {phone if phone else "(not provided)"}\nOpportunity: {kind}\nTimeline: {timeline}\n\nProject / request:\n{project}\n")
+        msg.set_content(
+            f"Name: {name}\\n"
+            f"Email: {email}\\n"
+            f"Organization: {company}\\n"
+            f"Website: {company_website or '(not provided)'}\\n"
+            f"Address: {address or '(not provided)'}\\n"
+            f"Phone: {country_code} {phone or '(not provided)'}\\n"
+            f"Opportunity: {kind}\\n"
+            f"Timeline: {timeline}\\n\\n"
+            f"Project / request:\\n{project}\\n"
+        )
         try:
             with smtplib.SMTP(os.environ["SMTP_HOST"], int(os.getenv("SMTP_PORT", "587")), timeout=15) as smtp:
                 smtp.starttls(context=ssl.create_default_context())
