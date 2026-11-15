@@ -1,43 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
-<title id="title">MasterData AI application preview</title><desc id="desc">Minimal customer master data interface showing CRM, policy and billing sources linked to a trusted customer record.</desc>
-<defs>
- <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff1f4"/><stop offset="1" stop-color="#ffe4ec"/></linearGradient>
- <filter id="shadow" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="17" stdDeviation="18" flood-color="#ad5d73" flood-opacity=".16"/></filter>
-</defs>
-<rect width="1200" height="650" fill="url(#bg)"/>
-<circle cx="1080" cy="90" r="260" fill="#ffc3d0" opacity=".36"/>
-<circle cx="130" cy="645" r="250" fill="#ffd5df" opacity=".55"/>
-<g filter="url(#shadow)"><rect x="90" y="58" width="1020" height="535" rx="25" fill="#fff"/></g>
-<rect x="90" y="58" width="1020" height="76" rx="25" fill="#fff"/>
-<rect x="90" y="114" width="1020" height="20" fill="#fff"/>
-<circle cx="126" cy="97" r="11" fill="#ff516f"/>
-<text x="150" y="105" font-family="Arial,sans-serif" font-size="26" font-weight="bold" fill="#242632">MasterData</text><text x="300" y="105" font-family="Arial,sans-serif" font-size="25" font-weight="bold" fill="#f3567a">AI</text>
-<text x="867" y="103" font-family="Arial,sans-serif" font-size="16" fill="#8b8b95">DATA  /  ASK</text>
-<line x1="90" y1="136" x2="1110" y2="136" stroke="#f4eef0" stroke-width="2"/>
-<text x="136" y="193" font-family="Arial,sans-serif" font-weight="bold" font-size="27" fill="#252630">One customer. One clear picture.</text>
-<text x="136" y="226" font-family="Arial,sans-serif" font-size="17" fill="#8b8a92">Three source systems, one trusted view</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 650" role="img" aria-labelledby="t d"><title id="t">Column &amp; Key product preview</title><desc id="d">Structured customer identity workbench showing three CSV source records connected to a canonical identity.</desc>
+<rect width="1200" height="650" fill="#e8ede5"/><g stroke="#d9e1d8" stroke-width="1"><path d="M0 50H1200M0 100H1200M0 150H1200M0 200H1200M0 250H1200M0 300H1200M0 350H1200M0 400H1200M0 450H1200M0 500H1200M0 550H1200M0 600H1200"/><path d="M50 0V650M100 0V650M150 0V650M200 0V650M250 0V650M300 0V650M350 0V650M400 0V650M450 0V650M500 0V650M550 0V650M600 0V650M650 0V650M700 0V650M750 0V650M800 0V650M850 0V650M900 0V650M950 0V650M1000 0V650M1050 0V650M1100 0V650M1150 0V650"/></g>
+<rect x="89" y="61" width="1022" height="527" fill="#fafbf7" stroke="#bdcdbf" stroke-width="3"/>
+<rect x="89" y="61" width="1022" height="82" fill="#263c31"/>
+<rect x="120" y="86" width="27" height="27" fill="#f3f3e8"/><rect x="153" y="86" width="27" height="27" fill="#bd7a55"/><rect x="120" y="119" width="27" height="5" fill="#bd7a55"/>
+<text x="201" y="111" fill="#faf9f0" font-family="sans-serif" font-size="33" font-weight="700">Column <tspan fill="#d9a17d">&amp;</tspan> Key</text>
+<text x="846" y="109" fill="#bdd0c0" font-family="monospace" font-size="18" letter-spacing="1">RECORD WORKBENCH</text>
+<text x="126" y="189" fill="#8e5f43" font-family="monospace" font-size="16" font-weight="700" letter-spacing="2">01 / SOURCES</text>
+<text x="786" y="189" fill="#8e5f43" font-family="monospace" font-size="16" font-weight="700" letter-spacing="2">02 / CANONICAL RECORD</text>
 <g>
-<rect x="136" y="278" width="245" height="99" rx="16" fill="#faf9fa" stroke="#efebed"/>
-<circle cx="165" cy="307" r="9" fill="#ff6e8b"/>
-<text x="185" y="314" font-family="Arial,sans-serif" font-weight="bold" font-size="19" fill="#2c2c36">CRM</text>
-<text x="159" y="349" font-family="Arial,sans-serif" font-size="16" fill="#92919b">Michael A. Johnson</text>
-<rect x="136" y="391" width="245" height="99" rx="16" fill="#faf9fa" stroke="#efebed"/>
-<circle cx="165" cy="421" r="9" fill="#ff6e8b"/>
-<text x="185" y="428" font-family="Arial,sans-serif" font-weight="bold" font-size="19" fill="#2c2c36">Policy</text>
-<text x="159" y="463" font-family="Arial,sans-serif" font-size="16" fill="#92919b">Mike Johnson</text>
-<rect x="397" y="332" width="235" height="99" rx="16" fill="#faf9fa" stroke="#efebed"/>
-<circle cx="427" cy="362" r="9" fill="#ff6e8b"/>
-<text x="446" y="369" font-family="Arial,sans-serif" font-weight="bold" font-size="19" fill="#2c2c36">Billing</text>
-<text x="421" y="402" font-family="Arial,sans-serif" font-size="16" fill="#92919b">Michael Johnson</text>
-<path d="M381 326 H405 M381 441 H405 M632 382 H685" fill="none" stroke="#ec849a" stroke-width="4" stroke-dasharray="9 7"/>
-<circle cx="677" cy="382" r="8" fill="#f3567a"/>
-<rect x="705" y="276" width="352" height="214" rx="21" fill="#fff4f6" stroke="#ffcfda" stroke-width="2"/>
-<circle cx="751" cy="322" r="19" fill="#ff647f"/>
-<path d="M743 322l6 7 12-15" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-<text x="785" y="329" font-family="Arial,sans-serif" font-weight="bold" font-size="23" fill="#242630">Customer 360</text>
-<text x="744" y="379" font-family="Arial,sans-serif" font-size="19" fill="#54505b">MDM-CUST-0001</text>
-<text x="744" y="411" font-family="Arial,sans-serif" font-size="16" fill="#77737d">Linked identities with source proof</text>
-<rect x="744" y="440" width="185" height="29" rx="14" fill="#ffe0e8"/>
-<text x="760" y="460" font-family="Arial,sans-serif" font-weight="bold" font-size="15" fill="#c9315a">Match approved</text>
-</g><text x="140" y="553" font-family="Arial,sans-serif" font-size="16" fill="#9c98a0">CSV-backed data   •   Explainable matching   •   Source-grounded answers</text>
+<rect x="128" y="221" width="366" height="75" fill="#f1f4ed" stroke="#96aa98" stroke-width="2"/><rect x="128" y="221" width="82" height="75" fill="#dce7dc"/><text x="169" y="264" text-anchor="middle" font-size="20" fill="#264032" font-family="monospace" font-weight="700">CRM</text><text x="238" y="252" font-size="18" fill="#2f4536" font-family="sans-serif" font-weight="700">CRM-105</text><text x="238" y="276" font-size="17" fill="#627469" font-family="sans-serif">Michael Johnson</text>
+<rect x="128" y="312" width="366" height="75" fill="#f1f4ed" stroke="#96aa98" stroke-width="2"/><rect x="128" y="312" width="82" height="75" fill="#dce7dc"/><text x="169" y="356" text-anchor="middle" font-size="17" fill="#264032" font-family="monospace" font-weight="700">POLICY</text><text x="238" y="343" font-size="18" fill="#2f4536" font-family="sans-serif" font-weight="700">PC-205</text><text x="238" y="367" font-size="17" fill="#627469" font-family="sans-serif">Mike Johnson</text>
+<rect x="128" y="403" width="366" height="75" fill="#f1f4ed" stroke="#96aa98" stroke-width="2"/><rect x="128" y="403" width="82" height="75" fill="#dce7dc"/><text x="169" y="447" text-anchor="middle" font-size="15" fill="#264032" font-family="monospace" font-weight="700">BILLING</text><text x="238" y="434" font-size="18" fill="#2f4536" font-family="sans-serif" font-weight="700">BC-305</text><text x="238" y="458" font-size="17" fill="#627469" font-family="sans-serif">Michael Johnson</text>
+</g>
+<path d="M494 260H567V350H653M494 350H567M494 441H567V350" fill="none" stroke="#a26441" stroke-width="4"/><circle cx="567" cy="260" r="7" fill="#a26441"/><circle cx="567" cy="350" r="7" fill="#a26441"/><circle cx="567" cy="441" r="7" fill="#a26441"/>
+<rect x="654" y="220" width="413" height="260" fill="#263c31"/>
+<rect x="654" y="220" width="413" height="48" fill="#476451"/><text x="679" y="252" font-family="monospace" font-size="16" font-weight="700" letter-spacing="1" fill="#f5f5ec">TRUSTED CUSTOMER ID</text>
+<text x="681" y="321" font-family="sans-serif" font-size="40" font-weight="700" fill="#fffdf4">MDM-1005</text>
+<path d="M680 343H1040" stroke="#769481" stroke-width="2"/>
+<text x="680" y="390" font-family="monospace" font-size="17" fill="#c9dcca">03 LINKED SOURCES</text>
+<rect x="682" y="412" width="192" height="37" fill="#f0f0e4"/><text x="778" y="436" fill="#385744" text-anchor="middle" font-family="monospace" font-weight="700" font-size="15">REVIEWED ✓</text>
+<text x="129" y="538" font-family="monospace" fill="#5c7462" font-size="17" letter-spacing="1">CSV SOURCES  /  TRACEABLE LINKS  /  HUMAN REVIEW</text>
 </svg>
