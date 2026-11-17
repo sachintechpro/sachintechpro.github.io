@@ -1,7 +1,7 @@
 // Live Render smoke verification for application-specific QA Benches.
 // Makes read-only GET requests and validates real HTML. No application mutations.
 const targets = [
-  ["Project-Program-Manager", "https://project-program-manager.onrender.com/qa-bench.html", "Project / Program Manager"],
+  ["Project-Program-Manager", "https://project-program-manager.onrender.com/qa-bench.html", "ValueStream HQ"],
   ["FrameOps", "https://frameops-operations.onrender.com/qa-bench.html", "FrameOps"],
   ["CommerceDesk", "https://commercedesk.onrender.com/qa-bench.html", "CommerceDesk"],
   ["IdentityFlow", "https://identityflow.onrender.com/qa-bench.html", "IdentityFlow"],
@@ -10,7 +10,8 @@ const targets = [
   ["QualityCommand", "https://qualitycommand.onrender.com/qa-bench.html", "QualityCommand"],
   ["ProductLens", "https://productlens-ab9d.onrender.com/qa-bench.html", "ProductLens"],
   ["ScopePilot", "https://scopepilot-etgt.onrender.com/qa-bench.html", "ScopePilot"],
-  ["BuildEstimate", "https://buildestimate-82xs.onrender.com/qa-bench.html", "BuildEstimate"]
+  ["BuildEstimate", "https://buildestimate-82xs.onrender.com/qa-bench.html", "BuildEstimate"],
+  ["Ternstone ValueOps", "https://ternstone-valueops-demo.onrender.com/", "Ternstone ValueOps"]
 ];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const results = new Map();
@@ -22,6 +23,23 @@ async function check([name, url, configName]) {
       redirect: "follow"
     });
     const html = (await response.text()).slice(0, 120000);
+    if (name === "Ternstone ValueOps") {
+      const u = new URL(url);
+      const [healthResponse, scriptResponse, catalogResponse] = await Promise.all([
+        fetch(new URL("/health", u), {signal: AbortSignal.timeout(75000)}),
+        fetch(new URL("/assets/qa_bench.js", u), {signal: AbortSignal.timeout(75000)}),
+        fetch(new URL("/api/public", u), {signal: AbortSignal.timeout(75000)})
+      ]);
+      if (!response.ok || !healthResponse.ok || !scriptResponse.ok || !catalogResponse.ok)
+        throw Error("Home, health, QA script or persona API unavailable");
+      const [health, script, catalog] = await Promise.all([
+        healthResponse.json(), scriptResponse.text(), catalogResponse.json()
+      ]);
+      if (health.status !== "ok" || !html.includes('data-page="test_bench"') ||
+          !script.includes("TernstoneQA") || !Array.isArray(catalog.roles) || catalog.roles.length < 29)
+        throw Error("Ternstone smoke evidence incomplete");
+      return {name,status:"LIVE",http:response.status,roles:catalog.roles.length,checks:["home","health","QA Test Bench module","persona catalog"],url};
+    }
     const match = html.match(/<script id="qa-config" type="application\/json">([\s\S]*?)<\/script>/);
     if (!response.ok) throw Error("HTTP " + response.status);
     if (!match) throw Error("QA configuration absent (stale or misrouted page)");
