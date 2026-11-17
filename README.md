@@ -10,3 +10,8 @@ Personal GitHub Pages landing page for independent demonstration applications.
 4. Open https://sachintechpro.github.io/ once GitHub Pages finishes deployment.
 
 The live demo links retain their existing Render hostnames. Edit `index.html` to change project descriptions or destinations.
+
+
+## Latest featured project
+
+**[Ternstone ValueOps — Interactive SAFe Agile Value Stream Delivery](https://ternstone-valueops-demo.onrender.com/)** — commercial and specialty insurance scenario mapping, portfolio-to-delivery governance, stakeholder decisions, RACI/RAID, and a transparent QA Test Bench. Start with the [visitor guide](https://github.com/sachintechpro/Project-Program-Manager/blob/ternstone-valueops-deploy/README.md) or review the [executed QA results](https://github.com/sachintechpro/Project-Program-Manager/blob/ternstone-valueops-deploy/docs/RELEASE_QA.md).
