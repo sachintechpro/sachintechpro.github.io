@@ -1,0 +1,8 @@
+segment,naics,employer_establishments_2023,firm_count_reference,why_it_fits,workflow_pain,priority,source
+Roofing contractors,238160,25519,,"Project scheduling; inspections; crews; supplements; warranty follow-up","High-volume job coordination and documentation",High,"U.S. Census County Business Patterns 2023"
+Plumbing heating and air conditioning,238220,111207,107004,"Recurring service plus installation; dispatch; parts; multiple branches","Dispatch; technician coordination; quotes; maintenance plans",High,"Census CBP 2023; SUSB 2022 firm count via secondary compilation"
+Residential remodelers,236118,135337,132711,"High-ticket projects; sales to measurement to installation to warranty","Estimating; change orders; supplier and crew handoffs",High,"Census CBP 2023; SUSB 2022 firm count via secondary compilation"
+Electrical contractors,238210,83342,79611,"Multi-crew work; permitting; field documentation; service calls","Scheduling; permits; job closeout; invoicing",Medium,"Census CBP 2023; SUSB 2022 firm count via secondary compilation"
+Flooring contractors,238330,17989,17777,"Showroom to measure to order to install to service","Measurements; inventory; installation coordination",High,"Census CBP 2023; SUSB 2022 firm count via secondary compilation"
+Glass and glazing contractors,238150,6945,,"Commercial/residential installs; measurements; fabrication coordination","Site measurements; approvals; delivery and installation",High,"Census CBP 2023 employer establishments"
+Finish carpentry contractors,238350,32219,,"Windows/doors, trim, cabinetry and installation adjacency","Estimating; materials; installer scheduling; punch lists",High,"Census CBP 2023 employer establishments"
