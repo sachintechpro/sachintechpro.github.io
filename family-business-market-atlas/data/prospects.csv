@@ -1,0 +1,9 @@
+id,company,segment,city,state,revenue_band,branches,ownership,fit_status,website,notes,record_type
+DEMO-001,Northstar Window & Door,Window and door installation,Denver,CO,$5M-$10M,4,Family-owned (illustrative),Research,https://example.com,"Fictional example. Strong measurement-to-installation workflow fit.",DEMO
+DEMO-002,Evergreen Roofing Group,Roofing contractors,Portland,OR,$10M-$25M,6,Founder/family-led (illustrative),Qualified,https://example.com,"Fictional example. Multiple crews, inspection and warranty coordination.",DEMO
+DEMO-003,Heritage Kitchen & Bath,Residential remodelers,Austin,TX,$5M-$10M,3,Family-owned (illustrative),Research,https://example.com,"Fictional example. Sales, design, materials and installer handoffs.",DEMO
+DEMO-004,Valley Climate Services,Plumbing heating and air conditioning,Phoenix,AZ,$10M-$25M,8,Privately held (illustrative),Qualified,https://example.com,"Fictional example. Dispatch and recurring service workflows.",DEMO
+DEMO-005,Oak & Stone Flooring,Flooring contractors,Charlotte,NC,$5M-$10M,2,Family-owned (illustrative),New,https://example.com,"Fictional example. Showroom, measurements, procurement and install.",DEMO
+DEMO-006,Clearview Glass & Glazing,Glass and glazing contractors,Seattle,WA,$10M-$25M,5,Family-owned (illustrative),Research,https://example.com,"Fictional example. Site survey, fabrication and field installation.",DEMO
+DEMO-007,Blue Ridge Electrical,Electrical contractors,Nashville,TN,$5M-$10M,3,Founder-led (illustrative),New,https://example.com,"Fictional example. Permit, job scheduling and closeout coordination.",DEMO
+DEMO-008,Coastal Home Renewal,Residential remodelers,Tampa,FL,$25M+,12,Privately held (illustrative),Research,https://example.com,"Fictional example. Upper edge of preferred size; verify ownership and structure.",DEMO
