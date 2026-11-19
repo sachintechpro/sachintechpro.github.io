@@ -163,6 +163,8 @@ function enhance(){grid.querySelectorAll('.card').forEach(card=>{if(card.dataset
 function apply(){enhance();let q=search.value.trim().toLowerCase();grid.querySelectorAll('.card').forEach(card=>{const match=(active==='all'||card.dataset.category===active)&&(!q||card.textContent.toLowerCase().includes(q));card.hidden=!match;card.style.display=match?'':'none'})}
 filters.forEach(b=>b.addEventListener('click',()=>{active=b.dataset.filter;filters.forEach(x=>x.classList.toggle('active',x===b));apply()}));search.addEventListener('input',apply);document.querySelectorAll('[data-search-for]').forEach(a=>a.addEventListener('click',()=>{search.value=a.dataset.searchFor;active='all';filters.forEach(x=>x.classList.toggle('active',x.dataset.filter==='all'));apply()}));enhance();new MutationObserver(apply).observe(grid,{childList:true});
 const inquiryParams=new URLSearchParams(location.search);
+const requestedProject=(inquiryParams.get('project')||'').toLowerCase();
+if(requestedProject){const interest=document.getElementById('inq-interest');if(interest){const option=[...interest.options].find(x=>x.value.toLowerCase()===requestedProject||x.textContent.trim().toLowerCase()===requestedProject);if(option)interest.value=option.value;}}
 if(inquiryParams.get('inquiry')==='success'){
   const message=document.querySelector('#inquiry-form .form-status');
   if(message){message.classList.add('ok');message.textContent='Success';}
