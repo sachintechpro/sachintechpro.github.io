@@ -350,5 +350,55 @@ if(inquiryParams.get('inquiry')==='success'){
   if (gallery) new MutationObserver(syncProjects).observe(gallery, {childList:true});
 })();
 </script>
+
+<style>
+#inquiry-form.is-submitted{display:block}
+#inquiry-form.is-submitted .field,#inquiry-form.is-submitted .honeypot,#inquiry-form.is-submitted .send,#inquiry-form.is-submitted .form-note{display:none}
+#inquiry-form.is-submitted .form-status{display:block;grid-column:1/-1;margin:0;padding:18px 20px;border:1px solid #b9dfc7;border-radius:10px;background:#effaf2;color:#176b3a;font-size:15px;line-height:1.6}
+#inquiry-form .form-status:empty{display:none}
+#inquiry-form .send:disabled{opacity:.65;cursor:wait}
+</style>
+<script>
+/* Submit the inquiry without navigating away; show confirmation only after FormSubmit accepts it. */
+(() => {
+  const form = document.getElementById('inquiry-form');
+  if (!form) return;
+  const status = form.querySelector('.form-status');
+  const button = form.querySelector('.send');
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (!form.reportValidity()) return;
+    const originalLabel = button.textContent;
+    button.disabled = true;
+    button.textContent = 'Sending…';
+    status.className = 'form-status';
+    status.textContent = 'Sending your inquiry securely…';
+    try {
+      const endpoint = form.action.replace('https://formsubmit.co/', 'https://formsubmit.co/ajax/');
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      let result = {};
+      try { result = await response.json(); } catch (_) {}
+      if (!response.ok || result.success === false || result.success === 'false') {
+        throw new Error(result.message || 'The submission could not be confirmed.');
+      }
+      form.reset();
+      form.classList.add('is-submitted');
+      status.className = 'form-status ok';
+      status.innerHTML = '<strong>Thank you — your inquiry has been sent.</strong><br>I’ve received your message and will review the details. I’ll get back to you using the contact information you provided.';
+      status.setAttribute('role', 'status');
+      status.setAttribute('aria-live', 'polite');
+    } catch (error) {
+      status.className = 'form-status error';
+      status.textContent = 'We couldn’t confirm that your inquiry was sent. Your entries are still here — please try again, or contact me directly through the site.';
+      button.disabled = false;
+      button.textContent = originalLabel;
+    }
+  });
+})();
+</script>
 </body></html>
 
