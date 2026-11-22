@@ -15,6 +15,42 @@
 .growth-cta-arrow{width:33px;height:33px;flex:0 0 33px;display:grid;place-items:center;background:#eeeafb;border-radius:10px;color:#5b45c6;font-size:20px;line-height:1}
 .growth-cta .growth-cta-note{color:#b9c5d7;font-size:12px;line-height:1.55;margin:0}
 @media(max-width:800px){.growth-cta{grid-template-columns:minmax(0,1fr);gap:24px;padding:clamp(24px,6vw,34px)}.growth-cta h3{font-size:clamp(28px,7.1vw,37px);margin:12px 0 12px;max-width:21ch}.growth-cta-copy p{font-size:15px;line-height:1.55}.growth-cta-action{padding:0;background:transparent;border:0;gap:11px}.growth-cta-link{min-height:58px}.growth-cta-kicker{font-size:10px}}
+</style><style>
+/* StuVi — scoped, responsive assistant for the three independent demos */
+.stuvi-root, .stuvi-root *{box-sizing:border-box}
+.stuvi-root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#1d2843;line-height:1.45}
+.stuvi-launch{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:901;display:inline-flex;align-items:center;gap:10px;min-height:55px;padding:9px 18px 9px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.55);background:#5e4bdb;color:#fff;box-shadow:0 13px 32px rgba(41,35,108,.28);font-size:14px;font-weight:750;letter-spacing:-.015em;cursor:pointer;transition:transform .18s ease,background .18s ease;touch-action:manipulation}
+.stuvi-launch:hover{transform:translateY(-2px);background:#5140c7}
+.stuvi-launch:focus-visible,.stuvi-root button:focus-visible,.stuvi-root textarea:focus-visible{outline:3px solid #a293ff;outline-offset:3px}
+.stuvi-spark{display:grid;place-items:center;width:36px;height:36px;flex:0 0 36px;border-radius:50%;background:rgba(255,255,255,.17);font-size:20px}
+.stuvi-panel{position:fixed;z-index:902;right:18px;bottom:calc(89px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;overflow:hidden;width:min(388px,calc(100vw - 28px));height:min(565px,calc(100dvh - 119px));min-height:320px;border:1px solid #e4e3f2;border-radius:22px;background:#fff;box-shadow:0 24px 72px rgba(16,26,55,.24);text-align:left}
+.stuvi-panel[hidden]{display:none}
+.stuvi-top{display:flex;align-items:center;gap:11px;padding:15px 15px 14px;background:linear-gradient(115deg,#302966,#6151bd);color:white;flex:0 0 auto}
+.stuvi-avatar{width:41px;height:41px;flex:0 0 41px;display:grid;place-items:center;background:rgba(255,255,255,.17);border:1px solid rgba(255,255,255,.18);border-radius:15px;font-size:23px}
+.stuvi-identity{min-width:0;flex:1}
+.stuvi-name{font-weight:800;font-size:17px;letter-spacing:-.02em;line-height:1.15}
+.stuvi-status{display:flex;align-items:center;gap:6px;margin-top:5px;color:#e8e4ff;font-size:11px;font-weight:550}
+.stuvi-dot{width:7px;height:7px;border-radius:50%;background:#8df3cd}
+.stuvi-close{width:34px;height:34px;display:grid;place-items:center;flex:0 0 34px;border:0;border-radius:11px;background:rgba(255,255,255,.12);color:#fff;font-size:22px;cursor:pointer}
+.stuvi-close:hover{background:rgba(255,255,255,.22)}
+.stuvi-context{padding:9px 15px;background:#f3f1ff;color:#51488f;font-weight:660;font-size:11px;flex:0 0 auto}
+.stuvi-history{flex:1;overflow:auto;overscroll-behavior:contain;display:flex;flex-direction:column;gap:11px;padding:16px 14px 12px;background:linear-gradient(180deg,#fbfaff,#fff 75%);scrollbar-width:thin}
+.stuvi-message{max-width:88%;padding:10px 12px;border-radius:16px;font-size:13px;line-height:1.55;overflow-wrap:anywhere;white-space:pre-wrap}
+.stuvi-message.bot{align-self:flex-start;background:#f0effa;color:#29324c;border-bottom-left-radius:5px}
+.stuvi-message.user{align-self:flex-end;background:#5e4bdb;color:white;border-bottom-right-radius:5px}
+.stuvi-suggestions{display:flex;gap:7px;padding:6px 13px 10px;overflow-x:auto;scrollbar-width:thin;background:#fff;flex:0 0 auto}
+.stuvi-suggest{flex:0 0 auto;background:#f8f7ff;border:1px solid #dcd7f5;border-radius:999px;color:#5040a3;padding:8px 11px;font-size:11px;font-weight:650;cursor:pointer}
+.stuvi-suggest:hover{background:#edeaff}
+.stuvi-compose{display:flex;gap:8px;align-items:flex-end;padding:10px 12px;border-top:1px solid #ececf4;background:#fff;flex:0 0 auto}
+.stuvi-compose textarea{display:block;flex:1;resize:none;min-height:40px;max-height:75px;line-height:1.3;font:inherit;font-size:13px;border:1px solid #dfe1ef;border-radius:12px;padding:10px 11px;background:#fff;color:#1d2843;outline:none}
+.stuvi-compose textarea:focus{border-color:#806cea}
+.stuvi-send{display:grid;place-items:center;width:40px;height:40px;flex:0 0 40px;border:0;border-radius:12px;background:#5e4bdb;color:#fff;font-size:18px;cursor:pointer}
+.stuvi-send:hover{background:#5140c7}
+.stuvi-note{padding:0 13px 11px;font-size:10px;line-height:1.35;color:#7e8394;background:#fff;text-align:center;flex:0 0 auto}
+@media(max-width:600px){.stuvi-launch{right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));min-height:51px;padding:7px 15px 7px 8px}.stuvi-spark{width:35px;height:35px;flex-basis:35px}.stuvi-panel{left:10px;right:10px;width:auto;bottom:calc(78px + env(safe-area-inset-bottom,0px));height:min(62dvh,540px);min-height:290px;border-radius:21px}.stuvi-message{max-width:93%}.stuvi-history{padding-top:12px}}
+@media(max-height:520px){.stuvi-panel{height:calc(100dvh - 95px);min-height:0}}
+@media(prefers-reduced-motion:reduce){.stuvi-launch{transition:none}}
+@media print{.stuvi-root{display:none!important}}
 </style></head><body>
 <header class="topbar"><div class="shell"><a class="brand" href="coverage.html"><span class="brandmark" style="background:#6c4bd8">◈</span> Coverage Companion</a><nav class="nav" aria-label="Main navigation"><a href="#try">Try it</a><a href="#seminars">Learn</a><a href="#opportunity">Business opportunity</a></nav><a class="toplink" href="index.html">← Both products</a></div></header>
 <main><section class="cover-hero"><div class="shell twopane"><div><div class="eyebrow"><span class="dot"></span> INTERACTIVE EXPERIENCE · DEMONSTRATION</div><div style="height:16px"></div><h1>More clarity.<br><span style="color:#6c4bd8">Better questions.</span></h1><p class="lead">Big life changes come with insurance questions. Answer three quick prompts to build a personalized conversation checklist—without entering personal information.</p><p class="small muted">This demo gives general educational prompts, not coverage advice, a policy recommendation, or a quote.</p><div class="flex heroactions"><a class="btn accent" href="#try">Build my conversation guide ↓</a><a class="btn secondary" href="#opportunity">Why this could help an agent</a></div></div><div class="bookstack" aria-hidden="true"><div class="book b1"></div><div class="book b2"></div><div class="book b3"><div class="bookicon">✳</div><h3>Questions worth asking.</h3><p>What should I compare?<br>What should I bring?<br>What changes over time?</p><span class="pill">Your personal discussion guide</span></div></div></div></section>
@@ -43,5 +79,118 @@ function output(){const d=base[state.persona],arr=[focus[state.focus],...d.quest
 document.querySelectorAll('[data-persona]').forEach(b=>b.addEventListener('click',()=>{state.persona=b.dataset.persona;show(2)}));document.querySelectorAll('[data-focus]').forEach(b=>b.addEventListener('click',()=>{state.focus=b.dataset.focus;show(3)}));document.querySelectorAll('[data-stage]').forEach(b=>b.addEventListener('click',()=>{state.stage=b.dataset.stage;output()}));$('back1').addEventListener('click',()=>show(1));$('back2').addEventListener('click',()=>show(2));$('restart').addEventListener('click',()=>{state.persona=state.focus=state.stage=null;show(1)});$('shareGuide').addEventListener('click',()=>{location.href='mailto:?subject='+encodeURIComponent('My insurance conversation checklist')+'&body='+encodeURIComponent(currentText)});$('printGuide').addEventListener('click',()=>window.print());
 const seminars={home:{title:'Five topics for a home-insurance conversation',items:['Property details and replacement-cost assumptions','Coverage limits and deductibles','Common exclusions and optional coverages','Documentation to prepare','When to revisit the policy']},family:{title:'Five topics for a family-protection conversation',items:['Household financial responsibilities','Existing benefits and coverage','Life changes and dependents','Questions about terms, eligibility, and costs','Reviewing beneficiaries and documents']},business:{title:'Five topics for a small-business conversation',items:['Nature of the business','Property, premises, and equipment','Liability and employees','Business disruption questions','When business changes require a review']}};
 document.querySelectorAll('[data-resource]').forEach(btn=>btn.addEventListener('click',()=>{let item=seminars[btn.dataset.resource];let container=$('seminarContent');container.replaceChildren();let cap=document.createElement('div');cap.className='badgefake';cap.textContent='Example educational card · '+btn.textContent.trim();let h=document.createElement('h3');h.textContent=item.title;let ul=document.createElement('ul');item.items.forEach(s=>{let li=document.createElement('li');li.textContent=s;ul.append(li)});container.append(cap,h,ul);document.querySelectorAll('[data-resource]').forEach(b=>b.style.borderColor=b===btn?'#6c4bd8':'#e4dbe5')}));
+})();
+</script><script>
+/* StuVi — privacy-conscious, contextual demo guide. No external API calls. */
+(() => {
+  'use strict';
+  const page = (/coverage\.html$/i.test(location.pathname) || /Coverage Companion/i.test(document.title)) ? 'coverage' : (/valleycircle\.html$/i.test(location.pathname) || /ValleyCircle/i.test(document.title)) ? 'valley' : 'overview';
+  const pageNames = {overview: 'Both product concepts', coverage: 'Coverage Companion', valley: 'ValleyCircle'};
+  const starters = {
+    overview: ['What can I try?', 'How are the products different?', 'Can this be customized?'],
+    coverage: ['How do I try this?', 'Can this make a quote?', 'Can I use seminar slides?'],
+    valley: ['How does this help residents?', 'Are these real partners?', 'How could sponsorship work?']
+  };
+  const answers = {
+    overview: [
+      {keys:['try','start','explore','demo','experience','how use','what do'],reply:'Try Coverage Companion for a personal insurance-question guide, or ValleyCircle for a local-services discovery and partner preview. Each has its own interactive demo.'},
+      {keys:['different','difference','compare','two product','both','which product'],reply:'Coverage Companion helps people prepare for an insurance conversation. ValleyCircle helps residents explore useful local services and shows a possible disclosed partner placement.'},
+      {keys:['benefit','value','business','growth','help me','help business'],reply:'These concepts aim to create value before asking for business: useful educational guides for insurance prospects, and a local discovery experience that could support vetted partnerships.'},
+      {keys:['revenue','earn','money','monetize','income','sale'],reply:'Coverage Companion could support qualified insurance conversations. ValleyCircle could test permitted sponsorship or affiliate models. Neither demo generates revenue today.'},
+      {keys:['nisha','agent','farmers'],reply:'The concepts were inspired by a local agent’s community work, but these are independent demonstrations—not an official Farmers site or a replacement for its systems.'},
+      {keys:['live','real','prototype','finished','production'],reply:'These are interactive prototypes, not connected business systems. They demonstrate possibilities; a real launch would require customized content, approvals, integrations, and testing.'},
+      {keys:['who is this for','audience','customers'],reply:'They can be adapted for local professionals, agencies, educators, and community businesses that want useful customer-facing tools rather than another dashboard.'}
+    ],
+    coverage: [
+      {keys:['try','start','how use','step','begin','what do'],reply:'Choose your life moment, select your main concern, then indicate your timing. You’ll get five questions to bring to a licensed insurance professional.'},
+      {keys:['quote','premium','exact price','insurance cost','buy policy','purchase','coverage amount'],reply:'No. This guide does not calculate premiums, compare policies, or sell coverage. A licensed insurance professional can explain actual options and pricing.'},
+      {keys:['seminar','presentation','slide','pdf','content','upload','workshop'],reply:'The seminar cards are examples. A custom version could use the agent’s approved slides, handouts, and resources to create interactive topic guides.'},
+      {keys:['lead','prospect','capture','contact customer','form','email address'],reply:'This prototype collects no prospect details. A customized version could offer an optional, consent-based contact link connected to an approved agency channel.'},
+      {keys:['share','print','download','send guide','email guide'],reply:'Finish the three-step journey, then choose “Share guide by email” or “Print guide.” Email opens your mail app; the demo does not send it for you.'},
+      {keys:['home','house','homeowner','buyer','property'],reply:'The home guide helps you ask about rebuilding costs, policy limits, deductibles, exclusions, and what information to prepare.'},
+      {keys:['rent','renter','tenant','landlord'],reply:'The renter guide raises questions about belongings, personal liability, exclusions, and how a landlord’s insurance differs from a renter’s own coverage.'},
+      {keys:['family','life insurance','dependent','child','beneficiar'],reply:'The family guide helps organize questions about dependents, existing benefits, coverage terms, and when to review beneficiaries. It is not a policy recommendation.'},
+      {keys:['business','commercial','employee','small business'],reply:'The small-business guide helps you prepare questions about operations, property, liability, employees, and changes that may warrant a professional review.'},
+      {keys:['deductible','deductibles'],reply:'A deductible is generally the amount you pay toward a covered claim under the policy terms. Ask a licensed professional how the deductible applies to specific events.'},
+      {keys:['exclusion','not covered','limits','limit','gap'],reply:'Limits cap certain payments; exclusions identify situations a policy does not cover. Specific wording and exceptions depend on the policy, so review them with a licensed agent.'},
+      {keys:['result','my guide','my question','checklist','summary'],reply:'Your guide contains five conversation questions matched to your selected life moment and concern. Finish the choices above to see, print, or email it.'},
+      {keys:['why use','benefit','useful','value','agent growth','business growth'],reply:'An agent could share a genuinely useful educational guide after seminars or introductions, making it easier for interested visitors to ask informed questions.'},
+      {keys:['appointment','talk agent','connect nisha','insurance consultation'],reply:'This demo does not book agent appointments. A commissioned version could link to the agency’s approved contact or appointment process.'}
+    ],
+    valley: [
+      {keys:['try','start','how use','what do','guide','resident'],reply:'Choose a moment such as moving, growing a family, improving a home, or starting a business. Your local starter guide updates instantly.'},
+      {keys:['local','neighborhood','san fernando','area','valley','near me'],reply:'The demo is framed around the San Fernando Valley. Its resources are categories and examples—not a verified, location-aware directory.'},
+      {keys:['real partner','real business','fictional','verified','actual provider','listing'],reply:'All example businesses and placements are fictional. A real launch would need verification, clear disclosures, and an appropriate review process.'},
+      {keys:['partner','industry','format','collaboration','preview'],reply:'In “Try the partner-side concept,” select an industry and collaboration format. The example partner card changes immediately.'},
+      {keys:['sponsor','sponsorship','advertis','paid placement'],reply:'A potential sponsor might support a clearly labeled local guide or community workshop. Any live placement would need vetting, disclosure, and an approved agreement.'},
+      {keys:['affiliate','commission','referral payment','revenue','earn money','monetiz'],reply:'Affiliate or sponsorship income is only a possible model—not active here. Real arrangements need applicable permissions, disclosure, privacy protections, and agreement review.'},
+      {keys:['realtor','real estate'],reply:'A realtor could co-create a useful moving guide or educational workshop, subject to any legal or industry restrictions. The realtor shown in the demo is fictional.'},
+      {keys:['move','moving','new resident','relocat'],reply:'The moving guide suggests researching utilities, property care, neighborhood resources, paperwork, and community connections.'},
+      {keys:['family','parent','child','school'],reply:'The family guide suggests researching libraries, schools, parks, community groups, and family-support resources.'},
+      {keys:['home improve','renovat','contractor','remodel'],reply:'The home-improvement guide encourages research into project scope, permits, licensed contractors, and written proposals.'},
+      {keys:['start business','small business','local business','entrepreneur'],reply:'The small-business guide highlights permits, financial basics, customer discovery, and professional services to investigate.'},
+      {keys:['share','email guide','send'],reply:'Use “Email my starter guide” after choosing a life moment. Your email app opens with the example guide; nothing is sent automatically.'},
+      {keys:['why build','business benefit','value','useful'],reply:'A local discovery tool could build trust through helpful resident guides, create reasons for business collaboration, and test clearly disclosed sponsorships if permitted.'}
+    ]
+  };
+  const escapePattern = /[.*+?^${}()|[\]\\]/g;
+  function normalize(value){return String(value||'').toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s]/g,' ').replace(/\s+/g,' ').trim()}
+  function contains(haystack, needle){const n=normalize(needle);return n && (haystack===n || (' '+haystack+' ').includes(' '+n+' ' ) || (n.length>=5 && haystack.includes(n)))}
+  function activeGuide(){
+    const result=document.getElementById('results');
+    if(result&&!result.classList.contains('hide')){
+      const title=document.getElementById('resultTitle')?.textContent.trim()||'your guide';
+      const q=[...document.querySelectorAll('#questionList .questionrow p')].slice(0,2).map(n=>n.textContent.trim());
+      return {done:true,title,q};
+    }
+    const step=(document.getElementById('stepCount')?.textContent||'').trim();
+    return {done:false,step};
+  }
+  function activeValley(){return {moment:document.querySelector('#residentResult h3')?.textContent.trim()||'Moving to the Valley',partner:document.getElementById('previewName')?.textContent.trim()||'example partner',format:document.getElementById('partnerFormat')?.selectedOptions[0]?.textContent.trim()||'sponsored guide placement'}}
+  function matchBest(input, rows){
+    const query=normalize(input);let top=null,best=0;
+    for(const item of rows){let score=0;for(const key of item.keys){if(contains(query,key))score+=key.includes(' ')?3:2}if(score>best){best=score;top=item}}
+    return best?top:null;
+  }
+  function respond(raw){
+    const query=normalize(raw);
+    if(!query)return 'What would you like to know about this demo?';
+    if(/^(hi|hello|hey|good morning|good evening|thanks|thank you|thankyou)$/.test(query))return 'Hi! I’m StuVi. Ask me something about the product you’re exploring, or tap a suggested question below.';
+    if(contains(query,'who are you')||contains(query,'your name')||contains(query,'what is stuvi'))return 'I’m StuVi, your short-answer guide for these demos. I use curated, page-aware information—not a live AI model.';
+    if(contains(query,'ai model')||contains(query,'is this ai')||contains(query,'real ai')||contains(query,'chatgpt'))return 'This prototype uses a local, curated question-and-answer guide. A custom implementation could add a secure AI assistant if needed.';
+    if(contains(query,'privacy')||contains(query,'stored')||contains(query,'save my data')||contains(query,'data collection')||contains(query,'record conversation'))return 'These prototypes do not send your chat or selections to a server. StuVi runs in your browser, and this conversation resets when you reload.';
+    if(contains(query,'contact')||contains(query,'hire')||contains(query,'customize')||contains(query,'customisation')||contains(query,'implementation')||contains(query,'deploy')||contains(query,'who built')||contains(query,'developer'))return 'SachinTechPro created these independent demos. Use the “Discuss customization” or implementation contact link on the page to email about a tailored version.';
+    if(contains(query,'cost to build')||contains(query,'pricing for app')||contains(query,'subscription')||contains(query,'development price'))return 'Pricing depends on the features, content, integrations, and approvals needed. A short discovery discussion would establish scope first.';
+    if(page==='coverage'){
+      const g=activeGuide();
+      if(contains(query,'what next')||contains(query,'next step')||contains(query,'where am i')||contains(query,'what should i do'))return g.done?'Your '+g.title.toLowerCase()+' is ready. You can print it, share it through your email app, or try another moment.':(g.step ? g.step+'. Choose one answer in the guide to continue.' : 'Choose a life moment to start your three-step guide.');
+      if((contains(query,'my questions')||contains(query,'my guide')||contains(query,'summarize my'))&&g.done)return 'Your '+g.title.toLowerCase()+' starts with:\n• '+g.q.join('\n• ')+'\nUse Print or Share to see all five.';
+    }
+    if(page==='valley'){
+      const v=activeValley();
+      if(contains(query,'my selection')||contains(query,'what did i choose')||contains(query,'current guide'))return 'You’re viewing “'+v.moment+'.” The partner preview shows '+v.partner+' with the “'+v.format+'” format.';
+      if(contains(query,'current partner')||contains(query,'which partner'))return 'The current preview is '+v.partner+'. This is a fictional example, not a real business listing.';
+    }
+    const byPage=matchBest(raw,answers[page]);if(byPage)return byPage.reply;
+    const byOverview=matchBest(raw,answers.overview);if(byOverview)return byOverview.reply;
+    return 'I can help with how this demo works, its business benefits, privacy, or customization. Try one of the suggested questions below.';
+  }
+  function el(tag,cls,txt){const node=document.createElement(tag);if(cls)node.className=cls;if(txt!==undefined)node.textContent=txt;return node}
+  const root=el('div','stuvi-root');
+  const launch=el('button','stuvi-launch');launch.type='button';launch.setAttribute('aria-expanded','false');launch.setAttribute('aria-controls','stuvi-panel');launch.setAttribute('aria-label','Open StuVi assistant');launch.append(el('span','stuvi-spark','✦'),el('span','', 'Ask StuVi'));
+  const panel=el('section','stuvi-panel');panel.id='stuvi-panel';panel.hidden=true;panel.setAttribute('role','dialog');panel.setAttribute('aria-label','StuVi demo assistant');
+  const top=el('div','stuvi-top');const av=el('div','stuvi-avatar','✦');const identity=el('div','stuvi-identity');identity.append(el('div','stuvi-name','StuVi'));const status=el('div','stuvi-status');status.append(el('span','stuvi-dot'),document.createTextNode('Short answers · On this page'));identity.append(status);
+  const close=el('button','stuvi-close','×');close.type='button';close.setAttribute('aria-label','Close StuVi assistant');top.append(av,identity,close);
+  const context=el('div','stuvi-context','EXPLORING · '+pageNames[page]);
+  const history=el('div','stuvi-history');history.setAttribute('role','log');history.setAttribute('aria-live','polite');history.setAttribute('aria-relevant','additions');
+  const suggestions=el('div','stuvi-suggestions');suggestions.setAttribute('aria-label','Suggested questions');
+  const compose=el('form','stuvi-compose');const input=el('textarea');input.setAttribute('rows','1');input.setAttribute('maxlength','240');input.setAttribute('aria-label','Ask StuVi a question');input.setAttribute('placeholder','Ask a short question…');const send=el('button','stuvi-send','➤');send.type='submit';send.setAttribute('aria-label','Send message');compose.append(input,send);
+  const note=el('div','stuvi-note','Demo assistant · No live AI, personal advice, or chat data storage');
+  panel.append(top,context,history,suggestions,compose,note);root.append(launch,panel);document.body.append(root);
+  function addMessage(kind,msg){const bubble=el('div','stuvi-message '+kind,msg);history.append(bubble);history.scrollTop=history.scrollHeight}
+  function showSuggestions(){const choices=page==='coverage'&&activeGuide().done?['What are my questions?','How do I share my guide?','Can I use seminar slides?']:starters[page];suggestions.replaceChildren();choices.forEach(label=>{const b=el('button','stuvi-suggest',label);b.type='button';b.addEventListener('click',()=>ask(label));suggestions.append(b)})}
+  function ask(question){const cleaned=String(question||'').trim().slice(0,240);if(!cleaned)return;addMessage('user',cleaned);addMessage('bot',respond(cleaned));input.value='';input.focus({preventScroll:true})}
+  function toggle(force){const open=typeof force==='boolean'?force:panel.hidden;panel.hidden=!open;launch.setAttribute('aria-expanded',String(open));launch.setAttribute('aria-label',open?'Close StuVi assistant':'Open StuVi assistant');launch.lastChild.textContent=open?'Close StuVi':'Ask StuVi';if(open){if(!history.children.length){addMessage('bot',page==='coverage'?'Hi! I’m StuVi. I can explain this insurance conversation guide or help with your current step.':page==='valley'?'Hi! I’m StuVi. Ask me about local guides, the fictional partner preview, or business possibilities.':'Hi! I’m StuVi. I can help you explore these two concepts and what they could do for a business.')}context.textContent='EXPLORING · '+pageNames[page]+(page==='coverage'&&activeGuide().done?' · Guide ready':'');showSuggestions();input.focus({preventScroll:true})}else launch.focus({preventScroll:true})}
+  launch.addEventListener('click',()=>toggle());close.addEventListener('click',()=>toggle(false));compose.addEventListener('submit',e=>{e.preventDefault();ask(input.value)});input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();ask(input.value)}});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden)toggle(false)});
 })();
 </script></body></html>
