@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d1426">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="DemoGuide">
+  <meta name="description" content="Make clear, personal product demo videos with a screen recording, selfie camera, and narration. Your recordings stay on your device.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <link rel="stylesheet" href="./styles.css">
+  <title>DemoGuide — Make your product personal</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="DemoGuide Home">
+        <span class="brand-mark" aria-hidden="true"><svg width="26" height="26" fill="none" viewBox="0 0 26 26"><rect x="2.6" y="5" width="16" height="16" rx="5" stroke="currentColor" stroke-width="2.1"/><path d="m17 10 6-3v12l-6-3" stroke="currentColor" stroke-width="2.1" stroke-linejoin="round"/><circle cx="10.6" cy="12.8" r="2.8" fill="currentColor"/></svg></span>
+        <span>DemoGuide<span class="brand-period">.</span></span>
+      </a>
+      <nav class="nav-actions" aria-label="Main">
+        <span class="local-pill"><span class="local-dot"></span> Private by design</span>
+        <button id="installBtn" type="button" class="btn btn-outline btn-small"><span aria-hidden="true">↧</span> Install app</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="intro">
+        <div class="eyebrow"><span class="sparkle">✦</span> THE PERSONAL DEMO STUDIO</div>
+        <h1>Show the product.<br><em>Tell the story.</em></h1>
+        <p>Give customers a guided walkthrough they'll actually want to watch. Your screen, your face, your voice — one shareable video.</p>
+      </section>
+
+      <section class="studio" aria-label="Demo recorder">
+        <div class="studio-heading">
+          <div><span class="section-kicker">YOUR WORKSPACE</span><h2>Create a walkthrough</h2></div>
+          <div id="capability" class="capability"><span class="capability-dot"></span> Checking browser</div>
+        </div>
+        <div class="studio-grid">
+          <section class="controls" aria-label="Recording setup">
+            <div class="step-count">01 <span>Choose a workflow</span></div>
+            <div class="mode-picker" role="group" aria-label="Recording workflow">
+              <button id="modeScreen" type="button" class="mode active" aria-pressed="true">
+                <span class="mode-icon" aria-hidden="true">▣</span><span><strong>Live screen + face</strong><small>Record as you demo</small></span>
+              </button>
+              <button id="modeImport" type="button" class="mode" aria-pressed="false">
+                <span class="mode-icon" aria-hidden="true">◉</span><span><strong>Narrate a recording</strong><small>Best for phones</small></span>
+              </button>
+            </div>
+            <div id="screenSetup" class="mode-setup">
+              <label for="demoUrl" class="field-label">YOUR DEMO LINK <span>Optional</span></label>
+              <div class="url-row"><input id="demoUrl" type="url" inputmode="url" placeholder="https://your-demo.onrender.com" autocomplete="url"><button id="openDemo" type="button" class="btn btn-quiet" title="Open demo in another tab">Open ↗</button></div>
+              <p class="field-hint">Open your demo, then choose the screen or tab you want to record.</p>
+            </div>
+            <div id="importSetup" class="mode-setup" hidden>
+              <label for="videoInput" class="field-label">YOUR SCREEN RECORDING <span>MP4, MOV or WebM</span></label>
+              <label class="upload-zone" for="videoInput"><span class="upload-icon" aria-hidden="true">↑</span><strong>Choose a video from your device</strong><small id="fileLabel">Tap to import a saved screen recording</small></label>
+              <input id="videoInput" type="file" accept="video/*,.mov,.mp4,.webm" class="sr-only">
+              <p class="field-hint">Record your phone screen first, then come back to add your selfie and narration. Keep this app open while exporting.</p>
+            </div>
+            <div class="thin-rule"></div>
+            <div class="step-count">02 <span>Personalize your recording</span></div>
+            <div class="setting-row"><span><strong>Selfie bubble</strong><small>Round face camera overlay</small></span><label class="mini-select-label"><span class="sr-only">Selfie bubble position</span><select id="facePosition"><option value="tl">Top left</option><option value="tr">Top right</option></select></label></div>
+            <div class="setting-row"><span><strong>Camera size</strong><small>Fits your screen naturally</small></span><label class="mini-select-label"><span class="sr-only">Selfie bubble size</span><select id="faceSize"><option value="small">Small</option><option value="medium">Medium</option></select></label></div>
+            <div class="thin-rule"></div>
+            <div class="step-count">03 <span>Record and share</span></div>
+            <button id="startBtn" type="button" class="btn btn-primary btn-full"><span class="record-dot"></span><span id="startText">Start recording</span></button>
+            <button id="stopBtn" type="button" class="btn btn-danger btn-full" hidden><span class="stop-square"></span> Stop & finish</button>
+            <p id="status" class="status" role="status" aria-live="polite">Ready when you are.</p>
+            <div class="privacy-note"><span aria-hidden="true">♧</span><span>No sign-up. No upload. Your footage is processed in your browser and saved only when you choose.</span></div>
+          </section>
+
+          <section class="preview-panel" aria-label="Live preview and finished video">
+            <div class="preview-header"><div class="preview-title"><span class="preview-led"></span><span id="previewTitle">STUDIO PREVIEW</span></div><span id="timer" class="timer">00:00</span></div>
+            <div class="preview-wrap"><canvas id="previewCanvas" width="1280" height="720" aria-label="Recording preview, including the selfie camera"></canvas><div id="previewOverlay" class="preview-overlay"><span class="preview-overlay-icon">◉</span><strong>Your video will appear here</strong><small>Open your demo or choose a screen recording to get started</small></div></div>
+            <div class="preview-bottom"><span><span class="quality-dot"></span> Screen + camera + microphone</span><span id="previewDetails">1280 × 720 preview</span></div>
+            <section id="resultSection" class="result-section" hidden>
+              <div class="result-top"><div><strong>Walkthrough complete</strong><small id="resultMeta">Ready to save or share</small></div><span class="done-mark" aria-hidden="true">✓</span></div>
+              <video id="resultVideo" controls playsinline preload="metadata" aria-label="Finished recorded video"></video>
+              <div class="result-actions"><button id="downloadBtn" type="button" class="btn btn-primary">↓ Save video</button><button id="shareBtn" type="button" class="btn btn-outline">Share video ↗</button></div>
+            </section>
+          </section>
+        </div>
+      </section>
+
+      <section class="howto" aria-label="How it works">
+        <div><span class="section-kicker">QUICK START</span><h2 id="howTitle">Three steps. One great demo.</h2><p id="howIntro">No editing timeline, no complicated production setup.</p></div>
+        <div id="howSteps" class="how-grid"></div>
+      </section>
+      <footer class="footer"><span>DemoGuide · Your story, in your own words.</span><span>Designed for short, personal product walkthroughs.</span></footer>
+    </main>
+  </div>
+
+  <dialog id="installDialog" class="install-dialog">
+    <form method="dialog"><button class="dialog-close" aria-label="Close installation instructions">×</button></form>
+    <span class="section-kicker">KEEP IT HANDY</span><h2>Install DemoGuide</h2>
+    <p>Use it like a normal app. Add a shortcut to your home screen, desktop, or Dock.</p>
+    <div id="installInstructions" class="dialog-instructions"></div>
+    <button id="promptInstall" class="btn btn-primary btn-full" type="button" hidden>Install DemoGuide</button>
+    <p class="dialog-foot">A secure HTTPS connection is required for camera and microphone recording. Screen capture depends on your browser.</p>
+  </dialog>
+
+  <video id="screenSource" class="offscreen-video" autoplay muted playsinline></video>
+  <video id="cameraSource" class="offscreen-video" autoplay muted playsinline></video>
+  <video id="fileSource" class="offscreen-video" muted playsinline preload="auto"></video>
+  <script defer src="./app.js"></script>
+</body>
+</html>
