@@ -179,18 +179,51 @@ document.querySelectorAll('[data-resource]').forEach(btn=>btn.addEventListener('
   const root=el('div','stuvi-root');
   const launch=el('button','stuvi-launch');launch.type='button';launch.setAttribute('aria-expanded','false');launch.setAttribute('aria-controls','stuvi-panel');launch.setAttribute('aria-label','Open StuVi assistant');launch.append(el('span','stuvi-spark','✦'),el('span','', 'Ask StuVi'));
   const panel=el('section','stuvi-panel');panel.id='stuvi-panel';panel.hidden=true;panel.setAttribute('role','dialog');panel.setAttribute('aria-label','StuVi demo assistant');
-  const top=el('div','stuvi-top');const av=el('div','stuvi-avatar','✦');const identity=el('div','stuvi-identity');identity.append(el('div','stuvi-name','StuVi'));const status=el('div','stuvi-status');status.append(el('span','stuvi-dot'),document.createTextNode('Short answers · On this page'));identity.append(status);
+  const top=el('div','stuvi-top');const av=el('div','stuvi-avatar','✦');const identity=el('div','stuvi-identity');identity.append(el('div','stuvi-name','StuVi'));const status=el('div','stuvi-status');status.append(el('span','stuvi-dot'),document.createTextNode('AI connection · On this page'));identity.append(status);
   const close=el('button','stuvi-close','×');close.type='button';close.setAttribute('aria-label','Close StuVi assistant');top.append(av,identity,close);
   const context=el('div','stuvi-context','EXPLORING · '+pageNames[page]);
   const history=el('div','stuvi-history');history.setAttribute('role','log');history.setAttribute('aria-live','polite');history.setAttribute('aria-relevant','additions');
   const suggestions=el('div','stuvi-suggestions');suggestions.setAttribute('aria-label','Suggested questions');
-  const compose=el('form','stuvi-compose');const input=el('textarea');input.setAttribute('rows','1');input.setAttribute('maxlength','240');input.setAttribute('aria-label','Ask StuVi a question');input.setAttribute('placeholder','Ask a short question…');const send=el('button','stuvi-send','➤');send.type='submit';send.setAttribute('aria-label','Send message');compose.append(input,send);
-  const note=el('div','stuvi-note','Demo assistant · No live AI, personal advice, or chat data storage');
+  const compose=el('form','stuvi-compose');const input=el('textarea');input.setAttribute('rows','1');input.setAttribute('maxlength','600');input.setAttribute('aria-label','Ask StuVi a question');input.setAttribute('placeholder','Ask a short question…');const send=el('button','stuvi-send','➤');send.type='submit';send.setAttribute('aria-label','Send message');compose.append(input,send);
+  const note=el('div','stuvi-note','AI-powered prototype · Questions go to an AI provider. Avoid personal or policy information.');
   panel.append(top,context,history,suggestions,compose,note);root.append(launch,panel);document.body.append(root);
   function addMessage(kind,msg){const bubble=el('div','stuvi-message '+kind,msg);history.append(bubble);history.scrollTop=history.scrollHeight}
   function showSuggestions(){const choices=page==='coverage'&&activeGuide().done?['What are my questions?','How do I share my guide?','Can I use seminar slides?']:starters[page];suggestions.replaceChildren();choices.forEach(label=>{const b=el('button','stuvi-suggest',label);b.type='button';b.addEventListener('click',()=>ask(label));suggestions.append(b)})}
-  function ask(question){const cleaned=String(question||'').trim().slice(0,240);if(!cleaned)return;addMessage('user',cleaned);addMessage('bot',respond(cleaned));input.value='';input.focus({preventScroll:true})}
-  function toggle(force){const open=typeof force==='boolean'?force:panel.hidden;panel.hidden=!open;launch.setAttribute('aria-expanded',String(open));launch.setAttribute('aria-label',open?'Close StuVi assistant':'Open StuVi assistant');launch.lastChild.textContent=open?'Close StuVi':'Ask StuVi';if(open){if(!history.children.length){addMessage('bot',page==='coverage'?'Hi! I’m StuVi. I can explain this insurance conversation guide or help with your current step.':page==='valley'?'Hi! I’m StuVi. Ask me about local guides, the fictional partner preview, or business possibilities.':'Hi! I’m StuVi. I can help you explore these two concepts and what they could do for a business.')}context.textContent='EXPLORING · '+pageNames[page]+(page==='coverage'&&activeGuide().done?' · Guide ready':'');showSuggestions();input.focus({preventScroll:true})}else launch.focus({preventScroll:true})}
+  const LIVE_AI_URL='https://stuvi-ai-companion-api.onrender.com/api/chat';
+  const conversation=[];let asking=false;let checkedAI=false;
+  function pageState(){
+    if(page==='coverage'){
+      const g=activeGuide(),active=[...document.querySelectorAll('.choice.active')].slice(0,2).map(n=>n.textContent.trim().slice(0,100));
+      return {guideReady:g.done,guideTitle:g.title||'',step:g.step||'',questions:g.q||[],moment:active[0]||'',concern:active[1]||''};
+    }
+    if(page==='valley'){const v=activeValley();return {moment:v.moment,partner:v.partner,format:v.format};}
+    return {};
+  }
+  async function checkAI(){
+    if(checkedAI)return;checkedAI=true;
+    try{
+      const response=await fetch('https://stuvi-ai-companion-api.onrender.com/health',{signal:AbortSignal.timeout(15000)});
+      const data=await response.json();
+      if(!data.aiConfigured){status.lastChild.textContent='AI connection needs setup';addMessage('bot','StuVi is being upgraded to real AI. Her AI provider key still needs to be configured, so free-form answers are not active yet.');}
+      else status.lastChild.textContent='AI ready · Short answers';
+    }catch(_){status.lastChild.textContent='AI connection unavailable';}
+  }
+  async function ask(question){
+    const cleaned=String(question||'').trim().slice(0,600);if(!cleaned||asking)return;
+    const context=pageState(),past=conversation.slice(-6);
+    addMessage('user',cleaned);conversation.push({role:'user',text:cleaned});
+    const waiting=el('div','stuvi-message bot','Thinking…');history.append(waiting);history.scrollTop=history.scrollHeight;
+    input.value='';asking=true;send.disabled=true;
+    try{
+      const response=await fetch(LIVE_AI_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:cleaned,page,state:context,history:past}),signal:AbortSignal.timeout(23000)});
+      const data=await response.json().catch(()=>({}));
+      if(!response.ok)throw new Error(data.message||'StuVi could not connect to her AI service. Please try later.');
+      const answer=String(data.answer||'').trim();if(!answer)throw new Error('StuVi received no answer. Please try again.');
+      waiting.textContent=answer;conversation.push({role:'assistant',text:answer});status.lastChild.textContent='AI ready · Short answers';
+    }catch(error){waiting.textContent=error.message||'StuVi is temporarily unavailable. Please try again.';}
+    finally{asking=false;send.disabled=false;history.scrollTop=history.scrollHeight;input.focus({preventScroll:true});}
+  }
+  function toggle(force){const open=typeof force==='boolean'?force:panel.hidden;panel.hidden=!open;launch.setAttribute('aria-expanded',String(open));launch.setAttribute('aria-label',open?'Close StuVi assistant':'Open StuVi assistant');launch.lastChild.textContent=open?'Close StuVi':'Ask StuVi';if(open){if(!history.children.length){addMessage('bot',page==='coverage'?'Hi! I’m StuVi. I can explain this insurance conversation guide or help with your current step.':page==='valley'?'Hi! I’m StuVi. Ask me about local guides, the fictional partner preview, or business possibilities.':'Hi! I’m StuVi. I can help you explore these two concepts and what they could do for a business.')}context.textContent='EXPLORING · '+pageNames[page]+(page==='coverage'&&activeGuide().done?' · Guide ready':'');showSuggestions();checkAI();input.focus({preventScroll:true})}else launch.focus({preventScroll:true})}
   launch.addEventListener('click',()=>toggle());close.addEventListener('click',()=>toggle(false));compose.addEventListener('submit',e=>{e.preventDefault();ask(input.value)});input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();ask(input.value)}});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!panel.hidden)toggle(false)});
 })();
 </script></body></html>
