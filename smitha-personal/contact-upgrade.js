@@ -98,12 +98,6 @@ messaging.forEach(([name,icon,entry,domains,preferred])=>{
  grid.append(action(name,icon,note,onClick,url,url?'connected':'pending'));
 });
 const extra=[];
-const email=contact.email;
-if(email?.verified&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.address||'')){
- extra.push(action('Email','@','Open an email draft',null,'mailto:'+email.address+'?subject='+encodeURIComponent('A question about '+subject),'connected'));
-}
-const book=safeUrl(contact.booking,['calendly.com','acuityscheduling.com','youcanbook.me','calendar.google.com']);
-if(book)extra.push(action('Find a time','◷','Choose a conversation time',null,book,'connected'));
 for(const [key,name,icon,domains] of [
  ['linkedin','LinkedIn','in',['linkedin.com']],['x','X','𝕏',['x.com','twitter.com']],['tiktok','TikTok','♪',['tiktok.com']]
 ]){
