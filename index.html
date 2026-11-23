@@ -101,6 +101,10 @@
     .inquiry-success{display:block;padding:10px 0}
     .inquiry-success h3{font:600 28px "Fraunces",Georgia,serif;margin:7px 0}
     @media(max-width:600px){.flow-stage{grid-template-columns:1fr;gap:13px}.flow-stage .field.full,.flow-stage .full{grid-column:1}.consent{font-size:12px}.inquiry-success h3{font-size:25px}}
+    
+    .demo-notice{margin:0 0 5px;padding:12px 14px;border:1px solid #e7bd92;border-radius:10px;background:#fff4e5;color:#72502d;font-size:12px;line-height:1.5}
+    .simulate-link{background:#d87350!important;border-color:#d87350!important}
+    .inquiry-success a{color:#b75e42;font-weight:800}
     </style>
 </head>
 <body>
@@ -137,11 +141,11 @@
   <section class="content" id="contact"><div class="contact"><div><div class="eyebrow">Let’s connect</div><h2>Tell me what you’re working through.</h2><p>A few details help me understand the opportunity and respond in a useful way. Email and mobile verification keep the contact form reliable.</p></div>
     <form id="inquiry-form" novalidate>
       <div class="flow-stage" id="email-stage">
-        <p class="flow-step">01 <span>Email confirmation</span></p>
+        <p class="demo-notice full">Interactive demo only: email and SMS verification are simulated. No messages are sent and no details are saved. Please use sample details.</p><p class="flow-step">01 <span>Email confirmation</span></p>
         <div class="field"><label for="visitor-name">Your name *</label><input id="visitor-name" name="name" autocomplete="name" required maxlength="120" placeholder="How should I address you?"></div>
         <div class="field"><label for="visitor-email">Work email *</label><input id="visitor-email" name="email" type="email" autocomplete="email" required maxlength="180" placeholder="you@company.com"></div>
         <button class="send" id="send-email-link" type="button">Email me a confirmation link</button>
-        <p class="form-note" id="email-status" aria-live="polite">I’ll send a personal confirmation link from SachinTechpro. It expires after 20 minutes.</p>
+        <button class="send simulate-link" id="simulate-email-confirm" type="button" hidden>Simulate opening the confirmation link</button><p class="form-note" id="email-status" aria-live="polite">Enter sample details to preview the email confirmation step.</p>
       </div>
       <div class="flow-stage" id="phone-stage" hidden>
         <p class="flow-step">02 <span>Mobile verification</span></p>
@@ -150,7 +154,7 @@
         <div class="field"><label for="visitor-phone">Mobile number *</label><input id="visitor-phone" type="tel" autocomplete="tel-national" required maxlength="20" placeholder="(555) 123-4567"></div>
         <button class="send" id="send-phone-code" type="button">Text me a verification code</button>
         <div id="code-entry" class="field" hidden><label for="phone-code">6-digit code *</label><input id="phone-code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" placeholder="Enter the code from your text"><button class="send secondary-send" id="verify-phone-code" type="button">Confirm mobile number</button></div>
-        <p class="form-note" id="phone-status" aria-live="polite">Your number is used to verify this inquiry. No marketing texts are sent unless you opt in later.</p>
+        <p class="form-note" id="phone-status" aria-live="polite">Demo code: 123456. No text message is sent.</p>
         <button class="text-link" id="restart-email" type="button">Use a different email</button>
       </div>
       <div class="flow-stage" id="details-stage" hidden>
@@ -167,99 +171,74 @@
         <label class="consent full"><input id="sms-consent" type="checkbox"><span>You may send me a personal text about this inquiry after my verification code. No recurring marketing messages.</span></label>
         <label class="consent full"><input id="whatsapp-consent" type="checkbox"><span>You may send me a personal WhatsApp follow-up about this inquiry. Optional; I can opt out at any time.</span></label>
         <button class="send full" id="submit-inquiry" type="submit">Send my inquiry</button>
-        <p class="form-note full" id="submit-status" aria-live="polite">I’ll use these details only to respond to this inquiry and any channels you choose above.</p>
+        <p class="form-note full" id="submit-status" aria-live="polite">This demo does not send or store the information you enter. Real email and messaging will be connected later.</p>
       </div>
-      <div class="flow-stage inquiry-success" id="success-stage" hidden aria-live="polite"><p class="flow-step">Thank you</p><h3 id="success-title">Your message is on its way.</h3><p id="success-copy">I’ll review it and follow up using the contact details you verified.</p></div>
+      <div class="flow-stage inquiry-success" id="success-stage" hidden aria-live="polite"><p class="flow-step">Thank you</p><h3 id="success-title">Your message is on its way.</h3><p id="success-copy">This was a simulated submission. No email, text, or WhatsApp message was sent, and the details were not saved. For a real inquiry, email <a href="mailto:Sachin.techpro@gmail.com">SachinTechpro</a>.</p></div>
       <label class="trap" aria-hidden="true">Leave blank<input id="website-trap" tabindex="-1" autocomplete="off"></label>
     </form>
   </div></section></main>
 <footer><div class="wrap">Professional portfolio · © 2026 Sachin Suyamindra</div></footer>
 <script>
 (() => {
-  const API = "https://sachintechpro-inquiries.onrender.com";
-  const $ = (id) => document.getElementById(id);
-  const stages = ["email-stage","phone-stage","details-stage","success-stage"].map($);
-  const emailStatus=$("email-status"), phoneStatus=$("phone-status"), submitStatus=$("submit-status");
-  let emailProof=sessionStorage.getItem("stp-email-proof")||"";
-  let phoneProof=sessionStorage.getItem("stp-phone-proof")||"";
-  let challenge=sessionStorage.getItem("stp-phone-challenge")||"";
-  let verifiedEmail=sessionStorage.getItem("stp-verified-email")||"";
-  $("visitor-name").value=sessionStorage.getItem("stp-name")||"";
-  $("visitor-email").value=verifiedEmail;
-  $("visitor-phone").value=sessionStorage.getItem("stp-phone")||"";
-  $("country-code").value=sessionStorage.getItem("stp-country-code")||"+1";
-  const show=(id)=>stages.forEach(stage=>stage.hidden=stage.id!==id);
+  const filterButtons=[...document.querySelectorAll("[data-filter]")];
+  const projectCards=[...document.querySelectorAll(".project")];
+  filterButtons.forEach(button=>button.addEventListener("click",()=>{
+    const filter=button.dataset.filter;
+    filterButtons.forEach(item=>item.setAttribute("aria-pressed",String(item===button)));
+    projectCards.forEach(card=>card.hidden=filter!=="all"&&card.dataset.category!==filter);
+  }));
+  const $=id=>document.getElementById(id);
+  const stages=["email-stage","phone-stage","details-stage","success-stage"].map($);
+  const emailStatus=$("email-status"),phoneStatus=$("phone-status"),submitStatus=$("submit-status");
+  let emailVerified=false,phoneVerified=false;
+  const show=id=>stages.forEach(stage=>stage.hidden=stage.id!==id);
   const status=(node,message,error=false)=>{node.textContent=message;node.classList.toggle("error",error)};
-  const json=async(path,body)=>{
-    const response=await fetch(API+path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
-    let data={};try{data=await response.json()}catch{}
-    if(!response.ok)throw new Error(data.error||"I couldn’t complete that step. Please try again.");
-    return data;
-  };
-  const clearProofs=()=>{emailProof="";phoneProof="";challenge="";verifiedEmail="";sessionStorage.removeItem("stp-email-proof");sessionStorage.removeItem("stp-phone-proof");sessionStorage.removeItem("stp-phone-challenge");sessionStorage.removeItem("stp-verified-email");sessionStorage.removeItem("stp-name");sessionStorage.removeItem("stp-phone");sessionStorage.removeItem("stp-country-code");};
-  const phoneE164=()=>{const digits=$("visitor-phone").value.replace(/\D/g,"");return $("country-code").value+digits;};
-  const renderFlow=()=>{
-    if(phoneProof){show("details-stage");return}
-    if(emailProof){$("verified-email-label").textContent=verifiedEmail;show("phone-stage");if(challenge)$("code-entry").hidden=false;return}
-    show("email-stage");
-  };
-  $("send-email-link").addEventListener("click",async()=>{
+  const phoneE164=()=>$("country-code").value+$("visitor-phone").value.replace(/\D/g,"");
+  $("send-email-link").addEventListener("click",()=>{
     const name=$("visitor-name"),email=$("visitor-email");
     if(!name.reportValidity()||!email.reportValidity())return;
-    status(emailStatus,"Sending your personal confirmation link…");
-    $("send-email-link").disabled=true;
-    try{await json("/api/verify/email/start",{name:name.value.trim(),email:email.value.trim(),website:$("website-trap").value});status(emailStatus,"Check your inbox for a message from SachinTechpro, then open its confirmation button. The link expires in 20 minutes.");}
-    catch(e){status(emailStatus,e.message,true)}
-    finally{$("send-email-link").disabled=false}
+    status(emailStatus,"Demo confirmation prepared for "+email.value.trim()+". No email was sent.");
+    $("simulate-email-confirm").hidden=false;
   });
-  async function confirmEmail(token){
-    try{
-      const data=await json("/api/verify/email/confirm",{token});
-      emailProof=data.proof;verifiedEmail=data.email;
-      sessionStorage.setItem("stp-email-proof",emailProof);sessionStorage.setItem("stp-verified-email",verifiedEmail);sessionStorage.setItem("stp-name",data.name||"");
-      $("visitor-email").value=verifiedEmail;
-      if(data.name)$("visitor-name").value=data.name;
-      $("verified-email-label").textContent=verifiedEmail;
-      history.replaceState(null,"",location.pathname+location.search+"#contact");
-      $("contact").scrollIntoView({behavior:"smooth",block:"start"});
-      status(phoneStatus,"Email confirmed. Enter a mobile number to receive a one-time verification code.");
-      renderFlow();
-    }catch(e){history.replaceState(null,"",location.pathname+location.search+"#contact");$("contact").scrollIntoView({behavior:"smooth",block:"start"});show("email-stage");status(emailStatus,"That confirmation link is invalid or expired. Please request a fresh link.",true)}
-  }
-  $("send-phone-code").addEventListener("click",async()=>{
+  $("simulate-email-confirm").addEventListener("click",()=>{
+    emailVerified=true;
+    $("verified-email-label").textContent=$("visitor-email").value.trim();
+    status(phoneStatus,"Email confirmation simulated. Enter a sample mobile number to preview the next step.");
+    show("phone-stage");
+  });
+  $("send-phone-code").addEventListener("click",()=>{
     const digits=$("visitor-phone").value.replace(/\D/g,"");
-    if(digits.length<7||digits.length>14){status(phoneStatus,"Enter a valid mobile number, including the country code above.",true);return}
-    status(phoneStatus,"Sending a one-time code from SachinTechpro…");$("send-phone-code").disabled=true;
-    try{const data=await json("/api/verify/phone/start",{emailProof,phone:phoneE164()});challenge=data.challenge;sessionStorage.setItem("stp-phone-challenge",challenge);$("code-entry").hidden=false;status(phoneStatus,"Code sent. It expires in 10 minutes. Check that the number above is correct.");$("phone-code").focus()}
-    catch(e){status(phoneStatus,e.message,true)}
-    finally{$("send-phone-code").disabled=false}
+    if(digits.length<7||digits.length>14){status(phoneStatus,"Enter a sample mobile number with 7 to 14 digits.",true);return}
+    status(phoneStatus,"Demo text prepared for "+phoneE164()+". Use code 123456 below; no text was sent.");
+    $("code-entry").hidden=false;
+    $("phone-code").focus();
   });
-  $("verify-phone-code").addEventListener("click",async()=>{
-    const code=$("phone-code").value.trim();
-    if(!/^\d{6}$/.test(code)){status(phoneStatus,"Enter the 6-digit code from your text.",true);return}
-    $("verify-phone-code").disabled=true;status(phoneStatus,"Confirming your mobile number…");
-    try{const data=await json("/api/verify/phone/confirm",{challenge,code});phoneProof=data.proof;sessionStorage.setItem("stp-phone-proof",phoneProof);status(phoneStatus,"Mobile number confirmed.");renderFlow()}
-    catch(e){status(phoneStatus,e.message,true)}
-    finally{$("verify-phone-code").disabled=false}
+  $("verify-phone-code").addEventListener("click",()=>{
+    if($("phone-code").value.trim()!=="123456"){status(phoneStatus,"For this demo, enter 123456.",true);return}
+    phoneVerified=true;
+    status(phoneStatus,"Mobile verification simulated successfully.");
+    show("details-stage");
   });
-  $("restart-email").addEventListener("click",()=>{clearProofs();$("visitor-phone").value="";$("phone-code").value="";$("code-entry").hidden=true;renderFlow()});
-  $("message-starter").addEventListener("change",event=>{const starter=event.target.value;if(starter&&!$("visitor-message").value.trim())$("visitor-message").value=starter;$("visitor-message").focus()});
-  $("inquiry-form").addEventListener("submit",async(event)=>{
+  $("restart-email").addEventListener("click",()=>{
+    emailVerified=false;phoneVerified=false;
+    $("visitor-phone").value="";$("phone-code").value="";$("code-entry").hidden=true;
+    $("simulate-email-confirm").hidden=true;status(emailStatus,"Enter sample details to preview the email confirmation step.");
+    show("email-stage");
+  });
+  $("message-starter").addEventListener("change",event=>{
+    const starter=event.target.value;
+    if(starter&&!$("visitor-message").value.trim())$("visitor-message").value=starter;
+    $("visitor-message").focus();
+  });
+  $("inquiry-form").addEventListener("submit",event=>{
     event.preventDefault();
-    if(!phoneProof){status(submitStatus,"Please verify your email and mobile number first.",true);return}
+    if(!emailVerified||!phoneVerified){status(submitStatus,"Complete the simulated email and mobile checks first.",true);return}
     if(!event.currentTarget.reportValidity())return;
-    const submit=$("submit-inquiry");submit.disabled=true;status(submitStatus,"Sending your inquiry securely…");
-    const payload={name:$("visitor-name").value.trim(),email:verifiedEmail,emailProof,phone:phoneE164(),countryCode:$("country-code").value,phoneProof,company:$("company").value.trim(),companyTitle:$("company-title").value.trim(),companyWebsite:$("company-website").value.trim(),businessAddress:$("business-address").value.trim(),visitConsent:$("visit-consent").checked,opportunity:$("opportunity").value,project:$("project-interest").value,message:message.value.trim(),smsConsent:$("sms-consent").checked,whatsappConsent:$("whatsapp-consent").checked,website:$("website-trap").value};
-    try{const data=await json("/api/inquiry",payload);clearProofs();show("success-stage");$("success-title").textContent="Thanks, "+payload.name.split(/\s+/)[0]+". Your note reached SachinTechpro.";let channels="I’ll review it and follow up personally.";if(data.emailReceipt===false)channels+=" Please check that your email address is correct; I couldn’t send a receipt.";if(payload.smsConsent&&data.smsReceipt)channels+=" I also sent the text update you requested.";if(payload.whatsappConsent&&data.whatsappReceipt)channels+=" I also sent the WhatsApp update you requested."; $("success-copy").textContent=channels}
-    catch(e){status(submitStatus,e.message,true)}
-    finally{submit.disabled=false}
+    const firstName=$("visitor-name").value.trim().split(/\s+/)[0]||"there";
+    $("success-title").textContent="Thanks, "+firstName+". The demo completed.";
+    show("success-stage");
   });
-  const emailToken=location.hash.match(/(?:^#|&)verify-email=([^&]+)/);
-  if(emailToken)confirmEmail(decodeURIComponent(emailToken[1]));else renderFlow();
-  if(phoneProof)$("visitor-phone").value=sessionStorage.getItem("stp-phone")||$("visitor-phone").value;
-  $("visitor-phone").addEventListener("change",()=>sessionStorage.setItem("stp-phone",$("visitor-phone").value));
-  $("country-code").addEventListener("change",()=>sessionStorage.setItem("stp-country-code",$("country-code").value));
-  [$("visitor-phone"),$("country-code")].forEach(field=>field.addEventListener("change",()=>{if(challenge){challenge="";sessionStorage.removeItem("stp-phone-challenge");$("code-entry").hidden=true;$("phone-code").value="";status(phoneStatus,"Number changed. Request a new verification code for this mobile number.");}}));
+  show("email-stage");
 })();
 </script>
 </body>
