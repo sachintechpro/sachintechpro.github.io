@@ -104,3 +104,66 @@
 /* Keep four high-priority mobile actions legible and screen-reader friendly. */
 .smitha-mobile-actions [hidden],.channel[hidden]{display:none!important}
 @media(max-width:380px){.smitha-mobile-actions a,.smitha-mobile-actions button{font-size:11px}}
+
+
+/* Smitha's concise personal contact chooser: fast decisions first, optional context below. */
+.smitha-contact-v2.overlay{padding:12px;background:rgba(13,29,51,.55);backdrop-filter:blur(4px)}
+.smitha-contact-v2 .modal{width:min(550px,100%);max-height:calc(100dvh - 24px);display:flex;flex-direction:column;overflow:hidden;border-radius:24px;box-shadow:0 28px 90px #0c243b55}
+.smitha-contact-v2 .modal-head{flex:none;padding:20px 22px 16px;align-items:flex-start;gap:12px;background:linear-gradient(120deg,#fbf6eb,#f6f8fc)}
+.smitha-contact-v2 .modal-head>div{min-width:0;flex:1}
+.smitha-contact-v2 .modal-head .eyebrow{font-size:10px;letter-spacing:2px;font-weight:800;margin:0 0 5px;color:#9b711f}
+.smitha-contact-v2 .modal-head h2{font-family:inherit;font-size:clamp(22px,3.2vw,29px);line-height:1.17;letter-spacing:-.5px;margin:2px 0 6px;max-width:390px}
+.smitha-contact-v2 .modal-head p{font-size:12px;line-height:1.48;margin:0;color:#637083}
+.smitha-contact-v2 .modal-head .xbtn{height:38px;width:38px;flex:0 0 38px;border-radius:13px;font-size:23px}
+.smitha-contact-avatar{float:left;width:52px;height:52px;object-fit:cover;border-radius:17px;border:2px solid #e5d6ba;margin:1px 12px 3px 0}
+.smitha-contact-v2 .modal-body{min-height:0;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:16px 20px 19px;background:#fff}
+.smitha-contact-v2 .smitha-choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.smitha-contact-choice{appearance:none;display:flex;align-items:center;justify-content:flex-start;gap:10px;min-height:70px;padding:11px 12px;border:1px solid #e2e7ef;border-radius:15px;background:#fff;text-align:left;text-decoration:none;color:#182f50;cursor:pointer;transition:border-color .15s,background .15s,transform .15s}
+.smitha-contact-choice:hover{border-color:#c89b46;background:#fcf9f1;transform:translateY(-1px)}
+.smitha-contact-choice:focus-visible,.smitha-contact-details summary:focus-visible{outline:3px solid #c28b32;outline-offset:2px}
+.smitha-contact-choice .smitha-choice-icon{display:flex;align-items:center;justify-content:center;flex:0 0 34px;width:34px;height:34px;background:#edf2f8;border-radius:11px;font-size:21px;font-weight:800;color:#253f62}
+.smitha-contact-choice .smitha-choice-copy{display:flex;flex-direction:column;min-width:0;gap:4px}
+.smitha-contact-choice strong{font-size:13px;font-weight:800;line-height:1.2;overflow-wrap:anywhere}
+.smitha-contact-choice small{font-size:10px;line-height:1.35;color:#647184;font-weight:600}
+.smitha-contact-choice.primary:first-child{background:#1a345a;color:#fff;border-color:#1a345a}
+.smitha-contact-choice.primary:first-child .smitha-choice-icon{background:#ffffff20;color:#fff}
+.smitha-contact-choice.primary:first-child small{color:#e0e8f4}
+.smitha-contact-choice.primary:nth-child(2){background:#f6ead3;border-color:#e8d3ad}
+.smitha-contact-choice.primary:nth-child(2) .smitha-choice-icon{background:#fff8ec;color:#9e6a20}
+.smitha-contact-choice.pending{background:#f8fafc;border-style:dashed}
+.smitha-contact-choice.pending small{color:#708096}
+.smitha-contact-extra{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:9px}
+.smitha-contact-details{margin-top:14px;border:1px solid #e4e9f0;background:#fafbfd;border-radius:15px;overflow:hidden}
+.smitha-contact-details summary{padding:13px 15px;list-style:none;cursor:pointer;font-size:13px;font-weight:800;color:#243c5c}
+.smitha-contact-details summary::-webkit-details-marker{display:none}
+.smitha-contact-details summary::before{content:'＋';display:inline-block;font-size:15px;margin-right:8px;color:#b58325}
+.smitha-contact-details[open] summary::before{content:'−'}
+.smitha-contact-details summary span{display:block;margin:4px 0 0 23px;font-size:11px;font-weight:600;color:#687589}
+.smitha-contact-note-inner{padding:1px 14px 15px;border-top:1px solid #e6eaf0}
+.smitha-contact-note-inner>.eyebrow{margin:14px 0 5px!important;font-size:10px}
+.smitha-contact-note-inner>h3{font-size:17px!important;margin-bottom:5px!important}
+.smitha-contact-note-inner>p{font-size:12px!important;line-height:1.5;margin-bottom:11px!important}
+.smitha-contact-v2 .star-fields{gap:9px}
+.smitha-contact-v2 .star-fields textarea{min-height:46px;padding:9px 11px;font-size:13px}
+.smitha-contact-v2 .star-actions{margin-top:11px}
+.smitha-contact-privacy{margin:12px 2px 0;font-size:11px;line-height:1.5;color:#737f90}
+@media(max-width:560px){
+ .smitha-contact-v2.overlay{align-items:center;padding:11px 10px}
+ .smitha-contact-v2 .modal{width:100%;max-height:calc(100dvh - 22px);border-radius:22px}
+ .smitha-contact-v2 .modal-head{padding:15px 16px 13px}
+ .smitha-contact-v2 .modal-head h2{font-size:23px}
+ .smitha-contact-v2 .modal-head .eyebrow{font-size:9px}
+ .smitha-contact-v2 .modal-body{padding:13px 13px 16px}
+ .smitha-contact-avatar{width:43px;height:43px;margin-right:9px;border-radius:13px}
+ .smitha-contact-choice{min-height:64px;gap:8px;padding:9px 8px;border-radius:13px}
+ .smitha-contact-choice .smitha-choice-icon{width:28px;height:28px;flex-basis:28px;font-size:18px;border-radius:9px}
+ .smitha-contact-choice strong{font-size:12px}
+ .smitha-contact-choice small{font-size:9.5px}
+}
+@media(max-width:355px){
+ .smitha-contact-v2 .modal-head h2{font-size:20px}
+ .smitha-contact-choice{gap:5px;padding:7px 6px}
+ .smitha-contact-choice strong{font-size:11px}
+ .smitha-contact-choice small{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){.smitha-contact-choice{transition:none}.smitha-contact-choice:hover{transform:none}}
