@@ -87,19 +87,138 @@
      if(progressLabel)progressLabel.textContent = step === 2 ? 'Your recommended starting points' : `Step ${step+1} of 2`;
      if(progressFill)progressFill.style.width = step === 0 ? '50%' : '100%';
    };
+   const pathMatrix = {
+   "new:people": [
+      "foundations",
+      "family-protection",
+      "estate"
+   ],
+   "new:money": [
+      "foundations",
+      "income",
+      "retirement"
+   ],
+   "new:health": [
+      "income",
+      "family-protection",
+      "estate"
+   ],
+   "new:legacy": [
+      "estate",
+      "trusts",
+      "foundations"
+   ],
+   "family:people": [
+      "marriage",
+      "children",
+      "estate"
+   ],
+   "family:money": [
+      "children",
+      "foundations",
+      "income"
+   ],
+   "family:health": [
+      "family-protection",
+      "children",
+      "income"
+   ],
+   "family:legacy": [
+      "estate",
+      "trusts",
+      "children"
+   ],
+   "care:people": [
+      "caregiving",
+      "estate",
+      "later-life"
+   ],
+   "care:money": [
+      "caregiving",
+      "income",
+      "later-life"
+   ],
+   "care:health": [
+      "caregiving",
+      "later-life",
+      "medicare"
+   ],
+   "care:legacy": [
+      "estate",
+      "caregiving",
+      "trusts"
+   ],
+   "later:people": [
+      "later-life",
+      "legacy",
+      "estate"
+   ],
+   "later:money": [
+      "retirement",
+      "later-life",
+      "foundations"
+   ],
+   "later:health": [
+      "medicare",
+      "later-life",
+      "retirement"
+   ],
+   "later:legacy": [
+      "estate",
+      "trusts",
+      "legacy"
+   ],
+   "work:people": [
+      "business",
+      "income",
+      "estate"
+   ],
+   "work:money": [
+      "income",
+      "business",
+      "foundations"
+   ],
+   "work:health": [
+      "income",
+      "family-protection",
+      "business"
+   ],
+   "work:legacy": [
+      "business",
+      "estate",
+      "trusts"
+   ]
+};
    function results() {
-     const primary = special[`${moment}:${concern}`] || momentMap[moment];
-     const secondary = concernMap[concern] || 'foundations';
-     chosen = [...new Set(['estate',primary,secondary,'trusts'])].slice(0,3);
+     const key = moment + ':' + concern;
+     chosen = (pathMatrix[key] || ['estate','trusts','foundations']).slice();
      const target = $('pathResultCards');
      target.replaceChildren(...chosen.map((slug,i) => {
-       const a = document.createElement('a');a.className='path-result';a.href=href(slug);
-       const small=document.createElement('span');small.textContent=i===0?'FOUNDATION':'EXPLORE NEXT';
-       const h3=document.createElement('h3');h3.textContent=labels[slug] || slug;
-       const p=document.createElement('p');p.textContent=i===0?'Make your wishes and decision-makers clear.':'Explore practical questions, a checklist, and reliable resources.';
-       const arrow=document.createElement('strong');arrow.textContent='Open guide ↗';a.append(small,h3,p,arrow);return a;
+       const a = document.createElement('a'); a.className='path-result'; a.href=href(slug);
+       const small=document.createElement('span');
+       small.textContent=['START HERE','ALSO CONSIDER','THEN EXPLORE'][i];
+       const h3=document.createElement('h3'); h3.textContent=labels[slug] || slug;
+       const p=document.createElement('p');
+       p.textContent = slug==='medicare'
+         ? 'If Medicare applies to you, check enrollment deadlines and employment coverage with Medicare or Social Security first.'
+         : slug==='trusts'
+         ? 'Understand when a living trust may help and what a qualified California estate attorney should review.'
+         : slug==='caregiving'
+         ? 'Clarify care needs, decision-making authority, available support, and the questions to ask next.'
+         : slug==='estate'
+         ? 'Identify trusted decision-makers, beneficiaries, and the documents worth discussing with an attorney.'
+         : 'Explore a practical checklist and focused questions for this part of your life.';
+       const arrow=document.createElement('strong'); arrow.textContent='Open guide ↗';
+       a.append(small,h3,p,arrow); return a;
      }));
-     show(2);$('pathResults')?.scrollIntoView({behavior:'smooth',block:'nearest'});
+     const introduction = $('pathResults')?.querySelector('p.muted');
+     if (introduction) introduction.textContent =
+       chosen[0]==='medicare'
+         ? 'If you are nearing a Medicare enrollment deadline, review official enrollment guidance first. Other planning topics can follow.'
+         : chosen[0]==='caregiving'
+         ? 'Start with the person who needs help and the decisions that cannot wait. Review legal and financial arrangements afterward.'
+         : 'These starting points reflect the situation and question you selected. Explore them in order, or begin with the one that feels most relevant.';
+     show(2); $('pathResults')?.scrollIntoView({behavior:'smooth',block:'nearest'});
    }
    document.querySelectorAll('[data-moment]').forEach(btn=>btn.addEventListener('click',()=>{moment=btn.dataset.moment;show(1)}));
    document.querySelectorAll('[data-concern]').forEach(btn=>btn.addEventListener('click',()=>{concern=btn.dataset.concern;results()}));
