@@ -183,7 +183,11 @@
   let emailProof=sessionStorage.getItem("stp-email-proof")||"";
   let phoneProof=sessionStorage.getItem("stp-phone-proof")||"";
   let challenge=sessionStorage.getItem("stp-phone-challenge")||"";
-  let verifiedEmail=sessionStorage.getItem("stp-verified-email")||"";\n  $("visitor-name").value=sessionStorage.getItem("stp-name")||"";\n  $("visitor-email").value=verifiedEmail;\n  $("visitor-phone").value=sessionStorage.getItem("stp-phone")||"";\n  $("country-code").value=sessionStorage.getItem("stp-country-code")||"+1";
+  let verifiedEmail=sessionStorage.getItem("stp-verified-email")||"";
+  $("visitor-name").value=sessionStorage.getItem("stp-name")||"";
+  $("visitor-email").value=verifiedEmail;
+  $("visitor-phone").value=sessionStorage.getItem("stp-phone")||"";
+  $("country-code").value=sessionStorage.getItem("stp-country-code")||"+1";
   const show=(id)=>stages.forEach(stage=>stage.hidden=stage.id!==id);
   const status=(node,message,error=false)=>{node.textContent=message;node.classList.toggle("error",error)};
   const json=async(path,body)=>{
@@ -242,8 +246,7 @@
   $("inquiry-form").addEventListener("submit",async(event)=>{
     event.preventDefault();
     if(!phoneProof){status(submitStatus,"Please verify your email and mobile number first.",true);return}
-    const message=$("visitor-message");
-    if(!message.reportValidity())return;
+    if(!event.currentTarget.reportValidity())return;
     const submit=$("submit-inquiry");submit.disabled=true;status(submitStatus,"Sending your inquiry securely…");
     const payload={name:$("visitor-name").value.trim(),email:verifiedEmail,emailProof,phone:phoneE164(),countryCode:$("country-code").value,phoneProof,company:$("company").value.trim(),companyTitle:$("company-title").value.trim(),companyWebsite:$("company-website").value.trim(),businessAddress:$("business-address").value.trim(),visitConsent:$("visit-consent").checked,opportunity:$("opportunity").value,project:$("project-interest").value,message:message.value.trim(),smsConsent:$("sms-consent").checked,whatsappConsent:$("whatsapp-consent").checked,website:$("website-trap").value};
     try{const data=await json("/api/inquiry",payload);clearProofs();show("success-stage");$("success-title").textContent="Thanks, "+payload.name.split(/\s+/)[0]+". Your note reached SachinTechpro.";let channels="I’ll review it and follow up personally.";if(data.emailReceipt===false)channels+=" Please check that your email address is correct; I couldn’t send a receipt.";if(payload.smsConsent&&data.smsReceipt)channels+=" I also sent the text update you requested.";if(payload.whatsappConsent&&data.whatsappReceipt)channels+=" I also sent the WhatsApp update you requested."; $("success-copy").textContent=channels}
@@ -253,7 +256,9 @@
   const emailToken=location.hash.match(/(?:^#|&)verify-email=([^&]+)/);
   if(emailToken)confirmEmail(decodeURIComponent(emailToken[1]));else renderFlow();
   if(phoneProof)$("visitor-phone").value=sessionStorage.getItem("stp-phone")||$("visitor-phone").value;
-  $("visitor-phone").addEventListener("change",()=>sessionStorage.setItem("stp-phone",$("visitor-phone").value));\n  $("country-code").addEventListener("change",()=>sessionStorage.setItem("stp-country-code",$("country-code").value));\n  [$("visitor-phone"),$("country-code")].forEach(field=>field.addEventListener("change",()=>{if(challenge){challenge="";sessionStorage.removeItem("stp-phone-challenge");$("code-entry").hidden=true;$("phone-code").value="";status(phoneStatus,"Number changed. Request a new verification code for this mobile number.");}}));
+  $("visitor-phone").addEventListener("change",()=>sessionStorage.setItem("stp-phone",$("visitor-phone").value));
+  $("country-code").addEventListener("change",()=>sessionStorage.setItem("stp-country-code",$("country-code").value));
+  [$("visitor-phone"),$("country-code")].forEach(field=>field.addEventListener("change",()=>{if(challenge){challenge="";sessionStorage.removeItem("stp-phone-challenge");$("code-entry").hidden=true;$("phone-code").value="";status(phoneStatus,"Number changed. Request a new verification code for this mobile number.");}}));
 })();
 </script>
 </body>
