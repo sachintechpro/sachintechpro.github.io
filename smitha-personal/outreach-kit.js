@@ -13,15 +13,34 @@ function merge(s,t){
   .replaceAll('{{context}}',val('emailContext')||'our local community')
   .replaceAll('{{link}}',site+t.link).replaceAll('{{signature}}',signature);
 }
-function update(){
- const t=templates.find(x=>x.id===select.value)||templates[0];
- $('emailCategory').textContent=t.category;$('emailTitle').textContent=t.title;
- $('emailSubject').textContent=merge(t.subject,t);body.value=merge(t.body,t);
+const drafts=new Map(); // This tab only; no personal content is stored on a server.
+let currentId=select.value||templates[0].id;
+let previousName=val('emailFirstName')||'there',previousContext=val('emailContext')||'our local community';
+function saveCurrent(){
+ if(currentId)drafts.set(currentId,{text:body.value,name:previousName,context:previousContext});
 }
-select.addEventListener('change',update);
-$('emailFirstName').addEventListener('input',update);
-$('emailContext').addEventListener('input',update);
-$('resetEmail').addEventListener('click',update);
+function preserveEditedText(draft,newName,newContext){
+ let text=draft.text;
+ if(draft.name!==newName)text=text.replaceAll('Hi '+draft.name+',','Hi '+newName+',');
+ // Only substitute the literal preview location previously inserted; leave other edits untouched.
+ if(draft.context!==newContext&&draft.context)text=text.replaceAll(draft.context,newContext);
+ return text;
+}
+function renderDraft(){
+ const t=templates.find(x=>x.id===select.value)||templates[0];
+ const name=val('emailFirstName')||'there',context=val('emailContext')||'our local community';
+ $('emailCategory').textContent=t.category;$('emailTitle').textContent=t.title;
+ $('emailSubject').textContent=merge(t.subject,t);
+ const saved=drafts.get(t.id);
+ body.value=saved?preserveEditedText(saved,name,context):merge(t.body,t);
+ if(saved)drafts.set(t.id,{text:body.value,name,context});
+ currentId=t.id;previousName=name;previousContext=context;
+}
+body.addEventListener('input',saveCurrent);
+select.addEventListener('change',()=>{saveCurrent();renderDraft()});
+$('emailFirstName').addEventListener('input',()=>{saveCurrent();renderDraft()});
+$('emailContext').addEventListener('input',()=>{saveCurrent();renderDraft()});
+$('resetEmail').addEventListener('click',()=>{drafts.delete(select.value);renderDraft();window.smithaToast?.('Original email example restored.')});
 $('copyEmail').addEventListener('click',async()=>{
  const txt='Subject: '+$('emailSubject').textContent+'\n\n'+body.value;
  try{await navigator.clipboard.writeText(txt);window.smithaToast?.('Email draft copied.');}
@@ -31,5 +50,5 @@ $('composeEmail').addEventListener('click',()=>{
  location.href='mailto:?subject='+encodeURIComponent($('emailSubject').textContent.trim())+
    '&body='+encodeURIComponent(body.value.trim());
 });
-update();
+renderDraft();
 })();
