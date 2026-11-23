@@ -26,3 +26,64 @@
 @media(max-width:760px){.essential-layout,.two-col-learning{grid-template-columns:1fr}.essential-art{max-width:470px}.core-thread{align-items:flex-start;flex-direction:column}.learning-grid{grid-template-columns:1fr 1fr}.path-result-cards{grid-template-columns:1fr}.journey-cards{grid-template-columns:1fr}.related-cards{grid-template-columns:1fr}.choice-tiles{grid-template-columns:1fr}.path-stepper{padding:19px}.section{padding:53px 0}.essential-band{padding:36px 0}}
 @media(max-width:500px){.learning-grid{grid-template-columns:1fr}.journey-card{padding:20px}.learning-pillar{padding:20px}.reference-area ul{display:block}.reference-area li{margin:9px 0}.bottom-topic-actions .btn{width:100%}.essential-band h2{font-size:30px}}
 @media print{.topbar,.foot,.connect-launch,.chat-launch,.chatpanel,.overlay,.button-row,.related-cards,.reference-area,.checklist-actions,.bottom-topic-actions,.core-thread{display:none!important}.section{padding:24px 0}.journey-content{padding:15px 0}.checklist-box,.question-details{box-shadow:none}.page-hero{padding:18px 0}}
+
+
+/* Contextual, accessible conversion journeys: contact is prominent on every page. */
+.smitha-conversion-section{padding-top:28px;padding-bottom:76px;background:#f5f7fa}
+.smitha-conversion-panel{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:30px;align-items:center;padding:38px;border-radius:27px;background:linear-gradient(135deg,#152a4e,#233d63);box-shadow:0 18px 45px #0d23451a;color:white}
+.smitha-conversion-copy h2{color:white;font-size:clamp(29px,3.5vw,43px);max-width:650px;margin:10px 0}
+.smitha-conversion-copy p{color:#e1e9f6;max-width:570px;font-size:15px;line-height:1.75}
+.smitha-conversion-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.smitha-conversion-actions .btn{display:flex;justify-content:center;min-height:54px;padding:12px;font-size:13px}
+.smitha-conversion-actions .btn.smitha-call-action{background:#fff;color:#152a4e}
+.smitha-conversion-actions .btn.outline{background:transparent;border:1px solid #9baec9;color:#fff}
+.smitha-conversion-actions .btn.outline:hover{background:#ffffff1d}
+.smitha-conversion-related{font-size:13px;line-height:1.8;color:#59677c;padding:15px 5px}
+.smitha-conversion-related .smitha-suggested{color:#815712;font-weight:750;text-decoration:underline;text-underline-offset:3px}
+.smitha-mobile-actions{display:none}
+.smitha-examples{margin-top:30px}
+.smitha-examples h2{font-size:clamp(24px,3.5vw,34px);color:var(--navy);margin:10px 0 20px}
+.smitha-example-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:11px}
+.smitha-example{display:flex;flex-direction:column;gap:10px;padding:18px;background:white;border:1px solid #e5e1d8;border-radius:16px;min-height:150px;transition:transform .15s ease}
+.smitha-example:hover{transform:translateY(-2px);border-color:#c18c2f}
+.smitha-example strong{color:var(--navy);font-size:15px}
+.smitha-example p{font-size:12px;line-height:1.6;color:#5b6878;flex:1}
+.smitha-example span{font-size:12px;color:#98651f;font-weight:800}
+.smitha-config-channel{color:var(--navy)}
+.handout-options,.email-kit-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.handout-card,.email-template-card{background:#fff;border:1px solid #e8e1d6;border-radius:18px;padding:23px}
+.handout-card h3,.email-template-card h3{color:var(--navy);margin:0 0 10px}
+.handout-card p,.email-template-card p{color:#617081;font-size:14px}
+.handout-card .button-row{margin-top:18px}
+.handout-preview{margin-top:27px;background:white;border:1px solid #e5e0d7;border-radius:23px;padding:30px}
+.handout-preview li{margin:9px 0;line-height:1.6}
+.email-draft{width:100%;min-height:320px;margin-top:12px;border-radius:14px;padding:16px;border:1px solid #dfe3eb;resize:vertical;color:var(--navy);background:#fff;font:14px/1.65 'DM Sans',Arial,sans-serif}
+.kit-control{display:flex;gap:13px;flex-wrap:wrap;align-items:end;margin:18px 0}
+.kit-control label{font-size:12px;font-weight:700;color:#526072}
+.kit-control input,.kit-control select{display:block;width:260px;max-width:100%;margin-top:5px;border:1px solid #dce1e9;background:#fff;border-radius:12px;padding:11px}
+.kit-banner{background:#fff9ee;border:1px solid #ebd5ad;border-radius:15px;padding:18px;color:#5a6370;margin:22px 0;font-size:13px}
+@media(max-width:950px){.smitha-conversion-panel{grid-template-columns:1fr}.smitha-example-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){
+ body{padding-bottom:calc(75px + env(safe-area-inset-bottom,0px))}
+ .smitha-conversion-section{padding:15px 0 38px}
+ .smitha-conversion-panel{padding:25px 20px;border-radius:20px;gap:19px}
+ .smitha-conversion-actions{grid-template-columns:1fr 1fr;gap:9px}
+ .smitha-conversion-actions .btn{min-height:48px;font-size:12px;padding:10px 7px}
+ .smitha-example-grid,.handout-options,.email-kit-options{grid-template-columns:1fr}
+ .smitha-example{min-height:0}
+ .smitha-mobile-actions{position:fixed;display:grid;grid-template-columns:repeat(3,1fr);left:12px;right:12px;bottom:calc(9px + env(safe-area-inset-bottom,0px));z-index:90;overflow:hidden;border-radius:16px;border:1px solid #d3dce7;background:white;box-shadow:0 8px 30px #0b24444f}
+ .smitha-mobile-actions a,.smitha-mobile-actions button{min-height:54px;display:flex;align-items:center;justify-content:center;border:0;background:white;font-size:14px;font-weight:800;color:#142b50;text-decoration:none;cursor:pointer}
+ .smitha-mobile-actions a+a,.smitha-mobile-actions a+button{border-left:1px solid #e0e5eb}
+ .smitha-mobile-actions a:nth-child(2){color:#9c6a1c}
+ .smitha-mobile-actions button{background:#152c50;color:white}
+ .connect-launch,.chat-launch{display:none!important}
+ .handout-preview{padding:19px}
+ .kit-control input,.kit-control select{width:min(100%,350px)}
+ .chatpanel{bottom:calc(75px + env(safe-area-inset-bottom,0px));height:min(520px,calc(100dvh - 95px))}
+}
+@media print{
+ .smitha-conversion-section,.smitha-mobile-actions,.chat-launch,.connect-launch,.topbar,.foot,.handout-card .button-row{display:none!important}
+ .handout-preview{border:none!important;box-shadow:none!important;padding:0!important}
+ body{background:white!important;padding:0!important}
+ .container{width:100%!important}
+}
