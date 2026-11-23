@@ -95,16 +95,16 @@ function addVerifiedContactChannels() {
   const textTile=document.getElementById('sendSms');
   const requestTime=document.getElementById('requestTime');
   const textIntro=document.getElementById('sendSms2');
-  const enabledSms=c.phone?.verifiedForSms===true;
-  if(callTile)callTile.querySelector('small')?.replaceChildren(document.createTextNode(displayPhone));
-  if(textTile){textTile.hidden=!enabledSms;textTile.style.display=enabledSms?'':'none';const small=textTile.querySelector('small');if(small)small.textContent='Opens a draft in your messaging app';}
+  const enabledSms=c.phone?.verifiedForSms===true||c.phone?.smsDraftEnabled===true;
+  if(callTile)callTile.querySelector('small')?.replaceChildren(document.createTextNode('Opens your phone app'));
+  if(textTile){textTile.hidden=!enabledSms;textTile.style.display=enabledSms?'':'none';const small=textTile.querySelector('small');if(small)small.textContent='Text draft · delivery not yet confirmed';}
   if(textIntro){textIntro.hidden=!enabledSms;textIntro.style.display=enabledSms?'':'none';}
   if(requestTime){
     const calendar=verifiedLink(c.booking);
     const label=requestTime.querySelector('span:not(.symbol)');
     const small=requestTime.querySelector('small');
     if(label)label.textContent=calendar?'Choose a time':enabledSms?'Request a time':'Arrange by phone';
-    if(small)small.textContent=calendar?'Opens the booking calendar':enabledSms?'Prepare a text request':'Call '+displayPhone;
+    if(small)small.textContent=calendar?'Opens the booking calendar':enabledSms?'Prepare a text request':'Arrange privately by call';
   }
   // Owner configuration is the single contact source, including links originally authored in HTML.
   document.querySelectorAll('a[href^="tel:"]').forEach(a=>{a.href='tel:'+phone});
@@ -158,8 +158,8 @@ function addConversationPanel(){
   const contain=node('div','container'),panel=node('div','smitha-conversion-panel'),copyBox=node('div','smitha-conversion-copy');
   copyBox.append(node('div','eyebrow','Your next step'),node('h2','',ctx.title),node('p','',ctx.desc));
   const actions=node('div','smitha-conversion-actions');
-  actions.append(link('☎ Call '+displayPhone,'btn smitha-call-action','tel:'+phone));
-  if(cfg.contact?.phone?.verifiedForSms===true)
+  actions.append(link('☎ Call Smitha','btn smitha-call-action','tel:'+phone));
+  if(cfg.contact?.phone?.verifiedForSms===true||cfg.contact?.phone?.smsDraftEnabled===true)
     actions.append(link('✉ Text Smitha','btn gold smitha-text-action',smsUrl(introText())));
   else actions.append(button('Copy my question','btn gold',()=>copy(introText(),'Conversation starter copied.')));
   const booking=verifiedLink(cfg.contact?.booking);
@@ -184,7 +184,7 @@ function addMobileQuickActions(){
   const rail=node('nav','smitha-mobile-actions');
   rail.id='smithaQuickActions';rail.setAttribute('aria-label','Quick ways to reach Smitha');
   rail.append(link('☎ Call','','tel:'+phone));
-  if(cfg.contact?.phone?.verifiedForSms===true)rail.append(link('✉ Text','',smsUrl(introText())));
+  if(cfg.contact?.phone?.verifiedForSms===true||cfg.contact?.phone?.smsDraftEnabled===true)rail.append(link('✉ Text','',smsUrl(introText())));
   else rail.append(button('✎ Copy note','',()=>copy(introText(),'Conversation starter copied.')));
   rail.append(button('✦ Ask','',()=>document.getElementById('chatLaunch')?.click()));
   rail.append(button('Connect','',talk));
