@@ -65,8 +65,14 @@ function safeLink(key,value){
  return u.href
 }
 function cleanSettings(body){
- const old=body?.contact||{},n=body?.newsletter||{};
+ const old=body?.contact||{},n=body?.newsletter||{},f=body?.forwarding||{};
  const contact={};
+ const rawPhone=String(old.phone?.e164||"").trim();
+ if(!/^\+[1-9]\d{7,14}$/.test(rawPhone))throw Error("invalid_phone");
+ const digits=rawPhone.replace(/\D/g,""),us=digits.length===11&&digits.startsWith("1");
+ const display=us?"("+digits.slice(1,4)+") "+digits.slice(4,7)+"-"+digits.slice(7):rawPhone;
+ contact.phone={e164:rawPhone,display,verifiedForVoice:old.phone?.verifiedForVoice===true,verifiedForSms:old.phone?.verifiedForSms===true,smsDraftEnabled:old.phone?.smsDraftEnabled===true};
+ contact.presentation={showPhoneNumber:false};
  for(const key of ["whatsapp","facebook","instagram","linkedin","x","tiktok","booking"]){
   const item=old[key]||{},u=safeLink(key,item.url);
   contact[key]={url:u,verified:Boolean(u&&item.verified===true)}
@@ -74,12 +80,15 @@ function cleanSettings(body){
  const mail=String(old.email?.address||"").trim().toLowerCase();
  if(mail&&!validEmail(mail))throw Error("invalid_contact_email");
  contact.email={address:mail,verified:Boolean(mail&&old.email?.verified===true)};
+ const forwardTo=String(f.email||"").trim().toLowerCase();
+ if(forwardTo&&!validEmail(forwardTo))throw Error("invalid_forward_email");
+ if(f.enabled===true&&!forwardTo)throw Error("forward_email_required");
  return {newsletter:{
   enabled:n.enabled===true,
   title:String(n.title||"A little clarity in your inbox.").trim().slice(0,110),
   description:String(n.description||"Occasional helpful notes from Smitha.").trim().slice(0,320),
   frequency:["Occasional","Monthly","Twice a month"].includes(n.frequency)?n.frequency:"Occasional"
- },contact};
+ },contact,forwarding:{enabled:f.enabled===true,email:forwardTo}};
 }
 async function persist(settings,sha){
  const token=process.env.SMITHA_CONFIG_REPO_TOKEN;
