@@ -168,11 +168,13 @@ function goBooking(){
 function addButton(label,cls,action){
  const b=el('button',cls,label);b.type='button';b.addEventListener('click',action);return b
 }
+function focusQuestion(){const heading=holder.querySelector('.smitha-qflow-heading');heading?.focus({preventScroll:true});heading?.scrollIntoView({block:'nearest',behavior:'smooth'})}
 function render(){
  holder.replaceChildren();
  const bank=current(),isGeneral=startedGeneral&&step===0,done=step>=4;
  const lead=el('div','smitha-qflow-eyebrow',done?'Ready to connect with Smitha':(step+1)+' of 4 · '+progressText[step]);
  const heading=el('h3','smitha-qflow-heading',done?'You have a useful starting point.':isGeneral?'What brings you here today?':stageNotes[step]);
+ heading.tabIndex=-1;
  const desc=el('p','smitha-qflow-desc',done?'Here is what you can share if you wish. You can still call, text, email, or request a time without sending this note.':
   step===0?(chosenTopic?'Choose the situation that feels closest.':'Select the area you are thinking about.'):
   step===1?'Thinking about '+(answers[0]||'this situation').toLowerCase()+', what would you most like to clarify?':
@@ -199,7 +201,7 @@ function render(){
   );
   holder.append(actions);
   const last=el('div','smitha-qflow-last');
-  last.append(addButton('Copy my conversation','smitha-qflow-link',copySummary),addButton('Change an answer','smitha-qflow-link',()=>{step=0;render()}));
+  last.append(addButton('Copy my conversation','smitha-qflow-link',copySummary),addButton('Change an answer','smitha-qflow-link',()=>{step=0;render();focusQuestion()}));
   holder.append(last);
   holder.append(el('p','smitha-qflow-privacy',bank.caution+' Sharing answers is optional and happens only if you complete the action in your chosen app.'));
   return;
@@ -212,14 +214,14 @@ function render(){
   const choice=addButton(label,'smitha-qflow-choice'+(answers[step]===label?' selected':''),()=>{
    answers[step]=label;answers.length=step+1;
    if(step===0&&isGeneral){chosenTopic=generalChoices[index].topic;contextHint='';}
-   step++;render()
+   step++;render();focusQuestion()
   });
   choice.setAttribute('aria-label',label);
   options.append(choice)
  });
  holder.append(options);
  const footer=el('div','smitha-qflow-navigation');
- if(step>0)footer.append(addButton('← Back','smitha-qflow-link',()=>{step--;render()}));
+ if(step>0)footer.append(addButton('← Back','smitha-qflow-link',()=>{step--;render();focusQuestion()}));
  footer.append(addButton('Connect without questions ↗','smitha-qflow-link',()=>{details.open=false;document.querySelector('#connectModal .smitha-primary-contact')?.scrollIntoView({block:'nearest',behavior:'smooth'})}));
  holder.append(footer);
  holder.append(el('p','smitha-qflow-privacy','Please do not share account numbers, Social Security information, policy numbers, or medical details.'));
@@ -229,8 +231,7 @@ window.smithaConversationBegin=(info={})=>{
  if(typeof window.openSmithaContact==='function')window.openSmithaContact(info?.intent||'');
  details.open=true;
  render();
- const h=holder.querySelector('.smitha-qflow-choice');
- if(h)h.focus({preventScroll:true});
+ focusQuestion();
 };
 document.addEventListener('smitha-contact-open',event=>{
  const intent=event?.detail?.intent||'';
