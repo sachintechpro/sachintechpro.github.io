@@ -9,9 +9,14 @@ const verifiedUrl=item=>{try{if(!item?.verified||!item.url)return '';const u=new
 const page=document.body.dataset.page||'home';
 const $=(id)=>document.getElementById(id);const icons={logo:`<svg viewBox="0 0 50 38" aria-hidden="true"><path d="M2 29 L14 17 L23 24 L33 9 L44 17" fill="none" stroke="#17345e" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M43 12 L47 2 L35 7" fill="none" stroke="#bf8c30" stroke-width="2.8"/><path d="M3 36 Q22 24 47 31" fill="none" stroke="#c18c2f" stroke-width="2.3"/></svg>`};
 const nav=document.querySelector('#mainNav');$('mobileToggle')?.addEventListener('click',()=>{const open=nav.classList.toggle('open');$('mobileToggle').setAttribute('aria-expanded',open)});nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>nav.classList.remove('open')));
-document.querySelectorAll('[data-open-contact]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();openContact(el.dataset.intent||'')}));
+document.querySelectorAll('[data-open-contact]').forEach(el=>el.addEventListener('click',e=>{
+ e.preventDefault();
+ const info={topic:document.body.dataset.topic||'',intent:el.dataset.intent||''};
+ if(el.hasAttribute('data-guide-questions')&&typeof window.smithaConversationBegin==='function')window.smithaConversationBegin(info);
+ else openContact(info.intent);
+}));
 const contactModal=$('connectModal');const chatPanel=$('chatPanel');const connectLaunch=$('connectLaunch');const chatLaunch=$('chatLaunch');let previousFocus=null;let inertBefore=[];
-function openContact(intent=''){if(!contactModal)return;previousFocus=document.activeElement;if(intent){const s=$('starSituation');if(s&&!s.value)s.value=intent;}contactModal.classList.add('open');contactModal.setAttribute('aria-hidden','false');inertBefore=[...document.querySelectorAll('main,header,footer')].filter(x=>!x.inert);inertBefore.forEach(x=>x.inert=true);document.body.style.overflow='hidden';$('closeConnect')?.focus()}
+function openContact(intent=''){if(!contactModal)return;previousFocus=document.activeElement;if(intent){const s=$('starSituation');if(s&&!s.value)s.value=intent;}contactModal.classList.add('open');contactModal.setAttribute('aria-hidden','false');inertBefore=[...document.querySelectorAll('main,header,footer')].filter(x=>!x.inert);inertBefore.forEach(x=>x.inert=true);document.body.style.overflow='hidden';$('closeConnect')?.focus();document.dispatchEvent(new CustomEvent('smitha-contact-open',{detail:{intent}}))}
 function closeContact(){if(!contactModal)return;contactModal.classList.remove('open');contactModal.setAttribute('aria-hidden','true');inertBefore.forEach(x=>x.inert=false);inertBefore=[];document.body.style.overflow='';previousFocus?.focus?.()}
 window.openSmithaContact=openContact;connectLaunch?.addEventListener('click',()=>openContact());$('closeConnect')?.addEventListener('click',closeContact);contactModal?.addEventListener('click',e=>{if(e.target===contactModal)closeContact()});
 document.addEventListener('keydown',e=>{
@@ -23,7 +28,7 @@ document.addEventListener('keydown',e=>{
  if(e.shiftKey&&(document.activeElement===first||!contactModal.contains(document.activeElement))){e.preventDefault();last.focus()}
  else if(!e.shiftKey&&(document.activeElement===last||!contactModal.contains(document.activeElement))){e.preventDefault();first.focus()}
 });
-function starText(){const fields=[['Situation','starSituation'],['Task','starTask'],['Action','starAction'],['Result','starResult']];return fields.map(([label,id])=>{const v=$(id)?.value?.trim();return v?`${label}: ${v.slice(0,300)}`:null}).filter(Boolean).join('\n')}
+function starText(){return typeof window.smithaConversationText==='function'?window.smithaConversationText():''}
 function composeText(kind){const star=starText();let intro=kind==='time'?"Hello Smitha, I'd appreciate a convenient time for a friendly conversation about my goals.":"Hello Smitha, I have a question about my next financial or family-planning decision.";return intro+(star?'\n\n'+star:'')}
 function smsHref(msg){const sep=/iPhone|iPad|iPod/i.test(navigator.userAgent)?'&':'?';return `sms:${activePhone()}${sep}body=${encodeURIComponent(msg)}`}
 function openSms(kind){if(!smsDraftAllowed()){toast('Texting is not connected; please choose Call instead.');return}location.href=smsHref(composeText(kind));toast('Your messaging app will open a draft. Delivery has not been verified.')}
@@ -44,7 +49,7 @@ function closeChat(){chatPanel?.classList.remove('open');chatLaunch?.setAttribut
 chatLaunch?.addEventListener('click',()=>chatPanel.classList.contains('open')?closeChat():openChat());$('closeChat')?.addEventListener('click',closeChat);
 function localAnswer(question){const q=question.toLowerCase();if(/are you (really|actually) smitha|human|real smitha|who are you/.test(q))return 'I’m an illustrated educational guide, not Smitha personally. Choose Let’s Connect to call or prepare a message for her.';
 if(/call|phone|number|text|sms|connect|appointment|schedule|meet|contact/.test(q))return 'Open “Let’s connect” to call Smitha privately or prepare a message in your preferred app. A message is not sent until you send it.';
-if(/star|situation|action|result|discussion/.test(q))return 'A STAR introduction is a simple way to share your Situation, Task, what you’ve tried (Action), and the Result you want. It keeps a first conversation helpful and focused.';
+if(/star|situation|action|result|discussion/.test(q))return 'You can answer a few optional questions about what matters, what you have already considered, and the next decision you want to clarify. Then choose how you would like to reach Smitha.';
 if(/advic|invest|returns|guarantee|license|fee|commission|product|portfolio|security/.test(q))return 'I can explain general concepts and questions to ask, but not make personalized legal, insurance, tax or investment recommendations. Confirm a professional’s credentials, scope and fees before acting.';
 if(/private|privacy|record|stored|data/.test(q))return 'Guide choices stay in your browser. If AI chat is enabled, questions may be sent to an AI provider. Please do not enter account numbers, medical records or other sensitive details.';
 if(/email|whatsapp|instagram|facebook|linkedin|tiktok|twitter|social/.test(q))return 'Use “Let’s connect” for a private call or an optional text draft. WhatsApp, Facebook, and Instagram open directly only after the correct profiles are connected.';
@@ -71,7 +76,9 @@ $('chatForm')?.addEventListener('submit',e=>{e.preventDefault();ask(chatInput.va
     const enhancements=document.createElement('script');enhancements.src='site-enhancements.js';enhancements.defer=true;
     enhancements.addEventListener('load',()=>{
       const contact=document.createElement('script');contact.src='contact-upgrade.js';contact.defer=true;
-      contact.addEventListener('load',()=>{const booking=document.createElement('script');booking.src='booking-ui.js';booking.defer=true;document.body.append(booking)});
+      contact.addEventListener('load',()=>{const booking=document.createElement('script');booking.src='booking-ui.js';booking.defer=true;
+ booking.addEventListener('load',()=>{const guide=document.createElement('script');guide.src='conversation-questions.js';guide.defer=true;document.body.append(guide)});
+ document.body.append(booking)});
       document.body.append(contact);
     });
     document.body.append(enhancements);
