@@ -256,3 +256,38 @@
 @media print{
  .smitha-contact-v2,.smitha-contact-page-ways,.smitha-booking-details,.smitha-scheduler{display:none!important}
 }
+
+
+/* Context-sensitive visitor conversation: the decision framework is internal, not a public form. */
+.smitha-qflow-inner{padding:16px 15px 17px;border-top:1px solid #e7ebf1}
+.smitha-qflow-eyebrow{font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:#ad7c28;margin-bottom:6px}
+.smitha-qflow-heading{font-size:19px!important;line-height:1.28!important;color:#19355a;margin:0 0 8px!important}
+.smitha-qflow-desc{font-size:12px!important;line-height:1.56;color:#687487;margin:0 0 13px!important}
+.smitha-qflow-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.smitha-qflow-choice{appearance:none;display:block;width:100%;min-height:58px;padding:12px;text-align:left;background:white;border:1px solid #dfe6ee;border-radius:12px;cursor:pointer;font-size:12px;line-height:1.48;font-weight:700;color:#253e61}
+.smitha-qflow-choice:hover{border-color:#c79b4f;background:#fffaf2}
+.smitha-qflow-choice.selected{background:#17365c;color:white;border-color:#17365c}
+.smitha-qflow-choice:focus-visible,.smitha-qflow-link:focus-visible{outline:3px solid #bf882d;outline-offset:2px}
+.smitha-qflow-navigation{display:flex;justify-content:space-between;align-items:center;gap:13px;margin-top:13px}
+.smitha-qflow-link{appearance:none;border:0;background:none;padding:7px 0;color:#173d68;text-decoration:underline;text-underline-offset:3px;font-size:12px;font-weight:750;cursor:pointer}
+.smitha-qflow-privacy{color:#728093;font-size:10px;line-height:1.5;margin:13px 0 0}
+.smitha-qflow-recap{display:flex;flex-direction:column;gap:7px;background:#f5f8fc;border:1px solid #e3e9f1;border-radius:12px;padding:14px;color:#2b4261}
+.smitha-qflow-recap p{font-size:12px;line-height:1.5;margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.smitha-qflow-recap .smitha-qflow-subject{font-weight:800;color:#183657}
+.smitha-qflow-note-label{display:flex;flex-direction:column;gap:7px;font-size:12px;font-weight:700;margin:14px 0 11px;color:#304463}
+.smitha-qflow-note{width:100%;min-height:60px;padding:10px 12px;border:1px solid #dce5ec;border-radius:10px;background:white;font-size:13px;resize:vertical;color:#213e5e}
+.smitha-qflow-contact-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.smitha-qflow-contact-actions .btn{min-height:43px;font-size:12px;padding:10px 9px}
+.smitha-qflow-last{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-top:8px;flex-wrap:wrap}
+.smitha-contact-page-questions{margin:16px 0 20px;display:flex;gap:16px;justify-content:space-between;align-items:center;border:1px solid #e3e8f0;background:#f8fafd;border-radius:15px;padding:15px}
+.smitha-contact-page-questions strong{font-size:15px;color:#203958}
+.smitha-contact-page-questions p{margin:5px 0 0;color:#68768b;font-size:12px;line-height:1.55}
+.smitha-contact-page-questions .btn{white-space:normal;flex:none;max-width:240px;font-size:12px}
+@media(max-width:560px){
+ .smitha-qflow-inner{padding:14px 11px}
+ .smitha-qflow-options{grid-template-columns:1fr;gap:7px}
+ .smitha-qflow-choice{min-height:47px;padding:10px 12px;font-size:12px}
+ .smitha-qflow-heading{font-size:18px!important}
+ .smitha-contact-page-questions{flex-direction:column;align-items:stretch}
+ .smitha-contact-page-questions .btn{max-width:none}
+}
