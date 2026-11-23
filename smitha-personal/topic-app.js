@@ -20,7 +20,24 @@
      let done = checks.filter(el => el.checked).length;
      if (counter) counter.textContent = `${done} of ${checks.length} considered`;
    };
-   checks.forEach(el => el.addEventListener('change', update));
+   // Opt-in, short-lived checklist continuity; checkmarks stay in this browser tab.
+   const storageKey='smitha-checklist:'+String(document.body.dataset.topic||'general');
+   const actions=document.querySelector('.checklist-actions');
+   let saved=null;try{saved=sessionStorage.getItem(storageKey)}catch{}
+   const retain=document.createElement('label');
+   retain.className='smitha-retain-checks';
+   const keep=document.createElement('input');keep.type='checkbox';keep.setAttribute('aria-label','Keep checklist progress in this browser tab');
+   const keepText=document.createElement('span');keepText.textContent=' Keep my checkmarks in this tab';
+   retain.append(keep,keepText);
+   if(actions)actions.append(retain);
+   if(saved){try{const marks=JSON.parse(saved);if(Array.isArray(marks)&&marks.length===checks.length){checks.forEach((x,i)=>x.checked=marks[i]===true);keep.checked=true}}catch{}}
+   const keepProgress=()=>{try{if(keep.checked)sessionStorage.setItem(storageKey,JSON.stringify(checks.map(x=>x.checked)));else sessionStorage.removeItem(storageKey)}catch{}};
+   keep.addEventListener('change',()=>{keepProgress();update()});
+   checks.forEach(el=>el.addEventListener('change',()=>{update();keepProgress()}));
+   const checklistIntro=document.querySelector('.checklist-box')?.previousElementSibling;
+   if(checklistIntro?.textContent.includes('nothing is saved or submitted'))
+     checklistIntro.textContent='Use the checks to organize your thoughts. Optionally keep progress in this tab, or copy the list; nothing is submitted.';
+
    document.querySelector('[data-copy-checklist]')?.addEventListener('click', async () => {
      const lines = checks.map((c,i) => `${c.checked ? '☑' : '☐'} ${i+1}. ${c.nextElementSibling.textContent.trim()}`);
      const txt = `${document.querySelector('h1')?.textContent.trim() || 'My checklist'}\n${lines.join('\n')}\n\nFor discussion only. No sensitive data.`;
