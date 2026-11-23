@@ -1,29 +1,31 @@
 # Hello, Nisha — family connections around Northridge
 
-An independent, personalized **demonstration** of how Nisha could create local conversations and qualified professional connections for families roughly 25 miles around Northridge, California. It is not an approved, official, or operational Farmers Insurance website, nor an approved Nisha business offering.
+An independent **concept demo** for building thoughtful, permitted family-planning conversations in Northridge and nearby communities (about 25 miles). This is not an official or approved Farmers Insurance site. The concept does not establish that Nisha is licensed, appointed, or authorized to provide any specific legal, insurance, or investment service.
 
-## Demo pages
+## Live pages
 
 - Home: https://hello-nisha-personal.onrender.com/
-- A Few Good Questions: https://hello-nisha-personal.onrender.com/coverage.html
+- Good Questions: https://hello-nisha-personal.onrender.com/coverage.html
 - Around Our Valley: https://hello-nisha-personal.onrender.com/valleycircle.html
 
-## Suggested visitor demonstration (about 3 minutes)
+## Suggested 3-minute walkthrough
 
-1. On Home, scan the six life-stage topics: estate planning, wills and trusts; family protection and IUL; savings; protection gaps; aging parents; children's education.
-2. Tap **Connect with Nisha** on a topic card. Verify the topic is preselected and fill the contact form. Use the meeting-time preference.
-3. Submit to display a **clearly labeled simulated success**. No visitor information is stored or sent. No SMS, email, calendar event, lead record or actual newsletter subscriber is created.
-4. Optionally expand **Newsletter subscription preview** and submit for its separate simulated confirmation.
-5. On A Few Good Questions, select a topic, concern and timing. See five educational conversation prompts, then tap Connect with Nisha.
-6. On Around Our Valley, explore local family conversation examples and the fictional workshop preview. Connect with Nisha for the next step.
-7. The illustrated digital guide is **not Nisha**; if an AI provider is configured, it can answer educational questions. Never input sensitive details.
+1. On Home, review six topics: estate planning and trusts, life protection and IUL education, savings, coverage gaps, aging parents, children's education.
+2. Choose a topic card to open a tailored three-step conversation guide. The guide presents questions, not individualized recommendations.
+3. Open **Ask Nisha**, which is clearly labeled as an *illustrated digital guide*, not Nisha herself. The visitor's question is sent to the guide's AI backend for an answer. Please do not share sensitive details.
+4. Tap **Request 15 minutes** to open an email draft. The visitor must send it; this does not book an appointment.
+5. Use **Text Nisha** or mobile-call links for a genuine device handoff. The publicly supplied contact mobile is **(818) 206-3016**; office is **(818) 206-4600**. Confirm Nisha's permission to use these channels before external promotion.
+6. Optionally expand **Stay in touch with Nisha** to try simulated inquiry and newsletter forms. Both validate input, show an explicit preview confirmation, then clear fields. No lead, subscription, email or SMS is transmitted or saved by these preview forms.
+7. Around Our Valley contains fictional educational collaboration examples only; no partners or endorsements have been verified.
 
-## Business boundary
+## What this demo is — and isn't
 
-This concept is about family life stages and permissible local connections, not competing with Farmers' core home, auto and umbrella offerings. Nisha must independently verify outside-business authorization, agent/carrier appointments, advertising requirements, and any limits on referrals or compensation before using a real commercial site. Estate legal work belongs to qualified attorneys; investment and insurance advice/products require the applicable professional qualifications.
+- It is a self-contained three-page static website with one AI digital-guide panel.
+- The digital-guide API is a separate Render service. Its answers depend on provider configuration; it sends questions to an AI service and should never be treated as a private channel for sensitive information.
+- The separate contact and subscription **preview forms are simulated only**. They do not connect to a CRM, lead mailbox, newsletter service, SMS gateway or calendar.
+- Email, SMS, and phone links open visitor devices. They do not guarantee delivery, a response, or a meeting.
+- No quotes, insurance policy service, legal/investment advice, or appointments are offered.
 
-## Demo status
+## Before any production outreach
 
-The three HTML pages are self-contained for static hosting. The lead forms require no API and run in the browser, where they validate and clear entered fields after success. Form success is simulated, not evidence of sending or saving anything. Direct device handoff options for calling, texting or emailing are distinct from those demo submissions. Meeting scheduling is request-only; there is no actual booking confirmation.
-
-This is a concept showcase for a conversation with Nisha and prospective reviewers. Do not invite actual lead submissions or represent that this is already a live lead collector.
+Obtain Nisha's approval; verify her employer/agency agreements, outside-business permissions, licensing, carrier appointments, referral arrangements, advertising disclosures, privacy notice, marketing consent, and any appropriate legal review. Actual lead capture requires secure persistence, verified delivery, consent records, abuse controls and compliant newsletter/unsubscribe processing.
