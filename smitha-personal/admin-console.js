@@ -42,6 +42,7 @@ async function loadOwner(){
   login.hidden=true;workspace.hidden=false;editable=settings.editingConnected===true;
   $('adminSignedInAs').textContent='Signed in as '+identity.email;
   fill(settings.settings);
+  document.dispatchEvent(new CustomEvent('smitha-owner-authorized',{detail:{email:identity.email}}));
   const save=$('adminSave');save.disabled=!editable;
   $('adminSaveStatus').textContent=editable?'':'Saving is not connected yet. The website owner must complete the private configuration.';
   return true;
