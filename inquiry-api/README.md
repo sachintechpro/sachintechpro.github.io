@@ -1,18 +1,28 @@
 # SachinTechpro portfolio inquiry service
 
-A privacy-minded inquiry flow with email confirmation, mobile verification, and a verified inquiry notification. The service does not persist inquiry records or message history; it holds short-lived verification attempts in process memory.
+The public contact flow is in **demo mode** for now. Email and mobile verification are simulated in the browser; the API also defaults to returning mock success responses. No emails, SMS, or WhatsApp messages are sent, and inquiry details are not stored.
 
-## Render environment
+## Intended live email identity
 
-Keep all values private in the service’s Render environment settings. Do not commit credentials.
+When real delivery is enabled, use:
 
-Required for email verification and inquiry delivery:
+- Sender display name: `SachinTechpro`
+- Sender address: `Sachin.techpro@gmail.com`
+- Inquiry notification destination: `Sachin.techpro@gmail.com`
+
+The SMTP provider must authorize `Sachin.techpro@gmail.com` to send mail. Verification emails will go to the visitor’s address; inquiry notifications and receipts use the sender identity above.
+
+## Switching to live delivery later
+
+Set `DEMO_MODE=false` only after configuring the service’s private Render environment:
+
+Required for email confirmation and inquiry delivery:
 
 - `SMTP_HOST`
 - `SMTP_PORT` (usually `587`)
-- `SMTP_USER` (an address authorized to send through the provider)
+- `SMTP_USER=Sachin.techpro@gmail.com`
 - `SMTP_PASSWORD`
-- `INQUIRY_TO` (private recipient address)
+- `INQUIRY_TO=Sachin.techpro@gmail.com`
 - `VERIFY_SECRET` (random secret with at least 32 characters)
 
 Required for mobile verification:
@@ -26,15 +36,13 @@ Optional WhatsApp follow-up:
 - `TWILIO_WHATSAPP_FROM` (WhatsApp-enabled Twilio sender, formatted as `whatsapp:+...`)
 - `TWILIO_WHATSAPP_CONTENT_SID` (approved WhatsApp message template, with variables `{{1}}` for first name and `{{2}}` for inquiry type)
 
-WhatsApp follow-up is sent only when the visitor explicitly opts in. Twilio requires an approved template for business-initiated WhatsApp messages. SMS follow-up is also opt-in. The one-time verification SMS is sent only after the visitor enters a number and requests a code.
+WhatsApp follow-up is sent only after explicit visitor opt-in and requires an approved template. SMS follow-up is also opt-in; the one-time verification text is sent only after the visitor requests a code. SMS messages begin with `SachinTechpro`, while recipients may see the configured Twilio number as the sender.
 
-## Service
+## Service details
 
 - Intended Render service: `sachintechpro-inquiries`
 - Start command: `python inquiry-api/server.py`
 - Health check: `GET /health`
-- Browser origin allowed: `https://sachintechpro.github.io`
+- Allowed browser origin: `https://sachintechpro.github.io`
 
-The email display name is `SachinTechpro`; the underlying SMTP address must be authorized by the email provider. SMS messages begin with `SachinTechpro`; the recipient will see the configured Twilio phone number as the sender. Set the WhatsApp Business sender profile name to `SachinTechpro` through the provider. The verification link expires after 20 minutes; SMS codes expire after 10 minutes. The inquiry notification and personalized receipt are sent after both checks pass.
-
-The public static website calls `https://sachintechpro-inquiries.onrender.com`. The Render service must be deployed and configured with the variables above before live verification can succeed. This lightweight service uses per-process rate limits and ephemeral verification state; use a persistent store and distributed rate limiting before scaling to multiple service instances.
+The verification link expires after 20 minutes; mobile codes expire after 10 minutes. The service uses per-process rate limits and short-lived verification state. Before scaling to multiple instances, use a persistent store and distributed rate limiting.
