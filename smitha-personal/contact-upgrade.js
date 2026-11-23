@@ -69,7 +69,7 @@ function safeUrl(entry,domains){
 }
 function action(label,icon,note,onClick,href,kind){
  const el=document.createElement(href?'a':'button');
- if(!href)el.type='button'; else{el.href=href;el.target='_blank';el.rel='noopener noreferrer'}
+ if(!href)el.type='button'; else{el.href=href;if(href.startsWith('https:')){el.target='_blank';el.rel='noopener noreferrer'}}
  el.className='smitha-contact-choice '+(kind||'');
  const symbol=document.createElement('span');symbol.className='smitha-choice-icon';symbol.textContent=icon;symbol.setAttribute('aria-hidden','true');
  const copy=document.createElement('span');copy.className='smitha-choice-copy';
