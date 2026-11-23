@@ -38,7 +38,7 @@ function copy(message){
 }
 function requestByText(message){if(!sms){copy(message);window.smithaToast?.('Text not connected; request copied instead.');return}location.href=smsHref(message)}
 function requestByEmail(message){
- if(!email){requestByText('Hi Smitha, what email address should I use for a 15-minute introduction-call request?');return}
+ if(!email){requestByText('Hi Smitha, may I have your preferred email address for this introduction-call request?\n\n'+message);return}
  location.href='mailto:'+email+'?subject='+encodeURIComponent('15-minute introduction call — preferred time')+'&body='+encodeURIComponent(message);
 }
 function tile(label,note,symbol,action,href){
