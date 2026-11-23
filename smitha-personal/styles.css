@@ -291,3 +291,8 @@
  .smitha-contact-page-questions{flex-direction:column;align-items:stretch}
  .smitha-contact-page-questions .btn{max-width:none}
 }
+
+
+.smitha-chat-contact{display:block;width:100%;margin-top:9px;min-height:36px;border:1px solid #d4dce8;border-radius:10px;background:#fff;color:#19385e;font-size:12px;font-weight:800;cursor:pointer}
+.smitha-chat-contact:hover{background:#f4f8fc;border-color:#be9041}
+.smitha-chat-contact:focus-visible{outline:3px solid #b7842e;outline-offset:2px}
