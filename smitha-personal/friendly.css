@@ -45,3 +45,5 @@ main .cx-hero .lead{color:#596a60}
 .cx-hero-portrait{border-color:#e4ece1;border-radius:26px;background:#f6f8f1;box-shadow:0 18px 45px rgba(35,70,59,.1)}
 .cx-hero-portrait strong{font-family:'DM Sans','Trebuchet MS',sans-serif;color:#294b3e}
 .cx-hero-portrait span{color:#b96543}
+
+body main h2,body main h3{color:#294b3e!important}
