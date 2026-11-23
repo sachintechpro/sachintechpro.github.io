@@ -167,3 +167,88 @@
  .smitha-contact-choice small{font-size:9px}
 }
 @media(prefers-reduced-motion:reduce){.smitha-contact-choice{transition:none}.smitha-contact-choice:hover{transform:none}}
+
+
+/* A real date/time *request* experience; no slots are represented as confirmed availability. */
+.smitha-primary-contact{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-bottom:15px}
+.smitha-primary-contact .smitha-contact-choice{min-height:67px}
+.smitha-contact-v2 .smitha-social-label{font-size:11px;color:#6d7889;font-weight:800;margin:5px 2px 9px;letter-spacing:.1px}
+.smitha-contact-v2 .smitha-social-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.smitha-contact-v2 .smitha-social-grid .smitha-contact-choice{min-height:67px;padding:9px 7px;gap:6px;flex-direction:column;align-items:center;text-align:center}
+.smitha-contact-v2 .smitha-social-grid .smitha-contact-choice .smitha-choice-icon{width:29px;height:29px;flex-basis:29px}
+.smitha-contact-v2 .smitha-social-grid .smitha-contact-choice strong{font-size:11px}
+.smitha-contact-v2 .smitha-social-grid .smitha-contact-choice small{font-size:10px}
+.smitha-booking-details{margin:14px 0 0;border-radius:15px;border:1px solid #dce5ee;background:#fafcff;overflow:hidden}
+.smitha-booking-toggle{list-style:none;cursor:pointer;padding:14px 15px;font-size:13px;font-weight:800;color:#17345b}
+.smitha-booking-toggle::-webkit-details-marker{display:none}
+.smitha-booking-toggle::before{content:'▦';font-size:17px;margin-right:10px;color:#b3822a}
+.smitha-booking-details[open] .smitha-booking-toggle{border-bottom:1px solid #e3e8ef;background:#f2f6fb}
+.smitha-calendar-box{padding:15px}
+.smitha-scheduler{display:flex;flex-direction:column;gap:13px;color:#22364e}
+.smitha-schedule-intro{font-size:13px;line-height:1.55;color:#273950;margin:0}
+.smitha-schedule-caveat{margin:0;font-size:11px;line-height:1.55;color:#67758a}
+.smitha-month-head{display:flex;align-items:center;justify-content:space-between;gap:9px}
+.smitha-month-label{font-size:16px;color:#1a3557}
+.smitha-month-arrow{width:36px;height:36px;min-width:36px;border:1px solid #dce5ee;background:white;border-radius:10px;color:#16365b;cursor:pointer;font-size:23px;line-height:1}
+.smitha-month-arrow:disabled{opacity:.35;cursor:not-allowed}
+.smitha-calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.smitha-calendar-weekday{font-size:10px;font-weight:800;text-align:center;padding:7px 0;color:#748398}
+.smitha-calendar-blank{min-height:33px}
+.smitha-calendar-day{width:100%;height:34px;border:1px solid #dfe6ed;border-radius:9px;background:white;color:#1d385a;font-size:12px;font-weight:750;cursor:pointer}
+.smitha-calendar-day:disabled{cursor:not-allowed;background:#f1f3f6;color:#a5afbd;border-color:transparent}
+.smitha-calendar-day:not(:disabled):hover{border-color:#b88935;background:#fff7e7}
+.smitha-calendar-day.selected{background:#193a62;color:white;border-color:#193a62}
+.smitha-time-heading{font-size:15px;margin:0;color:#223a5e}
+.smitha-time-slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.smitha-time-chip{appearance:none;min-height:37px;border:1px solid #dae2eb;background:#fff;border-radius:9px;padding:8px 4px;color:#284361;font-size:12px;font-weight:700;cursor:pointer}
+.smitha-time-chip:disabled{opacity:.45;cursor:not-allowed}
+.smitha-time-chip:not(:disabled):hover{background:#fff8eb;border-color:#c18b31}
+.smitha-time-chip.selected{background:#1b395f;color:white;border-color:#1b395f}
+.smitha-booking-summary{font-size:12px;line-height:1.6;background:#f5f8fc;padding:11px 12px;border:1px solid #e1e9f2;border-radius:10px;color:#203a60;margin:0}
+.smitha-booking-submit{display:flex;flex-wrap:wrap;gap:7px}
+.smitha-booking-submit .btn{font-size:12px;padding:10px 11px;min-height:40px}
+.smitha-booking-submit .btn:disabled{opacity:.45;cursor:not-allowed}
+.smitha-booking-warning{margin:0;font-size:11px;line-height:1.55;color:#68768b}
+.smitha-live-calendar-link{min-height:60px;text-align:left;border-color:#c8d7e8}
+.smitha-booking-details summary:focus-visible,
+.smitha-calendar-day:focus-visible,.smitha-time-chip:focus-visible,
+.smitha-booking-submit .btn:focus-visible{outline:3px solid #b88630;outline-offset:2px}
+.smitha-contact-page-hero{padding-bottom:45px}
+.smitha-contact-page-layout{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,.7fr);gap:28px;align-items:start}
+.smitha-contact-page-content{min-width:0}
+.smitha-contact-page-content>h2{color:#1d3555;font-size:clamp(25px,3vw,34px);margin:5px 0 12px}
+.smitha-contact-page-content>.muted{margin-bottom:20px}
+.smitha-contact-page-ways{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.smitha-contact-page-ways .smitha-contact-choice{min-height:79px}
+.smitha-contact-page-schedule{scroll-margin-top:100px;margin-top:25px;padding:23px;border:1px solid #e1e7ee;border-radius:23px;background:white;box-shadow:0 10px 40px #152d5010}
+.smitha-contact-page-schedule>h2{font-size:25px;color:#1d3659;margin:5px 0 10px}
+.smitha-contact-page-schedule>.muted{font-size:13px;line-height:1.6;margin-bottom:21px}
+.smitha-contact-page-aside{background:#f8f5ef;border-radius:22px;padding:23px;display:flex;flex-direction:column;gap:12px;border:1px solid #eee6d6}
+.smitha-contact-page-portrait{width:100%;max-width:190px;aspect-ratio:1;object-fit:cover;border-radius:20px;border:2px solid #e4d1b0;align-self:center}
+.smitha-contact-page-aside h3{font-size:24px;color:#1d3555;line-height:1.25}
+.smitha-contact-page-aside p{font-size:13px;line-height:1.65;color:#5d6877}
+.smitha-contact-page-aside-links{display:flex;flex-direction:column;gap:9px}
+.smitha-contact-page-aside-links a{color:#244569;text-decoration:underline;text-underline-offset:3px;font-size:13px;font-weight:700}
+@media(max-width:780px){
+ .smitha-contact-page-layout{grid-template-columns:1fr}
+ .smitha-contact-page-aside{flex-direction:column}
+}
+@media(max-width:560px){
+ .smitha-contact-v2 .smitha-social-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+ .smitha-primary-contact{gap:7px;margin-bottom:11px}
+ .smitha-primary-contact .smitha-contact-choice{min-height:62px}
+ .smitha-contact-v2 .smitha-social-grid .smitha-contact-choice{padding:7px 4px}
+ .smitha-contact-v2 .smitha-social-grid .smitha-contact-choice strong{font-size:10px}
+ .smitha-contact-v2 .smitha-social-grid .smitha-contact-choice small{font-size:9px}
+ .smitha-calendar-box{padding:12px}
+ .smitha-calendar-grid{gap:3px}
+ .smitha-calendar-day{height:33px;border-radius:8px;font-size:11px}
+ .smitha-contact-page-schedule{padding:16px}
+ .smitha-contact-page-ways{gap:8px}
+ .smitha-contact-page-ways .smitha-contact-choice{min-height:71px}
+ .smitha-booking-submit{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ .smitha-booking-submit .btn{min-height:42px}
+}
+@media print{
+ .smitha-contact-v2,.smitha-contact-page-ways,.smitha-booking-details,.smitha-scheduler{display:none!important}
+}
