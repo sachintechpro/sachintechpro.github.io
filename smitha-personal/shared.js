@@ -3,6 +3,7 @@ const fallbackPhone='+18186264474';
 const contactCfg=()=>window.SMITHA_SITE_CONFIG?.contact||{};
 const activePhone=()=>/^\+[1-9]\d{7,14}$/.test(contactCfg().phone?.e164||'')?contactCfg().phone.e164:fallbackPhone;
 const smsVerified=()=>contactCfg().phone?.verifiedForSms===true;
+const displayedPhone=()=>contactCfg().phone?.display||'(818) 626-4474';
 const verifiedUrl=item=>{try{if(!item?.verified||!item.url)return '';const u=new URL(item.url);return u.protocol==='https:'&&!u.hostname.endsWith('.example')?u.href:''}catch{return ''}};
 const page=document.body.dataset.page||'home';
 const $=(id)=>document.getElementById(id);const icons={logo:`<svg viewBox="0 0 50 38" aria-hidden="true"><path d="M2 29 L14 17 L23 24 L33 9 L44 17" fill="none" stroke="#17345e" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M43 12 L47 2 L35 7" fill="none" stroke="#bf8c30" stroke-width="2.8"/><path d="M3 36 Q22 24 47 31" fill="none" stroke="#c18c2f" stroke-width="2.3"/></svg>`};
@@ -41,11 +42,11 @@ function openChat(){if(!chatPanel)return;chatPanel.classList.add('open');chatLau
 function closeChat(){chatPanel?.classList.remove('open');chatLaunch?.setAttribute('aria-expanded','false');chatLaunch?.focus()}
 chatLaunch?.addEventListener('click',()=>chatPanel.classList.contains('open')?closeChat():openChat());$('closeChat')?.addEventListener('click',closeChat);
 function localAnswer(question){const q=question.toLowerCase();if(/are you (really|actually) smitha|human|real smitha|who are you/.test(q))return 'I’m an illustrated educational guide, not Smitha personally. Choose Let’s Connect to call or prepare a message for her.';
-if(/call|phone|number|text|sms|connect|appointment|schedule|meet|contact/.test(q))return 'Use “Let’s connect” to call 818-626-4474, prepare a text, or request a convenient time. No appointment is booked automatically.';
+if(/call|phone|number|text|sms|connect|appointment|schedule|meet|contact/.test(q))return 'Use “Let’s connect” to call '+displayedPhone()+', or request a convenient time. Texting is offered only after the number is verified; appointments are not booked automatically.';
 if(/star|situation|action|result|discussion/.test(q))return 'A STAR introduction is a simple way to share your Situation, Task, what you’ve tried (Action), and the Result you want. It keeps a first conversation helpful and focused.';
 if(/advic|invest|returns|guarantee|license|fee|commission|product|portfolio|security/.test(q))return 'I can explain general concepts and questions to ask, but not make personalized legal, insurance, tax or investment recommendations. Confirm a professional’s credentials, scope and fees before acting.';
 if(/private|privacy|record|stored|data/.test(q))return 'Guide choices stay in your browser. If AI chat is enabled, questions may be sent to an AI provider. Please do not enter account numbers, medical records or other sensitive details.';
-if(/email|whatsapp|instagram|facebook|linkedin|tiktok|twitter|social/.test(q))return 'You can call Smitha at 818-626-4474. A text draft can be prepared on your device; delivery to this number has not been verified. No other contact profiles are linked.';
+if(/email|whatsapp|instagram|facebook|linkedin|tiktok|twitter|social/.test(q))return 'You can call Smitha at '+displayedPhone()+'. Texting and social messaging are available only after those destinations have been verified in the contact settings.';
 if(page==='topic'){
   if(/medicare|part b/.test(q)&&document.body.dataset.topic==='medicare')return 'Medicare Part B generally covers doctor and outpatient care. Verify enrollment timing and employer coverage rules at Medicare.gov; this site cannot enroll you.';
   if(/trust|will|estate|beneficiar/.test(q))return 'For estate planning, consider decision-makers, beneficiaries, property ownership, and whether documents fit together. A California estate attorney can help with legal documents and trust funding.';
@@ -65,6 +66,7 @@ $('chatForm')?.addEventListener('submit',e=>{e.preventDefault();ask(chatInput.va
   const cfg=document.createElement('script');
   cfg.src='site-config.js';cfg.defer=true;
   cfg.addEventListener('load',()=>{
+    window.dispatchEvent(new Event('smitha-config-ready'));
     const enhancements=document.createElement('script');enhancements.src='site-enhancements.js';enhancements.defer=true;
     document.body.append(enhancements);
   });
