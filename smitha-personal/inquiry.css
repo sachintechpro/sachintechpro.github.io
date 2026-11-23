@@ -1,0 +1,18 @@
+
+.smitha-message-section{padding:55px 0;background:#f7f1e6;border-top:1px solid #e9dfcf}
+.smitha-message-section[hidden]{display:none!important}
+.smitha-message-layout{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(20px,5vw,65px);align-items:start}
+.smitha-message-layout h2{font-size:clamp(28px,4vw,42px);color:#1c3858;margin:9px 0 13px}
+.smitha-message-layout p{font-size:14px;line-height:1.7;color:#627183}
+.smitha-inquiry-form{display:grid;gap:14px;border:1px solid #e2dccf;border-radius:20px;background:white;padding:25px}
+.smitha-inquiry-form label{display:flex;flex-direction:column;gap:7px;font-size:12px;color:#254160;font-weight:800}
+.smitha-inquiry-form label>span{font-weight:500;color:#748398}
+.smitha-inquiry-form input:not([type=checkbox]),.smitha-inquiry-form textarea,.smitha-inquiry-form select{border:1px solid #d7e0eb;border-radius:11px;padding:12px;font-size:14px;max-width:100%;width:100%;background:#fff;color:#1c3858}
+.smitha-inquiry-form .smitha-inquiry-consent{display:flex;flex-direction:row;gap:10px;align-items:flex-start;line-height:1.6;font-weight:600}
+.smitha-inquiry-consent input{width:18px;height:18px;margin:3px 0 0;accent-color:#1b426d;flex:none}
+.smitha-inquiry-form .btn{min-height:45px;justify-self:start}
+.smitha-inquiry-form .btn:disabled{opacity:.6}
+.smitha-inquiry-status{font-size:12px!important;min-height:18px;margin:0!important}
+.smitha-inquiry-status[data-kind="success"]{color:#285e3d!important}
+.smitha-inquiry-status[data-kind="error"]{color:#9b352d!important}
+@media(max-width:760px){.smitha-message-layout{grid-template-columns:1fr}.smitha-message-section{padding:36px 0}.smitha-inquiry-form{padding:19px}}
