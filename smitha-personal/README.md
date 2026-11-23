@@ -13,7 +13,7 @@ Independent, client-personalized **educational preview** for Smitha Rangaswamy (
 - Full directory with topic search and filters, primary source links, collapsible questions and print/copy checklists.
 - Original Your Next Chapter and Build Something Good interactive guides remain.
 - Dedicated Contact Smitha page with Email, Text, Call and a 15-minute Pacific-time preferred-date calendar, plus the compact booking chooser on existing pages.
-- Private phone/text introduction and optional STAR conversation flow; no backend lead storage, no automatic appointment or sending.
+- An optional four-step, topic-aware question flow turns life-stage concerns into a clear discussion summary, then offers Call, Text, Email and a 15-minute request with Smitha. The internal questioning framework is not visible to customers. No backend lead storage or automatic sending.
 - Live appointment confirmation requires a verified external booking calendar; the built-in date and time picker currently prepares a request only. See `BOOKING_SETUP.md`.
 - Ask Smitha is an illustrated educational guide; live free-form model answers depend on verified server configuration. Avoid entering private financial, medical or identifying details.
 
