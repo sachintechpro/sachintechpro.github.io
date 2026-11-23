@@ -214,7 +214,7 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 self.log_error("Verification text could not be delivered")
                 return self.respond(502, {"error":"I couldn’t send the verification text. Check the number and try again."})
-            CHALLENGES[nonce] = {"attempts":0,"expires":int(time.time())+600}
+            current_time = int(time.time())\n            for old_nonce, state in list(CHALLENGES.items()):\n                if state["expires"] < current_time:\n                    CHALLENGES.pop(old_nonce, None)\n            CHALLENGES[nonce] = {"attempts":0,"expires":current_time+600}
             return self.respond(200, {"success":True,"challenge":challenge})
 
         if self.path == "/api/verify/phone/confirm":
