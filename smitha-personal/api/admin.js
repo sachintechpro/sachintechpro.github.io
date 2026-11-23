@@ -62,6 +62,7 @@ function safeLink(key,value){
  const u=new URL(raw);
  if(u.protocol!=="https:"||u.username||u.password)throw Error("invalid_"+key);
  if(!domainAllow[key].some(d=>u.hostname===d||u.hostname==="www."+d))throw Error("invalid_"+key);
+ if(key==="x"&&(!u.pathname.startsWith("/messages/compose")||!u.searchParams.get("recipient_id")))throw Error("invalid_x_dm_link");
  return u.href
 }
 function cleanSettings(body){
