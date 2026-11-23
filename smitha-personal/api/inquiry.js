@@ -1,4 +1,5 @@
 "use strict";
+const crypto=require("node:crypto");
 const ORIGINS=new Set(["https://hello-smitha-personal.onrender.com","http://localhost:3000","http://127.0.0.1:3000"]);
 const TOPICS=new Set(["estate","trusts","family","caregiving","medicare","retirement","business","general"]);
 const validEmail=s=>typeof s==="string"&&s.length<=254&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s);
@@ -14,7 +15,19 @@ async function getSettings(){
   const o=await r.json(),src=Buffer.from(String(o.content||"").replace(/\s/g,""),"base64").toString("utf8");
   const content=JSON.parse(src.replace(/^\s*window\.SMITHA_OWNER_CONFIG\s*=\s*/,"").replace(/;\s*$/,""));
   const f=content.forwarding||{};
-  cached={enabled:f.enabled===true,email:validEmail(f.email)?f.email:""};
+  let decrypted="";
+  if(f.encryptedEmail){
+   try{
+    const key=Buffer.from(process.env.SMITHA_FORWARDING_KEY||"","base64");
+    if(key.length!==32)throw Error("missing_key");
+    const parts=String(f.encryptedEmail).split(".");
+    if(parts.length!==4||parts[0]!=="v1")throw Error("bad_cipher");
+    const d=crypto.createDecipheriv("aes-256-gcm",key,Buffer.from(parts[1],"base64url"));
+    d.setAuthTag(Buffer.from(parts[3],"base64url"));
+    decrypted=Buffer.concat([d.update(Buffer.from(parts[2],"base64url")),d.final()]).toString("utf8");
+   }catch{decrypted=""}
+  }
+  cached={enabled:f.enabled===true,email:validEmail(decrypted)?decrypted:""};
   expires=Date.now()+60000;return cached
  }catch{if(cached)return cached;return{enabled:false,email:""}}
 }
