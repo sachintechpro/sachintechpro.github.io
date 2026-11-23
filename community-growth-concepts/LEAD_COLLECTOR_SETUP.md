@@ -1,3 +1,11 @@
+# Current operating mode: DEMO (November 23, 2026)
+
+The contact and subscription forms are local browser simulations: after a valid form submission they show an explicit demo-success notice and immediately clear entered values. **No request is sent to the server, no email/SMS is sent, and no information is saved.** The server also refuses /api/leads submissions unless LEADS_LIVE_ENABLED=true is explicitly set in a future production rollout. Direct email/call/text contact links remain genuine device handoffs and are separate from the demo forms.
+
+Do not claim real lead delivery or subscription during a demonstration. Live configuration below is retained for a future separately approved launch.
+
+---
+
 # Nisha lead collector — production setup
 The HTML pages now contain a contact lead form and a newsletter **subscription request** form. The Node web server exposes POST /api/leads and sends both email (Resend) and text (Twilio) notifications server-to-server.
 
