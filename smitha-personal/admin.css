@@ -38,3 +38,22 @@
 .smitha-admin-mobile-link{display:none!important}
 @media(max-width:850px){.admin-grid{grid-template-columns:1fr}.admin-flags{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:680px){.admin-main{padding-top:27px}.admin-panel{padding:18px;border-radius:14px}.admin-flags{grid-template-columns:1fr}.admin-back{font-size:12px}.smitha-admin-mobile-link{display:inline-flex!important;margin-left:auto;margin-right:8px}.admin-intro h1{font-size:34px}}
+
+
+/* Owner-only, on-device relationship follow-up — no automated social engagement */
+.admin-relationship-form{border:1px solid #e5e3de;border-radius:15px;padding:18px;background:#fafaf9;margin:15px 0 23px}
+.admin-relationship-form .admin-save{margin-top:17px}
+.admin-relationship-form .admin-save span{font-size:12px;max-width:420px}
+.admin-relations-queue h3{font-size:16px;color:#193859;font-weight:800;margin-bottom:13px}
+.admin-leads-empty{color:#67768a;font-size:12px;line-height:1.6}
+.admin-lead-card{border:1px solid #e0e6ed;border-radius:14px;background:#fff;padding:16px 17px;margin-bottom:12px}
+.admin-lead-title{display:flex;gap:6px;flex-direction:column}
+.admin-lead-title strong{font-size:15px;color:#1f3958}
+.admin-lead-title small{font-size:11px;color:#61748b}
+.admin-lead-info{font-size:12px;color:#856325;margin-top:7px;margin-bottom:11px}
+.admin-lead-links{display:flex;flex-wrap:wrap;gap:8px}
+.admin-lead-action,.admin-lead-search{border:1px solid #d5e0eb;background:#f6f9fc;border-radius:9px;padding:8px 10px;color:#1d507c;text-decoration:none;font-weight:700;font-size:12px;line-height:1.3}
+.admin-lead-search{border-color:#ebdfc9;background:#fffaf2;color:#776037}
+.admin-lead-action:hover,.admin-lead-search:hover{border-color:#b78d4c}
+.admin-lead-actions{display:flex;gap:15px;flex-wrap:wrap;margin-top:13px}
+@media(max-width:550px){.admin-relationship-form{padding:14px}.admin-lead-card{padding:13px}.admin-lead-links{gap:7px}.admin-lead-action,.admin-lead-search{font-size:11px}}
