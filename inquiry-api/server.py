@@ -30,6 +30,9 @@ CHALLENGES = {}
 PROJECTS = {"MarketOps 360", "Ternstone ValueOps", "Column & Key", "KindredPath", "Cedarline Insurance", "WorkerComp Insurance", "PlanBridge Retirement Ops", "Value & Delivery Workbench", "CommerceDesk", "PixelProof", "IdentityFlow"}
 OPPORTUNITIES = {"Project Manager role", "Program Manager role", "Portfolio Manager role", "Forward Deployed Engineer / AI Solutions Engineer role", "Independent contract", "Project-based development", "Technical consultation", "Something else"}
 
+def demo_mode():
+    return os.getenv("DEMO_MODE", "true").strip().lower() in {"1", "true", "yes", "on"}
+
 def signing_key():
     value = os.getenv("VERIFY_SECRET", "")
     return value.encode("utf-8") if len(value) >= 32 else None
@@ -155,7 +158,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         if self.path == "/health":
-            return self.respond(200, {"status":"ok","email_configured":mail_configured(),"verification_configured":smtp_ready(),"sms_configured":twilio_ready(),"whatsapp_configured":bool(os.getenv("TWILIO_WHATSAPP_FROM") and os.getenv("TWILIO_WHATSAPP_CONTENT_SID") and twilio_ready())})
+            return self.respond(200, {"status":"ok","demo_mode":demo_mode(),"email_configured":mail_configured(),"verification_configured":smtp_ready(),"sms_configured":twilio_ready(),"whatsapp_configured":bool(os.getenv("TWILIO_WHATSAPP_FROM") and os.getenv("TWILIO_WHATSAPP_CONTENT_SID") and twilio_ready())})
         return self.respond(404, {"error":"Not found"})
 
     def do_POST(self):
@@ -166,6 +169,18 @@ class Handler(BaseHTTPRequestHandler):
             return self.respond(400, {"error":"Malformed request"})
         if data.get("website"):
             return self.respond(200, {"success":True})
+        if demo_mode():
+            if self.path == "/api/verify/email/start":
+                return self.respond(200, {"success":True,"demo":True})
+            if self.path == "/api/verify/email/confirm":
+                return self.respond(200, {"success":True,"demo":True,"email":"demo@example.com","name":"Demo visitor","proof":"demo-email-proof"})
+            if self.path == "/api/verify/phone/start":
+                return self.respond(200, {"success":True,"demo":True,"challenge":"demo-phone-challenge"})
+            if self.path == "/api/verify/phone/confirm":
+                return self.respond(200, {"success":True,"demo":True,"proof":"demo-phone-proof"})
+            if self.path == "/api/inquiry":
+                return self.respond(200, {"success":True,"demo":True,"emailReceipt":False,"smsReceipt":False,"whatsappReceipt":False})
+            return self.respond(404, {"error":"Not found"})
         ip = self.client_address[0]
 
         if self.path == "/api/verify/email/start":
