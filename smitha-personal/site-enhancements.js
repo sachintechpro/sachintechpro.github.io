@@ -126,8 +126,14 @@ function addNavigation() {
     const contact=nav.querySelector('[data-open-contact]');
     if(contact)nav.insertBefore(a,contact); else nav.append(a);
   }
+  if(nav && !nav.querySelector('[href="contact.html"]')){
+    const a=link('Contact Smitha','','contact.html');
+    const contact=nav.querySelector('[data-open-contact]');
+    if(contact)nav.insertBefore(a,contact);else nav.append(a);
+  }
   const foot=document.querySelector('.footlinks');
   if(foot && !foot.querySelector('[href="handouts.html"]')) foot.append(link('Shareable handouts','','handouts.html'));
+  if(foot && !foot.querySelector('[href="contact.html"]')) foot.append(link('Contact Smitha','','contact.html'));
 }
 const handoutMap = {
  estate:'estate',trusts:'trusts',children:'children',caregiving:'caregiving',
@@ -145,7 +151,7 @@ const contextualAdvice={
  'later-life':{title:'How would you prefer to receive care?',desc:'Think about trusted helpers, daily support, expected costs and documents to discuss with a qualified professional.',nextText:'Explore caregiving essentials',nextHref:'caregiving.html'}
 };
 function addConversationPanel(){
-  if(slug==='outreach-kit')return; // Owner draft editor is separate from the visitor journey.
+  if(slug==='outreach-kit'||slug==='contact')return; // Owner and contact pages already have purpose-built actions.
   const main=document.querySelector('main'),foot=document.querySelector('footer');
   if(!main||!foot||document.getElementById('readyToConnect'))return;
   const ctx=contextualAdvice[slug]||{
@@ -162,8 +168,7 @@ function addConversationPanel(){
   if(cfg.contact?.phone?.verifiedForSms===true||cfg.contact?.phone?.smsDraftEnabled===true)
     actions.append(link('✉ Text Smitha','btn gold smitha-text-action',smsUrl(introText())));
   else actions.append(button('Copy my question','btn gold',()=>copy(introText(),'Conversation starter copied.')));
-  const booking=verifiedLink(cfg.contact?.booking);
-  if(booking)actions.append(link('Choose a conversation time','btn outline',booking));
+  actions.append(link('Book a 15-minute introduction ↗','btn outline','contact.html#smithaContactCalendar'));
   actions.append(button('Share a STAR introduction ↗','btn outline',talk));
   const extra=node('div','smitha-conversion-related');
   const next=link(ctx.nextText+' ↗','smitha-suggested',ctx.nextHref);
