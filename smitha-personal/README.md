@@ -12,14 +12,16 @@ Independent, client-personalized **educational preview** for Smitha Rangaswamy (
 - Income, financial foundations, legacy/final arrangements, and business continuity.
 - Full directory with topic search and filters, primary source links, collapsible questions and print/copy checklists.
 - Original Your Next Chapter and Build Something Good interactive guides remain.
+- Dedicated Contact Smitha page with Email, Text, Call and a 15-minute Pacific-time preferred-date calendar, plus the compact booking chooser on existing pages.
 - Private phone/text introduction and optional STAR conversation flow; no backend lead storage, no automatic appointment or sending.
+- Live appointment confirmation requires a verified external booking calendar; the built-in date and time picker currently prepares a request only. See `BOOKING_SETUP.md`.
 - Ask Smitha is an illustrated educational guide; live free-form model answers depend on verified server configuration. Avoid entering private financial, medical or identifying details.
 
 ## Implementation
 Static site assets reside in `smitha-personal/`. The current Render static service builds from this directory. The separate AI API remains under `smitha-personal/api/`, with any credentials configured only as server environment secrets. No browser script should contain a provider key.
 
 ## Release checks
-21 HTML pages validated at 390px and 1440px. The life-stage wizard, topic filtering, connected links, checklists, chat popup, phone/text contact dialog, original planning and entrepreneurship interactions passed local Chromium tests. No horizontal overflow or missing internal links. Device handoffs and actual SMS delivery require separate verification on production devices.
+Original 21 HTML pages underwent earlier smoke tests; later additions were verified by source and scripted interaction checks. Run fresh physical-device tests for production acceptance. The life-stage wizard, topic filtering, connected links, checklists, chat popup, phone/text contact dialog, original planning and entrepreneurship interactions passed local Chromium tests. No horizontal overflow or missing internal links. Device handoffs and actual SMS delivery require separate verification on production devices.
 
 ## Safety and publication
 - Estate and trust topics are legal-education prompts, not documents, legal advice, or a claim that every person must create a trust.
