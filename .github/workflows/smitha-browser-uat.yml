@@ -1,0 +1,33 @@
+name: Hello Smitha browser UAT
+on:
+  push:
+    branches: [demo/smitha-rangaswamy-personal-2026]
+    paths:
+      - 'smitha-personal/**'
+      - '.github/workflows/smitha-browser-uat.yml'
+      - '.github/scripts/smitha-browser-uat.mjs'
+  workflow_dispatch:
+jobs:
+  uat:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser
+        run: |
+          npm install --no-save playwright@1.57.0
+          npx playwright install --with-deps chromium
+      - name: Run end-to-end mobile and desktop UAT
+        run: node .github/scripts/smitha-browser-uat.mjs
+      - name: Keep UAT screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smitha-uat-screenshots
+          path: uat-screenshots/
+          if-no-files-found: ignore
