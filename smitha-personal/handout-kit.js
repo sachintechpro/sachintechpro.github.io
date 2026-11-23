@@ -35,7 +35,7 @@ const topics={
  },
  children:{
   tag:'CHILDREN & FUTURE GOALS',title:'Planning for a child: more than an education account',
-  intro:'Education goals matter, but a child's security also depends on caregiving plans, household resilience, and clear instructions for unexpected events.',
+  intro:'Education goals matter, but a child’s security also depends on caregiving plans, household resilience, and clear instructions for unexpected events.',
   checklist:[
    'Set a broad education goal and approximate timeline without sharing account details.',
    'Discuss who would care for a child if a parent became unavailable.',
