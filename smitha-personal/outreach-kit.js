@@ -16,11 +16,14 @@ function merge(s,t){
 const drafts=new Map(); // This tab only; no personal content is stored on a server.
 let currentId=select.value||templates[0].id;
 let previousName=val('emailFirstName')||'there',previousContext=val('emailContext')||'our local community';
+let previousPhone=window.SMITHA_SITE_CONFIG?.contact?.phone?.display||'(818) 626-4474';
 function saveCurrent(){
- if(currentId)drafts.set(currentId,{text:body.value,name:previousName,context:previousContext});
+ if(currentId)drafts.set(currentId,{text:body.value,name:previousName,context:previousContext,phone:previousPhone});
 }
 function preserveEditedText(draft,newName,newContext){
  let text=draft.text;
+ const currentPhone=window.SMITHA_SITE_CONFIG?.contact?.phone?.display||'(818) 626-4474';
+ if(draft.phone&&draft.phone!==currentPhone)text=text.replaceAll(draft.phone,currentPhone);
  if(draft.name!==newName)text=text.replaceAll('Hi '+draft.name+',','Hi '+newName+',');
  // Only substitute the literal preview location previously inserted; leave other edits untouched.
  if(draft.context!==newContext&&draft.context)text=text.replaceAll(draft.context,newContext);
@@ -33,8 +36,8 @@ function renderDraft(){
  $('emailSubject').textContent=merge(t.subject,t);
  const saved=drafts.get(t.id);
  body.value=saved?preserveEditedText(saved,name,context):merge(t.body,t);
- if(saved)drafts.set(t.id,{text:body.value,name,context});
- currentId=t.id;previousName=name;previousContext=context;
+ if(saved)drafts.set(t.id,{text:body.value,name,context,phone:window.SMITHA_SITE_CONFIG?.contact?.phone?.display||'(818) 626-4474'});
+ currentId=t.id;previousName=name;previousContext=context;previousPhone=window.SMITHA_SITE_CONFIG?.contact?.phone?.display||'(818) 626-4474';
 }
 body.addEventListener('input',saveCurrent);
 select.addEventListener('change',()=>{saveCurrent();renderDraft()});
