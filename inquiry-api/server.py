@@ -68,13 +68,19 @@ def read_token(token, purpose):
     except (ValueError, TypeError, json.JSONDecodeError, UnicodeDecodeError):
         return None
 
+def sender_email():
+    return os.getenv("SMTP_USER", "Sachin.techpro@gmail.com")
+
+def inquiry_recipient():
+    return os.getenv("INQUIRY_TO", "Sachin.techpro@gmail.com")
+
 def mail_configured():
-    return all(os.getenv(k) for k in ("SMTP_HOST", "SMTP_USER", "SMTP_PASSWORD", "INQUIRY_TO"))
+    return bool(os.getenv("SMTP_HOST") and os.getenv("SMTP_PASSWORD"))
 
 def mail_message(to, subject, text, html_body=None, reply_to=None):
     msg = EmailMessage()
     msg["Subject"] = subject
-    msg["From"] = formataddr(("SachinTechpro", os.environ["SMTP_USER"]))
+    msg["From"] = formataddr(("SachinTechpro", sender_email()))
     msg["To"] = to
     if reply_to:
         msg["Reply-To"] = reply_to
@@ -83,7 +89,7 @@ def mail_message(to, subject, text, html_body=None, reply_to=None):
         msg.add_alternative(html_body, subtype="html")
     with smtplib.SMTP(os.environ["SMTP_HOST"], int(os.getenv("SMTP_PORT", "587")), timeout=18) as smtp:
         smtp.starttls(context=ssl.create_default_context())
-        smtp.login(os.environ["SMTP_USER"], os.environ["SMTP_PASSWORD"])
+        smtp.login(sender_email(), os.environ["SMTP_PASSWORD"])
         smtp.send_message(msg)
 
 def smtp_ready():
@@ -287,7 +293,7 @@ class Handler(BaseHTTPRequestHandler):
             details = (f"Name: {name}\nEmail: {email}\nMobile: {phone_number}\nOrganization: {company or 'Not provided'}\nTitle: {title or 'Not provided'}\nWebsite: {company_website or 'Not provided'}\nBusiness address: {address or 'Not provided'}\nVisit request consent: {'Yes' if visit_consent else 'No'}\nOpportunity: {opportunity}\nProject: {project or 'Not specified'}\nSMS follow-up consent: {'Yes' if sms_consent else 'No'}\nWhatsApp follow-up consent: {'Yes' if whatsapp_consent else 'No'}\n\nMessage:\n{message}")
             owner_html = f'<div style="font-family:Arial,sans-serif;color:#29251f"><h2>New verified inquiry</h2><p><strong>{safe(name)}</strong> · {safe(opportunity)}</p><p>Email: {safe(email)}<br>Mobile: {safe(phone_number)}<br>Organization: {safe(company)}<br>Title: {safe(title)}<br>Website: {safe(company_website)}<br>Business address: {safe(address)}</p><p>Visit request consent: {"Yes" if visit_consent else "No"}<br>SMS follow-up: {"Yes" if sms_consent else "No"}<br>WhatsApp follow-up: {"Yes" if whatsapp_consent else "No"}<br>Project: {safe(project)}</p><p>{safe_message}</p></div>'
             try:
-                mail_message(os.environ["INQUIRY_TO"], subject, details, owner_html, reply_to=email)
+                mail_message(inquiry_recipient(), subject, details, owner_html, reply_to=email)
             except Exception:
                 self.log_error("Inquiry notification could not be delivered")
                 return self.respond(502, {"error":"I couldn’t deliver your inquiry right now. Please try again later."})
