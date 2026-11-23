@@ -177,6 +177,10 @@ function renderResult(r){
  const list=el('ol','cx-next-list');r.steps.forEach(x=>{const li=el('li');li.append(el('strong','',x.title),el('p','',x.explanation));list.append(li)});out.append(list);
  const cautions=el('div','cx-result-context');r.warnings.forEach(x=>cautions.append(el('p','',x)));out.append(cautions);
  const refs=el('div','cx-result-resources');refs.append(el('h4','','Helpful information'));links[active].forEach(([text,url])=>refs.append(makeLink(text,url)));out.append(refs);
+ const recommendations={estate:['trust','Preparing for a trust discussion?'],trust:['estate','See the wider estate picture'],family:['estate','Check family documents and decision-makers'],care:['estate','Review trusted decision-makers'],medicare:['care','Think through later-life support'],continuity:values().focus===1?['estate','Connect ownership and family wishes']:['medicare','Check Medicare timing questions']};
+ const suggested=recommendations[active];
+ if(suggested){const box=el('div','cx-related-next');box.append(el('strong','','This may connect to another question'));
+ const next=el('button','cx-next-experience',suggested[1]+' ↗');next.type='button';next.addEventListener('click',()=>{setTool(suggested[0]);$('cxWorkspace')?.scrollIntoView({behavior:'smooth',block:'start'})});box.append(next);out.append(box)}
  const actions=el('div','cx-result-actions'),b=(label,cls,fn)=>{const n=el('button',cls,label);n.type='button';n.addEventListener('click',fn);return n};
  actions.append(b('Talk with Smitha ↗','btn gold',()=>contact(r)),b('Text my questions','btn outline',()=>message(summary(r))),b('Copy my takeaway','cx-text-action',()=>copy(summary(r))),b('Print / save as PDF','cx-text-action',()=>window.print()));
  out.append(actions,el('p','cx-result-privacy','No information is sent to Smitha unless you choose to send it in your own app. A message draft is not a sent message.'));
