@@ -1,26 +1,28 @@
-# Hello, Smitha — Personal Community & Financial Education Demo
+# Hello, Smitha — Personal Life-Stage Education Site
 
-Independent, non-operational concept demonstration prepared for Smitha Rangaswamy (Los Angeles, CA). **Not an official website, an offer of financial products, or evidence of an established advisory relationship.** The illustration is a watercolor-style avatar, not Smitha's real photograph. Verify all credentials, licensing and advertising requirements before use as a real professional website.
+Independent, client-personalized **educational preview** for Smitha Rangaswamy (Los Angeles, California), pending her approval. Not an official financial institution, insurance agency or Medicare website. The watercolor portrait is illustrative, not a photograph.
 
-## Purpose
-A warm personal site, not a corporate or agency portal. Visitors explore two small interactive experiences and choose to initiate a private conversation if they want.
+## Visitor experience
+- Personal welcome page with conversational call and text CTAs.
+- Find My Path: two-step life-situation guide with connected educational topics.
+- Estate planning essentials and living trusts: dedicated guides, decision makers, asset/beneficiary questions, checklists, and California Courts resources.
+- Family: marriage, children, home, protection, beneficiaries.
+- Later life: retirement, own aging, caring for an older person, and official Medicare Part B guidance.
+- Long-term coverage: explanatory cash-value and policy-crediting trade-offs without carrier or branded product promotion.
+- Income, financial foundations, legacy/final arrangements, and business continuity.
+- Full directory with topic search and filters, primary source links, collapsible questions and print/copy checklists.
+- Original Your Next Chapter and Build Something Good interactive guides remain.
+- Private phone/text introduction and optional STAR conversation flow; no backend lead storage, no automatic appointment or sending.
+- Ask Smitha is an illustrated educational guide; live free-form model answers depend on verified server configuration. Avoid entering private financial, medical or identifying details.
 
-- **Your Next Chapter** — three-question educational journey ending in five financial-planning discussion questions. No individualized financial advice, forecasting, quote, product recommendation, portfolio review, or account-data collection.
-- **Build Something Good** — educational questions about side projects, entrepreneurship, community collaboration, and responsible opportunity exploration. Fictional examples only; no earnings promises or existing affiliates.
-- **Ask Smitha** — illustrated digital guide, not Smitha herself; limited contextual assistance in the static prototype. An optional future AI backend would require a real API key and privacy/security review.
-- **Let's connect** — call or SMS to the business-card phone number, plus optional STAR conversation notes. Uses device-native handoffs. No server-side lead capture, automatic SMS, confirmed appointment, or stored form data.
+## Implementation
+Static site assets reside in `smitha-personal/`. The current Render static service builds from this directory. The separate AI API remains under `smitha-personal/api/`, with any credentials configured only as server environment secrets. No browser script should contain a provider key.
 
-## Verified contact fields from the supplied card
-- Name: Smitha Rangaswamy
-- Role on card: Licensed Financial Professional & Entrepreneur Builder
-- Tagline: Plan Today | Build Tomorrow
-- Phone: 818-626-4474
-- Location: Los Angeles, California
+## Release checks
+21 HTML pages validated at 390px and 1440px. The life-stage wizard, topic filtering, connected links, checklists, chat popup, phone/text contact dialog, original planning and entrepreneurship interactions passed local Chromium tests. No horizontal overflow or missing internal links. Device handoffs and actual SMS delivery require separate verification on production devices.
 
-No public email, WhatsApp Business account, social handles, or scheduler link were supplied, so those are not active.
-
-## Deployment
-This static project contains `index.html`, `plan.html`, `grow.html`, `styles.css`, `shared.js`, `interactive.js`, and `assets/smitha-watercolor.webp`. Render can publish the project directory with no build tools or backend required. Do not add an API key to this public repository. The live preview should be reviewed and approved by Smitha before promotion to her real domain.
-
-## Local checks
-Run from a local static server or Render. Verify mobile responsiveness, the three-question guide, entrepreneurship selector, chat, contact sheet, and device-native `tel:` / `sms:` draft behavior. Real message delivery, account ownership and license verification require a separate acceptance test.
+## Safety and publication
+- Estate and trust topics are legal-education prompts, not documents, legal advice, or a claim that every person must create a trust.
+- Medicare guidance links to Medicare.gov; no Medicare affiliation, enrollment, or private plan offers.
+- No policy prices, guaranteed returns, specific insurance product names, agent-affiliate claims, partner endorsements, or real customer records.
+- All content and professional claims require Smitha’s review and applicable compliance approvals before deployment to her own domain.
