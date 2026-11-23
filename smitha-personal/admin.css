@@ -1,0 +1,40 @@
+
+.smitha-admin-page{min-height:100vh;background:#f7f5f0;color:#1b3557}
+.smitha-admin-page .topbar>.container{display:flex;align-items:center;justify-content:space-between;gap:15px}
+.admin-back{font-size:13px;color:#1e446d;text-decoration:underline;text-underline-offset:3px;font-weight:700}
+.admin-main{padding-top:49px;padding-bottom:90px;max-width:1000px}
+.admin-intro{max-width:750px;margin-bottom:28px}
+.admin-intro h1{font-family:Georgia,serif;font-size:clamp(32px,4.5vw,53px);color:#1a3557;line-height:1.1;margin:10px 0 14px}
+.admin-intro p{font-size:15px;color:#607086;line-height:1.72}
+.admin-panel{background:#fff;border:1px solid #e3e5e9;border-radius:19px;padding:25px;margin-bottom:19px;box-shadow:0 9px 27px #152b4b08}
+.admin-panel h2{font-size:24px;color:#1c3658;margin:7px 0 13px}
+.admin-panel>p{font-size:13px;color:#627184;line-height:1.65;margin-bottom:21px}
+.admin-panel label{font-size:12px;font-weight:750;color:#254466;display:flex;flex-direction:column;gap:8px}
+.admin-panel label>span{font-size:11px;font-weight:500;color:#687b8c}
+.admin-panel input:not([type=checkbox]),.admin-panel textarea,.admin-panel select{width:100%;min-height:44px;border:1px solid #d8e0e8;padding:10px 12px;border-radius:11px;color:#1a3b5f;background:#fbfcfe;font-size:14px}
+.admin-panel input:focus-visible,.admin-panel textarea:focus-visible,.admin-panel select:focus-visible{outline:3px solid #c39851;outline-offset:2px}
+.admin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.admin-flags{border:1px solid #dfe5ed;border-radius:14px;padding:13px 15px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:24px}
+.admin-flags legend{font-size:13px;font-weight:800;color:#1a385b;padding:0 7px}
+.admin-panel .admin-flags label,.admin-panel .admin-checkbox{flex-direction:row;align-items:flex-start;gap:10px;font-size:12px;line-height:1.6}
+.admin-flags input[type=checkbox],.admin-checkbox input[type=checkbox]{accent-color:#193e6d;margin:3px 0 0;width:18px;height:18px;flex:none}
+.admin-panel .admin-wide{margin:15px 0}
+.admin-identity{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 6px 23px;font-size:12px;font-weight:700;color:#5c6e81}
+.admin-text-button{border:0;background:transparent;text-decoration:underline;color:#174a77;font-size:12px;font-weight:800;cursor:pointer}
+.admin-save{display:flex;align-items:center;gap:15px;flex-wrap:wrap}
+.admin-save button{min-width:150px}
+.admin-save span{font-size:12px;color:#526986}
+.admin-note{font-size:12px;color:#6c798b;line-height:1.5;margin-top:12px}
+.admin-newsletter-status{margin-top:18px;padding-top:20px;border-top:1px solid #e7e8ea}
+.admin-newsletter-status h3{font-size:16px;color:#1a3559;margin-bottom:9px}
+#adminSubscriberSummary{font-size:12px;color:#61738a;margin-top:10px}
+#adminSubscribers{overflow-x:auto}
+.admin-subscriber-table{border-collapse:collapse;width:100%;font-size:12px;margin-top:13px}
+.admin-subscriber-table td,.admin-subscriber-table th{border-bottom:1px solid #e1e5eb;padding:9px 7px;text-align:left}
+.admin-login{max-width:580px;padding:29px}
+.admin-login p{margin-bottom:15px}
+#adminLoginStatus{font-size:12px;color:#60718a;margin:15px 0}
+.smitha-admin-header-link{font-size:12px!important;font-weight:800!important;border:1px solid #b28b4e!important;border-radius:10px!important;padding:7px 11px!important;color:#173657!important;background:#fcf4e7!important;text-decoration:none!important}
+.smitha-admin-mobile-link{display:none!important}
+@media(max-width:850px){.admin-grid{grid-template-columns:1fr}.admin-flags{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.admin-main{padding-top:27px}.admin-panel{padding:18px;border-radius:14px}.admin-flags{grid-template-columns:1fr}.admin-back{font-size:12px}.smitha-admin-mobile-link{display:inline-flex!important;margin-left:auto;margin-right:8px}.admin-intro h1{font-size:34px}}
