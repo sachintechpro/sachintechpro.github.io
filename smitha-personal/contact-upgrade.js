@@ -83,7 +83,7 @@ grid.replaceChildren();
 grid.classList.add('smitha-choice-grid');
 grid.append(
  action('Call Smitha','☎','Opens a private phone call',()=>{location.href='tel:'+phone},null,'primary'),
- action('Send a text','✉','Opens a message draft',()=>textSmitha(''),null,'primary')
+ action('Send a text','✉',contact.phone?.verifiedForSms===true?'Opens your Messages app':'Draft only · receipt not confirmed',()=>textSmitha(''),null,'primary')
 );
 const messaging=[
  ['WhatsApp','◉',contact.whatsapp,['wa.me','api.whatsapp.com'],'WhatsApp'],
@@ -138,7 +138,7 @@ if(sendNote){
  sendNote.addEventListener('click',()=>{if(smsEnabled)textSmitha('');else copyText(messageFor(''))});
 }
 const privacy=document.createElement('p');privacy.className='smitha-contact-privacy';
-privacy.textContent='Calls and messages open in your own app. Nothing is sent automatically. Social profiles are linked only after confirmation. Please avoid sharing private financial or medical details.';
+privacy.textContent='Calls and messages open in your own app; nothing is sent automatically.'+(contact.phone?.verifiedForSms===true?'':' Text delivery has not been confirmed.')+' Social links open directly only after ownership is confirmed. Please avoid private financial or medical details.';
 body.append(privacy);
 // A visible number should not be necessary for choosing how to connect.
 // The actual phone endpoint remains in tel:/sms: links, so this is UI privacy, not telephone-number secrecy.
