@@ -5,6 +5,33 @@ const BRANCH="demo/smitha-rangaswamy-personal-2026";
 const CONFIG_PATH="smitha-personal/owner-config.js";
 let certs=null,certsTime=0;
 const normalized=s=>String(s||"").trim().toLowerCase();
+
+function forwardingKey(){
+ const encoded=process.env.SMITHA_FORWARDING_KEY||"";
+ let key;
+ try{key=Buffer.from(encoded,"base64")}catch{}
+ return key?.length===32?key:null
+}
+function encryptEmail(email){
+ if(!email)return "";
+ const key=forwardingKey();
+ if(!key)throw Error("forwarding_encryption_not_connected");
+ const iv=crypto.randomBytes(12),cipher=crypto.createCipheriv("aes-256-gcm",key,iv);
+ const encrypted=Buffer.concat([cipher.update(email,"utf8"),cipher.final()]);
+ return "v1."+iv.toString("base64url")+"."+encrypted.toString("base64url")+"."+cipher.getAuthTag().toString("base64url")
+}
+function decryptEmail(value){
+ if(!value)return "";
+ const key=forwardingKey();if(!key)throw Error("forwarding_encryption_not_connected");
+ const parts=String(value).split(".");
+ if(parts.length!==4||parts[0]!=="v1")throw Error("forwarding_encryption_invalid");
+ const decipher=crypto.createDecipheriv("aes-256-gcm",key,Buffer.from(parts[1],"base64url"));
+ decipher.setAuthTag(Buffer.from(parts[3],"base64url"));
+ const result=Buffer.concat([decipher.update(Buffer.from(parts[2],"base64url")),decipher.final()]).toString("utf8");
+ if(!validEmail(result))throw Error("forwarding_email_invalid");
+ return result
+}
+
 const validEmail=s=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s)&&s.length<=254;
 const ownerSet=()=>new Set(String(process.env.SMITHA_ADMIN_EMAILS||"").split(",").map(normalized).filter(validEmail));
 async function readPayload(req,limit=14000){
@@ -94,7 +121,8 @@ function cleanSettings(body){
 async function persist(settings,sha){
  const token=process.env.SMITHA_CONFIG_REPO_TOKEN;
  if(!token)throw Error("config_storage_not_connected");
- const source="window.SMITHA_OWNER_CONFIG = "+JSON.stringify(settings,null,2)+";\n";
+ const safe={...settings,forwarding:{enabled:settings.forwarding.enabled,encryptedEmail:encryptEmail(settings.forwarding.email)}};
+ const source="window.SMITHA_OWNER_CONFIG = "+JSON.stringify(safe,null,2)+";\n";
  const response=await fetch(url,{method:"PUT",headers:{...githubHeaders(),"Content-Type":"application/json"},body:JSON.stringify({message:"Update Smitha's site settings from secure owner area",branch:BRANCH,sha,content:Buffer.from(source).toString("base64")}),signal:AbortSignal.timeout(12000)});
  if(!response.ok)throw Error(response.status===409?"config_conflict":"config_save_failed");
  return true
@@ -118,7 +146,7 @@ async function handleAdmin(req,res,path,json,allowed,origin){
  if(!owner){json(res,401,{error:"admin_sign_in_required"});return true}
  if(path==="/api/admin/me"&&req.method==="GET"){json(res,200,{authorized:true,name:owner.name,email:owner.email});return true}
  if(path==="/api/admin/config"&&req.method==="GET"){
-  try{const state=await loadConfig();json(res,200,{settings:state.settings,editingConnected:Boolean(process.env.SMITHA_CONFIG_REPO_TOKEN),newsletterConnected:Boolean(process.env.BUTTONDOWN_API_KEY)})}
+  try{const state=await loadConfig();const c=state.settings.forwarding||{};const settings={...state.settings,forwarding:{enabled:c.enabled===true,email:decryptEmail(c.encryptedEmail)}};json(res,200,{settings,editingConnected:Boolean(process.env.SMITHA_CONFIG_REPO_TOKEN),newsletterConnected:Boolean(process.env.BUTTONDOWN_API_KEY),forwardingConnected:Boolean(forwardingKey()&&process.env.RESEND_API_KEY&&process.env.SMITHA_FROM_EMAIL)})}
   catch{json(res,503,{error:"settings_unavailable"})}
   return true
  }
