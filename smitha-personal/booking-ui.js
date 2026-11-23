@@ -58,7 +58,8 @@ function buildCalendar(host){
   const l=tile('Open Smitha’s live booking calendar','See actual availability and get a confirmation','◷',null,live);
   l.classList.add('smitha-live-calendar-link');root.append(l);
  }
- let month=new Date(Date.UTC(start.getUTCFullYear(),start.getUTCMonth(),1)),selectedDay='',selectedTime='';
+ let firstValid=new Date(start);while(firstValid<=end&&!availableDay(firstValid))firstValid=new Date(firstValid.getTime()+86400000);
+ let month=new Date(Date.UTC(firstValid.getUTCFullYear(),firstValid.getUTCMonth(),1)),selectedDay='',selectedTime='';
  const heading=E('div','smitha-month-head'),back=E('button','smitha-month-arrow','‹'),next=E('button','smitha-month-arrow','›'),caption=E('strong','smitha-month-label');
  back.type='button';next.type='button';back.setAttribute('aria-label','Previous month');next.setAttribute('aria-label','Next month');
  heading.append(back,caption,next);
