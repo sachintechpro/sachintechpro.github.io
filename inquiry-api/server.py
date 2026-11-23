@@ -66,7 +66,7 @@ def read_token(token, purpose):
         return None
 
 def sender_email():
-    return os.getenv("SMTP_USER", "Sachin.techpro@gmail.com")
+    return "Sachin.techpro@gmail.com"
 
 def inquiry_recipient():
     return os.getenv("INQUIRY_TO", "Sachin.techpro@gmail.com")
@@ -86,7 +86,7 @@ def mail_message(to, subject, text, html_body=None, reply_to=None):
         msg.add_alternative(html_body, subtype="html")
     with smtplib.SMTP(os.environ["SMTP_HOST"], int(os.getenv("SMTP_PORT", "587")), timeout=18) as smtp:
         smtp.starttls(context=ssl.create_default_context())
-        smtp.login(sender_email(), os.environ["SMTP_PASSWORD"])
+        smtp.login(os.getenv("SMTP_USER", sender_email()), os.environ["SMTP_PASSWORD"])
         smtp.send_message(msg)
 
 def smtp_ready():
