@@ -1,5 +1,6 @@
 /* Owner-editable contact settings and FICTIONAL demonstration examples.
-   Only channels marked verified:true with valid URLs are shown as active.
+   Social channels are active only when verified:true and the exact owned profile URL is configured.
+   SMS drafts may open with smsDraftEnabled:true without implying receipt or SMS verification.
    Do not publish customer records, credentials, or private keys here. */
 window.SMITHA_SITE_CONFIG = Object.freeze({
   identity: {
@@ -11,7 +12,8 @@ window.SMITHA_SITE_CONFIG = Object.freeze({
     status: "Independent preview, pending Smitha's review"
   },
   contact: {
-    phone: { display: "(818) 626-4474", e164: "+18186264474", verifiedForVoice: true, verifiedForSms: false },
+    phone: { display: "(818) 626-4474", e164: "+18186264474", verifiedForVoice: true, verifiedForSms: false, smsDraftEnabled: true },
+    presentation: { showPhoneNumber: false, pendingDMsRequestByText: true },
     email: { address: "", verified: false, exampleOnly: "hello@smitha.example" },
     whatsapp: { url: "", verified: false, exampleOnly: "https://wa.me/18185550137" },
     facebook: { url: "", verified: false, exampleOnly: "https://m.me/smitha.example" },
