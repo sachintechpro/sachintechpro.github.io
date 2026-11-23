@@ -139,7 +139,7 @@
           <div class="nc-field"><label for="ncResult">R · What would feel like a good outcome?</label><select id="ncResult"><option>Decide a clear next step</option><option>Feel more informed</option><option>Identify the right questions</option><option>Find a helpful resource</option><option>Get to know each other</option></select></div>
           <div class="nc-field wide"><label for="ncWhen">If you'd like to talk, what tends to work?</label><select id="ncWhen"><option>Flexible</option><option>Weekday mornings (Pacific)</option><option>Weekday afternoons (Pacific)</option><option>Weekday evenings (Pacific)</option><option>Weekend (Pacific)</option></select></div>
           <div class="nc-field wide"><label>Your conversation note</label><div class="nc-preview" id="ncSummary" aria-live="polite"></div></div>
-          <div class="nc-form-actions"><button type="button" class="nc-outline" id="ncCopy">Copy my note</button><span class="nc-note">Then choose Email, Text or Find a time above. Nothing is automatically sent.</span></div>
+          <div class="nc-form-actions"><button type="button" class="nc-outline" id="ncCopy">Use this in my message</button><span class="nc-note">This fills the message box above. Demo submissions are not delivered.</span></div>
         </div>
         
         <div class="nc-social" id="ncSocialActive" aria-label="Connected social accounts" hidden></div>
@@ -261,7 +261,7 @@
    launch('mailto:'+CONTACT.email+'?subject='+encodeURIComponent('Friendly conversation — request a time')+'&body='+encodeURIComponent(body),'This opens an email to request a time. No appointment is booked until Nisha confirms it.');
  }
  document.querySelectorAll('[data-nc-channel]').forEach(btn=>btn.addEventListener('click',()=>{selectedChannel=btn.dataset.ncChannel;({email,sms,call,schedule}[selectedChannel]||email)()}));
- $('ncCopy')?.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(summaryText());showStatus('Your conversation note was copied. You can paste it into any messaging app.')}catch(_){showStatus('Copy was unavailable here. You can select the preview text and copy it manually.')}});
+ $('ncCopy')?.addEventListener('click',()=>{const message=document.querySelector('#nishaLeadContact textarea[name="message"]');if(!message)return;message.value=summaryText().slice(0,1000);message.scrollIntoView({behavior:'smooth',block:'center'});message.focus({preventScroll:true});showStatus('Your conversation note was added to the demo inquiry form above.');});
  function socialLink(url,label){if(!url)return;try{const p=new URL(url);if(p.protocol!=='https:')return;const a=document.createElement('a');a.href=p.href;a.target='_blank';a.rel='noopener noreferrer';a.textContent=label;a.setAttribute('aria-label','Open '+label+' profile');$('ncSocialActive').append(a)}catch(_){}}
  if(CONTACT.whatsappNumber&&/^\d{8,15}$/.test(CONTACT.whatsappNumber)){
    socialLink('https://wa.me/'+CONTACT.whatsappNumber+'?text='+encodeURIComponent(shortIntro()),'WhatsApp');
