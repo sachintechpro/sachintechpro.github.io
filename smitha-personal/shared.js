@@ -47,6 +47,14 @@ function msg(role,text){const div=document.createElement('div');div.className='b
 function openChat(){if(!chatPanel)return;chatPanel.classList.add('open');chatLaunch.setAttribute('aria-expanded','true');if(!chatMessages.children.length)msg('assistant',firstMessage);suggestions.replaceChildren();chips.forEach(q=>{const b=document.createElement('button');b.type='button';b.textContent=q;b.addEventListener('click',()=>ask(q));suggestions.append(b)});chatInput.focus()}
 function closeChat(){chatPanel?.classList.remove('open');chatLaunch?.setAttribute('aria-expanded','false');chatLaunch?.focus()}
 chatLaunch?.addEventListener('click',()=>chatPanel.classList.contains('open')?closeChat():openChat());$('closeChat')?.addEventListener('click',closeChat);
+const chatFooter=chatPanel?.querySelector('.chat-note');
+if(chatFooter&&!chatFooter.querySelector('.smitha-chat-contact')){
+  const action=document.createElement('button');
+  action.type='button';action.className='smitha-chat-contact';
+  action.textContent='Contact Smitha ↗';
+  action.addEventListener('click',()=>{closeChat();openContact('I have a question about '+topicTitle.toLowerCase()+'.')});
+  chatFooter.append(action);
+}
 function localAnswer(question){const q=question.toLowerCase();if(/are you (really|actually) smitha|human|real smitha|who are you/.test(q))return 'I’m an illustrated educational guide, not Smitha personally. Choose Let’s Connect to call or prepare a message for her.';
 if(/call|phone|number|text|sms|connect|appointment|schedule|meet|contact/.test(q))return 'Open “Let’s connect” to call Smitha privately or prepare a message in your preferred app. A message is not sent until you send it.';
 if(/star|situation|action|result|discussion/.test(q))return 'You can answer a few optional questions about what matters, what you have already considered, and the next decision you want to clarify. Then choose how you would like to reach Smitha.';
