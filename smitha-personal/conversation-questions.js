@@ -127,6 +127,7 @@ function resultText(){
  return rows.join('\n');
 }
 window.smithaConversationText=resultText;
+window.smithaConversationHasAnswers=()=>answers.some(Boolean)||!!additional.trim();
 window.smithaConversationSetContext=setContext;
 function getGreeting(){return 'Hello Smitha, I have a question about '+(chosenTopic?current().name.toLowerCase():'my next step')+'.\n\n'+resultText()+'\n\nWould you be available for a friendly discussion?'}
 function emailHref(){
