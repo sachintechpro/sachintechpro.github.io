@@ -21,7 +21,7 @@ jobs:
       - name: Install browser
         run: |
           npm install --no-save playwright@1.57.0
-          npx playwright install --with-deps chromium
+          npx playwright install chromium
       - name: Run end-to-end mobile and desktop UAT
         run: node .github/scripts/smitha-browser-uat.mjs
       - name: Keep UAT screenshots
