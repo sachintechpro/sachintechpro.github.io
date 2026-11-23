@@ -47,7 +47,9 @@
    update();
  }
  document.querySelectorAll('[data-contact-topic]').forEach(btn => btn.addEventListener('click', () => {
-   window.openSmithaContact?.(`I'd like to discuss ${btn.dataset.contactTopic.toLowerCase()} and the next helpful step.`);
+   const intent=`I'd like to discuss ${btn.dataset.contactTopic.toLowerCase()} and the next helpful step.`;
+   if(typeof window.smithaConversationBegin==='function')window.smithaConversationBegin({topic:document.body.dataset.topic||'',intent});
+   else window.openSmithaContact?.(intent);
  }));
 
  // Live category filtering on the independent topic directory.
@@ -247,7 +249,9 @@
      catch{toast('Copy is unavailable here. You can open the guides directly.');}
    });
    $('talkAboutPath')?.addEventListener('click',()=>{
-     window.openSmithaContact?.(`I explored my life-stage starting points: ${chosen.map(s=>labels[s]).join(', ')}. I'd like to clarify which question to discuss first.`);
+     const intent=`I explored my life-stage starting points: ${chosen.map(s=>labels[s]).join(', ')}. I'd like to clarify which question to discuss first.`;
+     if(typeof window.smithaConversationBegin==='function')window.smithaConversationBegin({topic:chosen[0]||'estate',intent});
+     else window.openSmithaContact?.(intent);
    });
    show(0);
  }
