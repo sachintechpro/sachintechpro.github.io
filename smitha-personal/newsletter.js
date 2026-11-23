@@ -17,10 +17,15 @@ section.innerHTML='<div class="container smitha-notes-layout">'+
  '<button id="newsletterSubmit" type="submit">Subscribe</button></div>'+
  '<label class="smitha-notes-consent" for="newsletterConsent"><input type="checkbox" name="consent" id="newsletterConsent" required/><span>Yes, I would like occasional educational emails from Smitha. I can unsubscribe at any time.</span></label>'+
  '<div class="smitha-notes-honeypot" aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden"><label for="newsletterWebsite">Leave this field empty</label><input id="newsletterWebsite" type="text" name="website" tabindex="-1" autocomplete="off"></div>'+
- '<p class="smitha-notes-note" id="newsletterNote">Chrome or Safari may suggest your saved email when you tap the field. Please confirm your subscription through the email you receive. No account or login needed.</p>'+
+ '<p class="smitha-notes-note" id="newsletterNote">Please check your inbox to confirm your subscription. You can unsubscribe at any time.</p>'+
  '<p class="smitha-notes-status" id="newsletterStatus" role="status" aria-live="polite"></p>'+
  '</form></div>';
 footer.parentNode.insertBefore(section,footer);
+const owner=window.SMITHA_SITE_CONFIG?.newsletter||{};
+if(owner.enabled===false){section.remove();return}
+if(owner.title)section.querySelector('h2').textContent=owner.title;
+if(owner.description)section.querySelector('.smitha-notes-copy>p').textContent=owner.description;
+
 const form=document.getElementById('newsletterSignup');
 const email=document.getElementById('newsletterEmail');
 const consent=document.getElementById('newsletterConsent');
