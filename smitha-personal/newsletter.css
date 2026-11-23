@@ -1,0 +1,30 @@
+
+/* Notes from Smitha: an opt-in, mobile-first personal newsletter */
+.smitha-notes-section{background:#f4ede0;border-top:1px solid #eadfca;border-bottom:1px solid #eadfca;padding:50px 0}
+.smitha-notes-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.95fr);gap:clamp(20px,4vw,55px);align-items:center}
+.smitha-notes-copy h2{color:#173457;font-size:clamp(27px,3.4vw,41px);line-height:1.2;margin:8px 0 12px}
+.smitha-notes-copy>p{font-size:15px;line-height:1.7;color:#5f6e80;max-width:540px}
+.smitha-notes-preview{display:flex;flex-wrap:wrap;gap:8px;margin:17px 0 0}
+.smitha-notes-preview span{font-size:11px;font-weight:750;color:#695328;padding:7px 12px;border-radius:999px;background:#fffcf5;border:1px solid #e6d6b7}
+.smitha-notes-form{padding:24px;background:white;border:1px solid #e4dac9;border-radius:20px;box-shadow:0 12px 35px rgba(18,41,72,.06)}
+.smitha-notes-form label:not(.smitha-notes-consent){display:block;margin:0 0 7px;color:#193657;font-size:13px;font-weight:800}
+.smitha-notes-entry{display:flex;align-items:stretch;gap:8px}
+.smitha-notes-entry input{min-width:0;flex:1;border-radius:11px;background:#fbfcff;border:1px solid #d9e1eb;padding:12px 13px;font-size:15px;color:#19334e}
+.smitha-notes-entry button{border:none;border-radius:11px;background:#1a3459;color:white;font-weight:800;font-size:13px;padding:12px 17px;cursor:pointer;min-height:46px}
+.smitha-notes-entry button:disabled{opacity:.65;cursor:wait}
+.smitha-notes-consent{display:flex;align-items:flex-start;gap:9px;color:#536276;font-size:12px;line-height:1.55;margin:14px 0 7px;cursor:pointer}
+.smitha-notes-consent input{flex:none;margin:3px 0 0;accent-color:#1d436d;min-width:17px;min-height:17px}
+.smitha-notes-note,.smitha-notes-status{font-size:11px;line-height:1.6;color:#6a7786;margin:8px 0 0}
+.smitha-notes-status{font-size:12px;font-weight:700;min-height:18px}
+.smitha-notes-status[data-kind="success"]{color:#24583a}
+.smitha-notes-status[data-kind="error"]{color:#a03a30}
+.smitha-notes-form a:not(.btn){text-decoration:underline;text-underline-offset:3px;color:#1e5079}
+.smitha-notes-page{padding:65px 0;background:#fffcf7}
+.smitha-notes-page h1{max-width:870px;color:#1b3756;font-size:clamp(38px,5vw,65px);margin:8px 0 16px}
+.smitha-notes-page .lead{max-width:790px;color:#617082}
+.smitha-notes-example{background:#fff;border:1px solid #e6e4e0;border-radius:20px;padding:22px;margin:25px 0 0;max-width:900px}
+.smitha-notes-example h2{font-size:26px;color:#183658;margin:8px 0 12px}
+.smitha-notes-example p{font-size:14px;line-height:1.75;color:#5b687a;margin-bottom:13px}
+@media(max-width:780px){.smitha-notes-layout{grid-template-columns:1fr}.smitha-notes-section{padding:38px 0}.smitha-notes-form{padding:21px}}
+@media(max-width:470px){.smitha-notes-entry{flex-direction:column}.smitha-notes-entry button{width:100%}.smitha-notes-form{padding:18px}.smitha-notes-copy h2{font-size:29px}}
+@media print{.smitha-notes-section,.smitha-notes-form{display:none!important}}
