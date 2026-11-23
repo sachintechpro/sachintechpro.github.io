@@ -1,36 +1,29 @@
-# Hello, Nisha — personalized community concept (demo)
+# Hello, Nisha — family connections around Northridge
 
-This project is an independently prepared, non-operational concept demonstration for Nisha Rawal. It is **not** an agency portal or an official, approved Farmers Insurance website. The watercolor portrait is an illustrative likeness, not a real photo.
+An independent, personalized **demonstration** of how Nisha could create local conversations and qualified professional connections for families roughly 25 miles around Northridge, California. It is not an approved, official, or operational Farmers Insurance website, nor an approved Nisha business offering.
 
-## Live demonstration
+## Demo pages
 
 - Home: https://hello-nisha-personal.onrender.com/
 - A Few Good Questions: https://hello-nisha-personal.onrender.com/coverage.html
 - Around Our Valley: https://hello-nisha-personal.onrender.com/valleycircle.html
 
-All three pages are mobile-responsive, self-contained HTML. The avatar illustration is embedded; no separate image asset is required.
+## Suggested visitor demonstration (about 3 minutes)
 
-## What visitors can do
+1. On Home, scan the six life-stage topics: estate planning, wills and trusts; family protection and IUL; savings; protection gaps; aging parents; children's education.
+2. Tap **Connect with Nisha** on a topic card. Verify the topic is preselected and fill the contact form. Use the meeting-time preference.
+3. Submit to display a **clearly labeled simulated success**. No visitor information is stored or sent. No SMS, email, calendar event, lead record or actual newsletter subscriber is created.
+4. Optionally expand **Newsletter subscription preview** and submit for its separate simulated confirmation.
+5. On A Few Good Questions, select a topic, concern and timing. See five educational conversation prompts, then tap Connect with Nisha.
+6. On Around Our Valley, explore local family conversation examples and the fictional workshop preview. Connect with Nisha for the next step.
+7. The illustrated digital guide is **not Nisha**; if an AI provider is configured, it can answer educational questions. Never input sensitive details.
 
-- Explore a friendly personal introduction in Nisha's illustrative voice.
-- Answer a three-step educational insurance questionnaire and receive five tailored conversation questions. No insurance quote or recommendation is produced.
-- Explore neighborhood-oriented guides and fictional examples of possible local collaborations.
-- Open a private contact chooser with email, call, SMS, or a request to find a friendly no-sales conversation time.
-- Optionally prepare a STAR conversation note (Situation, Task, Action, Result), copied locally or passed into an email/SMS draft.
+## Business boundary
 
-## What is *not* connected
+This concept is about family life stages and permissible local connections, not competing with Farmers' core home, auto and umbrella offerings. Nisha must independently verify outside-business authorization, agent/carrier appointments, advertising requirements, and any limits on referrals or compensation before using a real commercial site. Estate legal work belongs to qualified attorneys; investment and insurance advice/products require the applicable professional qualifications.
 
-- No automatic message sending, server-side lead capture, or appointment confirmation.
-- No verified WhatsApp, LinkedIn, Facebook, Instagram, X/Twitter, or TikTok profiles are configured; unconnected services are labeled.
-- No real partner directory, live paid offers, quotes, policy systems, or customer records.
-- “Ask Nisha” is a clearly labeled illustrated digital guide. Free-form AI replies require a configured provider API key and successful endpoint health check. Do not claim AI is active until verified.
+## Demo status
 
-## Technical deployment
+The three HTML pages are self-contained for static hosting. The lead forms require no API and run in the browser, where they validate and clear entered fields after success. Form success is simulated, not evidence of sending or saving anything. Direct device handoff options for calling, texting or emailing are distinct from those demo submissions. Meeting scheduling is request-only; there is no actual booking confirmation.
 
-The personalized demo is deployed from the isolated branch `demo/hello-nisha-personal-2026` in `sachintechpro/sachintechpro.github.io`. The existing production `main` branch and the separate generic demo branch are not changed by these updates. Render serves the three HTML files through a static-site build. Any future client production deployment should use a dedicated repository and an approved domain after Nisha consents.
-
-## Quality verification
-
-Browser tests ran in Chromium at 390px mobile and 1440px desktop widths for all three pages. Verified no horizontal overflow, visible illustration, opening/closing the contact modal, STAR note preview, and proper mailto, sms, tel and request-time handoff URLs. These are device handoffs: they do **not** prove that a recipient receives a message. Separate checks are required on real phones and for all future external integrations.
-
-See `INTEGRATION_SETUP.md` for contact endpoints, privacy boundaries, and activation steps. Do not publish customer data, API keys, or internal integration secrets in this repository.
+This is a concept showcase for a conversation with Nisha and prospective reviewers. Do not invite actual lead submissions or represent that this is already a live lead collector.
