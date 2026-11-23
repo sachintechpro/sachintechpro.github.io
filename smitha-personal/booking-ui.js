@@ -137,6 +137,7 @@ if(grid&&modal){
  },email?'mailto:'+email+'?subject='+encodeURIComponent('A quick introduction to Smitha'):'');
  const bookTile=tile('Book 15 minutes','Select date and preferred time','◷',()=>openBooking(),null);
  if(call&&text){primary.append(emailTile,text,call,bookTile);grid.parentNode.insertBefore(primary,grid)}
+ grid.classList.add('smitha-social-grid');
  const label=E('div','smitha-social-label','Or message through a social app');
  grid.parentNode.insertBefore(label,grid);
  const holder=E('details','smitha-booking-details'),summary=E('summary','smitha-booking-toggle','Choose a date & time for a 15-minute call');
