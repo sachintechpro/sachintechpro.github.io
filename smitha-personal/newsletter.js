@@ -21,6 +21,19 @@ section.innerHTML='<div class="container smitha-notes-layout">'+
  '<p class="smitha-notes-status" id="newsletterStatus" role="status" aria-live="polite"></p>'+
  '</form></div>';
 footer.parentNode.insertBefore(section,footer);
+section.hidden=true;
+fetch('https://hello-smitha-guide-api.onrender.com/health',{cache:'no-store'})
+.then(r=>r.ok?r.json():{newsletterConfigured:false})
+.then(state=>{
+  if(state.newsletterConfigured===true){section.hidden=false;return}
+  section.remove();
+  document.querySelectorAll('a[href$="#notes-from-smitha"]').forEach(a=>a.remove());
+})
+.catch(()=>{
+  section.remove();
+  document.querySelectorAll('a[href$="#notes-from-smitha"]').forEach(a=>a.remove());
+});
+
 const owner=window.SMITHA_SITE_CONFIG?.newsletter||{};
 if(owner.enabled===false){section.remove();return}
 if(owner.title)section.querySelector('h2').textContent=owner.title;
