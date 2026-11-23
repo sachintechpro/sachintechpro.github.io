@@ -2,7 +2,7 @@
 'use strict';
 const $=id=>document.getElementById(id),form=$('cxForm'),area=$('cxInputs'),out=$('cxResult');
 if(!form||!area||!out)return;
-const F=(id,label,options,help)=>({id,label,options,help:help||''});
+const F=(id,label,options,help,initial)=>({id,label,options,help:help||'',initial:initial===undefined?0:initial});
 const data={
 estate:{title:"Let’s make your wishes easier to follow.",intro:"Explore the people, instructions and legal documents worth discussing. This is not a legal assessment.",fields:[
 F('financial','Who could handle financial decisions?',['Already documented','Needs review','Not sure']),
@@ -68,7 +68,7 @@ function setTool(key){
    input=el('select','cx-control');let initial=el('option','','Choose what fits…');initial.value='';input.append(initial);
    f.options.forEach((text,i)=>{let opt=el('option','',text);opt.value=String(i);input.append(opt)})
   }else{
-   input=el('input','cx-control');input.type='number';input.inputMode='decimal';input.min=f.id==='years'?'1':'0';input.max=f.id==='years'?'30':f.id==='rate'?'8':'1000000';input.step=f.id==='rate'?'0.5':'1';input.value=String(f.help!==undefined?f.initial||0:0);
+   input=el('input','cx-control');input.type='number';input.inputMode='decimal';input.min=f.id==='years'?'1':'0';input.max=f.id==='years'?'30':f.id==='rate'?'8':'1000000';input.step=f.id==='rate'?'0.5':'1';input.value=String(f.initial);
   }
   input.id='cx-'+f.id;input.name=f.id;row.append(input);
   if(f.help){const hint=el('p','cx-field-note',f.help);hint.id=input.id+'-hint';input.setAttribute('aria-describedby',hint.id);row.append(hint)}
