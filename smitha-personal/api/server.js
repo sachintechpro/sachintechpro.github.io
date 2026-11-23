@@ -5,7 +5,7 @@ const allowed=new Set(["https://hello-smitha-personal.onrender.com","http://loca
 const rate=new Map();
 const newsletterRate=new Map();
 const newsletterProviderConfigured=()=>Boolean(process.env.BUTTONDOWN_API_KEY);
-const validEmail=email=>typeof email==="string"&&email.length<=254&&/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email);
+const validEmail=email=>typeof email==="string"&&email.length<=254&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 async function newsletterSubscribe(req,res,origin){
  if(!allowed.has(origin))return json(res,403,{error:"origin_not_allowed"});
  const id=String(req.headers["x-forwarded-for"]||req.socket.remoteAddress||"unknown").split(",")[0].slice(0,100);
