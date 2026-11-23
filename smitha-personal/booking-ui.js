@@ -29,7 +29,9 @@ function safeBooking(){
 }
 function intro(day,time){
  const subject=document.body.dataset.topic?document.body.dataset.topic.replaceAll('-',' '):'my goals';
- return 'Hello Smitha, I would like to request a friendly '+duration+'-minute introduction call on '+fmt(fromKey(day))+' at '+hourLabel(time)+' Pacific (Los Angeles time). I was exploring '+subject+'. Please confirm whether this works or suggest another time. No appointment has been booked yet.';
+ const answers=window.smithaConversationHasAnswers?.()&&typeof window.smithaConversationText==='function'
+   ?'\n\nWhat I would like to discuss:\n'+window.smithaConversationText():'';
+ return 'Hello Smitha, I would like to request a friendly '+duration+'-minute introduction call on '+fmt(fromKey(day))+' at '+hourLabel(time)+' Pacific (Los Angeles time). I was exploring '+subject+'. Please confirm whether this works or suggest another time. No appointment has been booked yet.'+answers;
 }
 function smsHref(message){return 'sms:'+phone+(/iPhone|iPad|iPod/.test(navigator.userAgent)?'&':'?')+'body='+encodeURIComponent(message)}
 function copy(message){
