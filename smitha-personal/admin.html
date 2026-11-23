@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="theme-color" content="#fffcf7"><title>Private Owner Settings | Smitha Rangaswamy</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="admin.css"><script src="https://accounts.google.com/gsi/client" async defer></script><script src="admin-console.js" defer></script></head>
+<body class="smitha-admin-page"><a class="skip" href="#main">Skip to settings</a>
+<header class="topbar"><div class="container"><a class="logo" href="index.html" aria-label="Return to Smitha's website"><svg viewBox="0 0 50 38" aria-hidden="true"><path d="M2 29 L14 17 L23 24 L33 9 L44 17" fill="none" stroke="#17345e" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M43 12 L47 2 L35 7" fill="none" stroke="#bf8c30" stroke-width="2.8"/><path d="M3 36 Q22 24 47 31" fill="none" stroke="#c18c2f" stroke-width="2.3"/></svg><span><strong>Smitha Rangaswamy</strong><small>Owner settings</small></span></a><a class="admin-back" href="index.html">← Visit website</a></div></header>
+<main class="container admin-main" id="main">
+<section class="admin-intro"><div class="eyebrow">Private owner access</div><h1>Keep your connections up to date.</h1><p>Change the ways visitors can reach Smitha and manage newsletter settings. Only signed-in, authorized owners can view or save these settings.</p></section>
+<section id="adminSignIn" class="admin-panel admin-login"><h2>Owner sign-in</h2><p>Sign in with your approved Google account to continue.</p><div id="adminGoogleButton"></div><p id="adminLoginStatus" role="status" aria-live="polite"></p></section>
+<div id="adminWorkspace" hidden>
+<div class="admin-identity"><span id="adminSignedInAs"></span><button type="button" id="adminSignOut" class="admin-text-button">Sign out</button></div>
+<form id="adminSettings" class="admin-settings" novalidate>
+<section class="admin-panel"><div class="eyebrow">How people reach Smitha</div><h2>Contact and direct messaging</h2><p>Only mark a link verified after testing that it opens Smitha's correct account.</p>
+<div class="admin-grid">
+<label>Smitha's mobile number <span>International format</span><input name="phone" type="tel" autocomplete="off" placeholder="+1…" required></label>
+<label>Contact email <span>Shown through email actions after verification</span><input name="contactEmail" type="email" autocomplete="off" placeholder="name@example.com"></label>
+<label>WhatsApp chat URL <input name="whatsapp" type="url" placeholder="https://wa.me/…"></label>
+<label>Facebook Messenger link <input name="facebook" type="url" placeholder="https://m.me/…"></label>
+<label>Instagram DM link <input name="instagram" type="url" placeholder="https://ig.me/m/…"></label>
+<label>X direct-message link <input name="x" type="url" placeholder="https://x.com/messages/compose?recipient_id=…"></label>
+<label>LinkedIn profile URL <input name="linkedin" type="url" placeholder="https://www.linkedin.com/in/…"></label>
+<label>TikTok profile URL <input name="tiktok" type="url" placeholder="https://www.tiktok.com/@…"></label>
+<label>15-minute scheduling link <input name="booking" type="url" placeholder="https://calendly.com/…"></label>
+</div>
+<fieldset class="admin-flags"><legend>Confirm the connected channels</legend>
+<label><input type="checkbox" name="voiceVerified"> Phone can receive calls</label>
+<label><input type="checkbox" name="smsDraftEnabled"> Allow visitors to open an SMS draft</label>
+<label><input type="checkbox" name="smsVerified"> Text message receipt has been tested</label>
+<label><input type="checkbox" name="emailVerified"> Contact email verified</label>
+<label><input type="checkbox" name="whatsappVerified"> WhatsApp verified</label>
+<label><input type="checkbox" name="facebookVerified"> Facebook Messenger verified</label>
+<label><input type="checkbox" name="instagramVerified"> Instagram DM verified</label>
+<label><input type="checkbox" name="xVerified"> X direct-message link verified</label>
+<label><input type="checkbox" name="linkedinVerified"> LinkedIn profile verified</label>
+<label><input type="checkbox" name="tiktokVerified"> TikTok profile verified</label>
+<label><input type="checkbox" name="bookingVerified"> Booking account verified</label>
+</fieldset></section>
+<section class="admin-panel"><div class="eyebrow">Private inquiries</div><h2>Forward website messages</h2>
+<p>Messages submitted through Smitha's website can be forwarded to this inbox. Messages sent inside Facebook, Instagram, X, WhatsApp, phone or SMS stay with their own providers unless separately integrated.</p>
+<label class="admin-wide">Forwarding email inbox <input type="email" name="forwardEmail" autocomplete="off" placeholder="Where website inquiries should go"></label>
+<label class="admin-checkbox"><input type="checkbox" name="forwardEnabled"> Enable forwarding when the email delivery service is connected</label>
+<p class="admin-note">Email forwarding also requires a verified sending domain and email-provider connection. Until connected, the site will not claim delivery.</p></section>
+<section class="admin-panel"><div class="eyebrow">Notes from Smitha</div><h2>Newsletter</h2>
+<label class="admin-checkbox"><input type="checkbox" name="newsletterEnabled"> Show newsletter signup to visitors</label>
+<label class="admin-wide">Newsletter heading <input type="text" maxlength="110" name="newsletterTitle"></label>
+<label class="admin-wide">Newsletter introduction <textarea name="newsletterDescription" rows="3" maxlength="320"></textarea></label>
+<label class="admin-wide">Frequency <select name="newsletterFrequency"><option>Occasional</option><option>Monthly</option><option>Twice a month</option></select></label>
+<div class="admin-newsletter-status"><h3>Recent newsletter subscriptions</h3><button type="button" class="admin-text-button" id="adminLoadSubscribers">Refresh subscriber list</button><div id="adminSubscriberSummary" role="status"></div><div id="adminSubscribers"></div></div></section>
+<div class="admin-save"><button type="submit" class="btn gold" id="adminSave">Save settings</button><span id="adminSaveStatus" role="status" aria-live="polite"></span></div>
+</form></div></main></body></html>
