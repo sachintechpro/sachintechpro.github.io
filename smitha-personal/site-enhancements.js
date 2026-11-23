@@ -114,9 +114,9 @@ function addVerifiedContactChannels() {
   while(walker.nextNode()){
     const t=walker.currentNode;
     if(t.parentElement?.closest('script,style,textarea'))continue;
-    if(/\\(?818\\)?[\\s.\\-]*626[\\s.\\-]*4474/.test(t.textContent))numberNodes.push(t);
+    if(/\(?818\)?[\s.\-]*626[\s.\-]*4474/.test(t.textContent))numberNodes.push(t);
   }
-  numberNodes.forEach(t=>{t.textContent=t.textContent.replace(/\\(?818\\)?[\\s.\\-]*626[\\s.\\-]*4474/g,displayPhone)});
+  numberNodes.forEach(t=>{t.textContent=t.textContent.replace(/\(?818\)?[\s.\-]*626[\s.\-]*4474/g,displayPhone)});
 
 }
 function addNavigation() {
