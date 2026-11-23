@@ -35,3 +35,13 @@ body:not([data-page="home"]) .hero-copy h1 em{color:#cb7652!important}
 body:not([data-page="home"]) .sectionhead h2,body:not([data-page="home"]) .section h2{color:#294b3e}
 body:not([data-page="home"]) .journey-card h3,body:not([data-page="home"]) .experience h3{color:#294b3e}
 body:not([data-page="home"]) .eyebrow{color:#b96543}
+
+/* Unify the legacy interactive tool hero and editorial templates. */
+main .cx-hero,main .hero:not(.new-home){background:radial-gradient(ellipse at 83% 28%,#e8f1e7 0%,transparent 36%),linear-gradient(130deg,#fbf7ed 0%,#fffaf4 54%,#f2f7ef 100%)!important}
+body main h1{color:#23463b!important}
+body main h1 em{color:#cb7652!important;font-style:normal}
+body main h2{color:#294b3e}
+main .cx-hero .lead{color:#596a60}
+.cx-hero-portrait{border-color:#e4ece1;border-radius:26px;background:#f6f8f1;box-shadow:0 18px 45px rgba(35,70,59,.1)}
+.cx-hero-portrait strong{font-family:'DM Sans','Trebuchet MS',sans-serif;color:#294b3e}
+.cx-hero-portrait span{color:#b96543}
