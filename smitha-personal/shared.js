@@ -71,6 +71,7 @@ $('chatForm')?.addEventListener('submit',e=>{e.preventDefault();ask(chatInput.va
     const enhancements=document.createElement('script');enhancements.src='site-enhancements.js';enhancements.defer=true;
     enhancements.addEventListener('load',()=>{
       const contact=document.createElement('script');contact.src='contact-upgrade.js';contact.defer=true;
+      contact.addEventListener('load',()=>{const booking=document.createElement('script');booking.src='booking-ui.js';booking.defer=true;document.body.append(booking)});
       document.body.append(contact);
     });
     document.body.append(enhancements);
