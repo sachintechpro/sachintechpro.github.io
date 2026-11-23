@@ -1,6 +1,7 @@
 "use strict";
 const http=require("node:http");
 const {handleAdmin}=require("./admin.js");
+const {handleInquiry}=require("./inquiry.js");
 const port=Number(process.env.PORT||10000);
 const allowed=new Set(["https://hello-smitha-personal.onrender.com","http://localhost:3000","http://127.0.0.1:3000"]);
 const rate=new Map();
@@ -71,6 +72,7 @@ http.createServer(async(req,res)=>{
  if(path==="/health")return json(res,200,{ok:true,aiConfigured:Boolean(process.env.GEMINI_API_KEY||process.env.OPENAI_API_KEY),newsletterConfigured:newsletterProviderConfigured()});
  if(path==="/api/newsletter/subscribe"&&req.method==="POST")return newsletterSubscribe(req,res,origin);
  if(await handleAdmin(req,res,path,json,allowed,origin))return;
+ if(await handleInquiry(req,res,path,origin))return;
  if(path!=="/api/chat"||req.method!=="POST")return json(res,404,{error:"not_found"});
  if(!allowed.has(origin))return json(res,403,{error:"origin_not_allowed"});
  const id=String(req.headers["x-forwarded-for"]||req.socket.remoteAddress||"unknown").split(",")[0].slice(0,100);
