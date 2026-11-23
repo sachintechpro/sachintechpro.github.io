@@ -23,6 +23,17 @@ window.SMITHA_SITE_CONFIG = Object.freeze({
     tiktok: { url: "", verified: false, exampleOnly: "https://www.tiktok.com/@smitha.example" },
     booking: { url: "", verified: false, exampleOnly: "https://calendly.com/smitha-example/intro" }
   },
+  introductionCall: {
+    durationMinutes: 15,
+    timezone: "America/Los_Angeles",
+    weekdayStarts: [1,2,3,4,5],
+    earliestHour: 9,
+    latestStartHour: 16,
+    intervalMinutes: 30,
+    daysAheadMinimum: 1,
+    daysAheadMaximum: 60,
+    mode: "request-only" // Without connected booking provider, these are preferred times, not available slots.
+  },
   priorities: { firstTopic: "estate", nextTopic: "trusts", requireAttorneyForTrustDocuments: true },
   sampleJourneys: [
     { label:"First home", persona:"Maya and Dev (illustrative)", situation:"Recently purchased a home; want to identify decision-makers and review beneficiaries.", topic:"estate" },
