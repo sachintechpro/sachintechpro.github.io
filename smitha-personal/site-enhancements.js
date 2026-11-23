@@ -141,6 +141,7 @@ function addNavigation() {
   const foot=document.querySelector('.footlinks');
   if(foot && !foot.querySelector('[href="handouts.html"]')) foot.append(link('Shareable handouts','','handouts.html'));
   if(foot && !foot.querySelector('[href="contact.html"]')) foot.append(link('Contact Smitha','','contact.html'));
+  if(foot && cfg.newsletter?.enabled!==false && !foot.querySelector('[href="index.html#notes-from-smitha"]')) foot.append(link('Notes from Smitha','','index.html#notes-from-smitha'));
 }
 const handoutMap = {
  estate:'estate',trusts:'trusts',children:'children',caregiving:'caregiving',
@@ -255,6 +256,10 @@ function run(){
   addConversationPanel();
   addMobileQuickActions();
   addExampleJourneys();
+  if(slug!=='outreach-kit' && cfg.newsletter?.enabled!==false){
+    const css=document.createElement('link');css.rel='stylesheet';css.href='newsletter.css';document.head.append(css);
+    const script=document.createElement('script');script.src='newsletter.js';script.defer=true;document.body.append(script);
+  }
 }
 run();
 })();
