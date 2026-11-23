@@ -87,3 +87,16 @@
  body{background:white!important;padding:0!important}
  .container{width:100%!important}
 }
+/* Print only the chosen educational takeaway, not the selection interface. */
+@media print{
+ body[data-page="handouts"] .page-hero,
+ body[data-page="handouts"] .sectionhead,
+ body[data-page="handouts"] .handout-options,
+ body[data-page="handouts"] .handout-preview .button-row,
+ body[data-page="handouts"] .handout-preview .micro,
+ body[data-page="handouts"] .smitha-conversion-related{display:none!important}
+ body[data-page="handouts"] .section{padding:0!important;background:white!important}
+ body[data-page="handouts"] .handout-preview{margin:0!important;max-width:100%;min-height:0;break-inside:avoid}
+ body[data-page="handouts"] .handout-preview h2{font-size:25px!important}
+ body[data-page="handouts"] .handout-preview li{font-size:11pt;line-height:1.35;break-inside:avoid}
+}
