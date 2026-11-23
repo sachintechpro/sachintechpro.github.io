@@ -223,7 +223,7 @@
       history.replaceState(null,"",location.pathname+location.search+"#contact");
       status(phoneStatus,"Email confirmed. Enter a mobile number to receive a one-time verification code.");
       renderFlow();
-    }catch(e){history.replaceState(null,"",location.pathname+location.search+"#contact");show("email-stage");status(emailStatus,"That confirmation link is invalid or expired. Please request a fresh link.",true)}
+    }catch(e){history.replaceState(null,"",location.pathname+location.search+"#contact");$("contact").scrollIntoView({behavior:"smooth",block:"start"});show("email-stage");status(emailStatus,"That confirmation link is invalid or expired. Please request a fresh link.",true)}
   }
   $("send-phone-code").addEventListener("click",async()=>{
     const digits=$("visitor-phone").value.replace(/\D/g,"");
