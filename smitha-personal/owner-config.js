@@ -51,6 +51,6 @@ window.SMITHA_OWNER_CONFIG = {
   },
   "forwarding": {
     "enabled": false,
-    "email": ""
+    "encryptedEmail": ""
   }
 };
