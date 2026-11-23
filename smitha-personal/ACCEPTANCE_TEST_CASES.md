@@ -16,7 +16,7 @@ All people and scenarios below are **fictional**, for testing only. No third-par
 | 11 | Visitor arrives from a shared estate email on iPhone | estate landing -> mobile quick-action Call/Copy note/Ask/Connect | All four mobile actions visible; Ask opens digital guide, with no overlap with contact options |
 | 12 | Visitor has sensitive account info | chat and contact | Context explicitly discourages entering Social Security, Medicare or account numbers |
 | 13 | Visitor wants to schedule immediately | Find a time | With verified booking URL, scheduling opens calendar; otherwise choose verified text or a call. Never claim a reserved time without provider confirmation |
-| 14 | Visitor wants to send a first STAR note | any page -> Talk -> optional Situation/Task/Action/Result -> Copy or verified Text | Context prefilled and editable, no server storage; an unverified SMS number cannot receive a site-launched text |
+| 14 | Visitor wants a useful first conversation | any life-stage guide -> Answer relevant questions -> situation, concern, prior effort, desired next outcome -> Text / Email / Book / Call Smitha | Topic-aware questions, no public framework labels, answers carried to user-initiated message, no server storage |
 | 15 | Client owner wants to configure DMs | edit site-config.js -> verified URL -> deploy | Only verified real HTTPS URLs activate. Test examples never activate. |
 | 16 | Visitor uses print on resources | printable takeaway | Body text and source links fit page; interactive site chrome hidden in print |
 | 17 | Prospect wants to understand policy value | long-term-protection -> official California DOI -> Call | Explains guarantees, loans, lapses/fees without making promises |
