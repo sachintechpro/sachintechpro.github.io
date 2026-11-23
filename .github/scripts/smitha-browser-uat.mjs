@@ -29,7 +29,7 @@ const prep=async(width)=>{
 };
 try{
  await new Promise(r=>setTimeout(r,800));
- for(const width of [320,390,768,1440]){
+ for(const width of [320,390,768,900,1024,1440]){
   const ctx=await prep(width),page=await ctx.newPage();
   for(const name of pages){
    await verify('layout '+width+' '+name,async()=>{
@@ -105,5 +105,5 @@ try{
  await page.screenshot({path:'uat-screenshots/desktop-1440.png',fullPage:true});
  await ctx.close();
 }finally{await browser.close();server.kill('SIGTERM')}
-console.log(JSON.stringify({pages:pages.length,widths:[320,390,768,1440],passed:checks.length,failed:errors.length,errors},null,2));
+console.log(JSON.stringify({pages:pages.length,widths:[320,390,768,900,1024,1440],passed:checks.length,failed:errors.length,errors},null,2));
 if(errors.length)process.exitCode=1;

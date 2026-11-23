@@ -306,3 +306,11 @@
 .cx-topic-copy p{font-size:13px;line-height:1.55;color:#677384;margin-top:5px}
 .cx-topic-teaser .btn{font-size:12px;min-height:42px;flex:none}
 @media(max-width:570px){.cx-topic-teaser{flex-direction:column;align-items:stretch;padding:15px}.cx-topic-teaser .btn{justify-content:center;width:100%}}
+
+/* Tablet and small-laptop navigation: keep the expanded menu from forcing horizontal scrolling. */
+@media (min-width:721px) and (max-width:1120px){
+ .topbar .mobile-toggle{display:block;margin-left:auto}
+ .topbar .nav{display:none;position:absolute;top:100%;left:0;right:0;z-index:65;background:#fffdf8;border-bottom:1px solid var(--line);padding:13px 24px 20px;box-shadow:0 12px 24px #102b4d15;flex-direction:column;align-items:stretch;gap:6px}
+ .topbar .nav.open{display:flex}
+ .topbar .nav a{font-size:14px;padding:12px 14px}
+}
