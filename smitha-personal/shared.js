@@ -47,7 +47,10 @@ function msg(role,text){const div=document.createElement('div');div.className='b
 function openChat(){if(!chatPanel)return;chatPanel.classList.add('open');chatLaunch.setAttribute('aria-expanded','true');if(!chatMessages.children.length)msg('assistant',firstMessage);suggestions.replaceChildren();chips.forEach(q=>{const b=document.createElement('button');b.type='button';b.textContent=q;b.addEventListener('click',()=>ask(q));suggestions.append(b)});chatInput.focus()}
 function closeChat(){chatPanel?.classList.remove('open');chatLaunch?.setAttribute('aria-expanded','false');chatLaunch?.focus()}
 chatLaunch?.addEventListener('click',()=>chatPanel.classList.contains('open')?closeChat():openChat());$('closeChat')?.addEventListener('click',closeChat);
+const chatSubtitle=chatPanel?.querySelector('.chat-head small');
+if(chatSubtitle)chatSubtitle.textContent='Digital guide · I may make mistakes';
 const chatFooter=chatPanel?.querySelector('.chat-note');
+if(chatFooter)chatFooter.textContent="I may make mistakes here. Please book a free 15-minute call with Smitha to discuss. Don't share private financial or medical details.";
 if(chatFooter&&!chatFooter.querySelector('.smitha-chat-contact')){
   const action=document.createElement('button');
   action.type='button';action.className='smitha-chat-contact';
@@ -56,6 +59,7 @@ if(chatFooter&&!chatFooter.querySelector('.smitha-chat-contact')){
   chatFooter.append(action);
   const explore=document.createElement('a');explore.href='experiences.html';explore.className='smitha-chat-contact';
   explore.textContent='Explore my situation ↗';chatFooter.append(explore);
+  const time=document.createElement('a');time.href='contact.html#smithaContactCalendar';time.className='smitha-chat-contact';time.textContent='Book a free 15-minute call ↗';chatFooter.append(time);
 }
 function localAnswer(question){
  const q=String(question||'').toLowerCase();
