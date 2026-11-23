@@ -107,10 +107,17 @@ function addVerifiedContactChannels() {
     if(small)small.textContent=calendar?'Opens the booking calendar':enabledSms?'Prepare a text request':'Call '+displayPhone;
   }
   // Owner configuration is the single contact source, including links originally authored in HTML.
-  document.querySelectorAll('a[href^="tel:"]').forEach(a=>{
-    a.href='tel:'+phone;
-    if(/818[\s()\-]*626[\s\-]*4474/.test(a.textContent))a.textContent=a.textContent.replace(/\(?818\)?[\s\-]*626[\s\-]*4474/,displayPhone);
-  });
+  document.querySelectorAll('a[href^="tel:"]').forEach(a=>{a.href='tel:'+phone});
+  // Update printed numbers too; modifying the owner configuration must not leave old numbers on the page.
+  const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+  const numberNodes=[];
+  while(walker.nextNode()){
+    const t=walker.currentNode;
+    if(t.parentElement?.closest('script,style,textarea'))continue;
+    if(/\\(?818\\)?[\\s.\\-]*626[\\s.\\-]*4474/.test(t.textContent))numberNodes.push(t);
+  }
+  numberNodes.forEach(t=>{t.textContent=t.textContent.replace(/\\(?818\\)?[\\s.\\-]*626[\\s.\\-]*4474/g,displayPhone)});
+
 }
 function addNavigation() {
   const nav=document.querySelector('#mainNav');
