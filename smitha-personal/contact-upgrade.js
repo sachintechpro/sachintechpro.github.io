@@ -86,11 +86,12 @@ grid.append(
 const messaging=[
  ['WhatsApp','◉',contact.whatsapp,['wa.me','api.whatsapp.com'],'WhatsApp'],
  ['Instagram','◎',contact.instagram,['ig.me','instagram.com'],'Instagram'],
- ['Facebook Messenger','f',contact.facebook,['m.me','messenger.com','facebook.com'],'Facebook Messenger']
+ ['Facebook Messenger','f',contact.facebook,['m.me','messenger.com','facebook.com'],'Facebook Messenger'],
+ ['X direct message','𝕏',contact.x,['x.com','twitter.com'],'X']
 ];
 messaging.forEach(([name,icon,entry,domains,preferred])=>{
  const url=safeUrl(entry,domains);
- const directMessage=url&&((name==='WhatsApp')||(name==='Instagram'&&new URL(url).hostname==='ig.me')||(name==='Facebook Messenger'&&new URL(url).hostname==='m.me'));
+ const directMessage=url&&((name==='WhatsApp')||(name==='Instagram'&&new URL(url).hostname==='ig.me')||(name==='Facebook Messenger'&&new URL(url).hostname==='m.me')||(name==='X direct message'&&new URL(url).pathname.startsWith('/messages/compose')));
  const note=url?(directMessage?'Open direct conversation':'Open verified profile'):(smsEnabled?'Ask for verified link by text':'Link not connected');
  const onClick=url?null:()=>{if(smsEnabled)textSmitha(preferred);else showNotice(name+' is not connected yet. Please choose Call Smitha.')};
  grid.append(action(name,icon,note,onClick,url,url?'connected':'pending'));
