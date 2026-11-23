@@ -83,16 +83,30 @@ $('chatForm')?.addEventListener('submit',e=>{e.preventDefault();ask(chatInput.va
   const cfg=document.createElement('script');
   cfg.src='site-config.js';cfg.defer=true;
   cfg.addEventListener('load',()=>{
-    window.dispatchEvent(new Event('smitha-config-ready'));
-    const enhancements=document.createElement('script');enhancements.src='site-enhancements.js';enhancements.defer=true;
-    enhancements.addEventListener('load',()=>{
-      const contact=document.createElement('script');contact.src='contact-upgrade.js';contact.defer=true;
-      contact.addEventListener('load',()=>{const booking=document.createElement('script');booking.src='booking-ui.js';booking.defer=true;
- booking.addEventListener('load',()=>{const guide=document.createElement('script');guide.src='conversation-questions.js';guide.defer=true;document.body.append(guide)});
- document.body.append(booking)});
-      document.body.append(contact);
-    });
-    document.body.append(enhancements);
+    const owner=document.createElement('script');owner.src='owner-config.js';owner.defer=true;
+    const ready=()=>{
+      const base=window.SMITHA_SITE_CONFIG||{},override=window.SMITHA_OWNER_CONFIG||{};
+      window.SMITHA_SITE_CONFIG={
+        ...base,newsletter:{enabled:true,...override.newsletter},
+        contact:{...base.contact,...override.contact,phone:{...base.contact?.phone,...override.contact?.phone}}
+      };
+      window.dispatchEvent(new Event('smitha-config-ready'));
+      const enhancements=document.createElement('script');enhancements.src='site-enhancements.js';enhancements.defer=true;
+      enhancements.addEventListener('load',()=>{
+        const contact=document.createElement('script');contact.src='contact-upgrade.js';contact.defer=true;
+        contact.addEventListener('load',()=>{
+          const booking=document.createElement('script');booking.src='booking-ui.js';booking.defer=true;
+          booking.addEventListener('load',()=>{const guide=document.createElement('script');guide.src='conversation-questions.js';guide.defer=true;document.body.append(guide)});
+          document.body.append(booking);
+        });
+        document.body.append(contact);
+        const admin=document.createElement('script');admin.src='admin-link.js';admin.defer=true;document.body.append(admin);
+      });
+      document.body.append(enhancements);
+    };
+    owner.addEventListener('load',ready,{once:true});
+    owner.addEventListener('error',ready,{once:true});
+    document.body.append(owner);
   });
   cfg.addEventListener('error',()=>console.warn('Optional contact configuration unavailable.'));
   document.body.append(cfg);
