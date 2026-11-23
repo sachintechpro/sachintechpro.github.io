@@ -161,8 +161,7 @@ const makeLink=(text,url)=>{const a=el('a','cx-resource',text+' ↗');a.href=url
 function summary(r){
  return 'Hello Smitha, I explored '+active+' questions.\n\n'+r.heading+'\n'+r.description+'\n\nQuestions to discuss:\n'+r.steps.slice(0,4).map((x,i)=>(i+1)+'. '+x.title+': '+x.explanation).join('\n')+'\n\nCould we have a short introductory conversation?';
 }
-function copy(t){if(navigator.clipboard?.writeText)navigator.clipboard.writeText(t).then(()=>window.smithaToast?.('Your takeaway was copied.')).catch(()=>window.prompt('Copy this note:',t));else window.prompt('Copy this note:',t)}
-function message(t){const c=window.SMITHA_SITE_CONFIG?.contact||{},p=c.phone||{};if(!(p.smsDraftEnabled||p.verifiedForSms)||!/^\+[1-9]\d{7,14}$/.test(p.e164||'')){copy(t);return}location.href='sms:'+p.e164+(/iPhone|iPad|iPod/i.test(navigator.userAgent)?'&':'?')+'body='+encodeURIComponent(t)}
+function message(t,r){const c=window.SMITHA_SITE_CONFIG?.contact||{},p=c.phone||{};if(!(p.smsDraftEnabled||p.verifiedForSms)||!/^\+[1-9]\d{7,14}$/.test(p.e164||'')){contact(r);return}location.href='sms:'+p.e164+(/iPhone|iPad|iPod/i.test(navigator.userAgent)?'&':'?')+'body='+encodeURIComponent(t)}
 function contact(r){
  if(typeof window.smithaConversationSetContext==='function')window.smithaConversationSetContext({topic:active==='trust'?'trusts':active==='family'?'children':active==='care'?'caregiving':active==='continuity'?(values().focus===1?'business':'retirement'):active,intent:summary(r).slice(0,220)});
  if(typeof window.openSmithaContact==='function')window.openSmithaContact('I explored '+active+' and would like to discuss my next step.');
@@ -182,7 +181,7 @@ function renderResult(r){
  if(suggested){const box=el('div','cx-related-next');box.append(el('strong','','This may connect to another question'));
  const next=el('button','cx-next-experience',suggested[1]+' ↗');next.type='button';next.addEventListener('click',()=>{setTool(suggested[0]);$('cxWorkspace')?.scrollIntoView({behavior:'smooth',block:'start'})});box.append(next);out.append(box)}
  const actions=el('div','cx-result-actions'),b=(label,cls,fn)=>{const n=el('button',cls,label);n.type='button';n.addEventListener('click',fn);return n};
- actions.append(b('Talk with Smitha ↗','btn gold',()=>contact(r)),b('Text my questions','btn outline',()=>message(summary(r))),b('Copy my takeaway','cx-text-action',()=>copy(summary(r))),b('Print / save as PDF','cx-text-action',()=>window.print()));
+ actions.append(b('Talk with Smitha ↗','btn gold',()=>contact(r)),b('Text my questions','btn outline',()=>message(summary(r),r)));
  out.append(actions,el('p','cx-result-privacy','No information is sent to Smitha unless you choose to send it in your own app. A message draft is not a sent message.'));
  out.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
