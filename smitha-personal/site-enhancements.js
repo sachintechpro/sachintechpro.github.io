@@ -126,6 +126,8 @@ function addVerifiedContactChannels() {
 }
 function addNavigation() {
   const nav=document.querySelector('#mainNav');
+  const first=nav?.querySelector('a[href="my-path.html"]');
+  if(first){first.href='experiences.html';first.textContent='Explore together';first.classList.toggle('active',slug==='experiences');if(slug==='experiences')first.setAttribute('aria-current','page');else first.removeAttribute('aria-current');}
   if(nav && !nav.querySelector('[href="handouts.html"]')){
     const a=link('Free takeaways','','handouts.html');
     const contact=nav.querySelector('[data-open-contact]');
@@ -217,9 +219,39 @@ function addExampleJourneys(){
   wrap.append(grid,node('p','micro','These are illustrative situations, not customer stories or testimonials.'));
   section.append(wrap);
 }
+const experienceMap={
+ estate:['estate','Want to see what may need attention?','Try a short estate-readiness check and leave with questions to take to a qualified attorney.'],
+ trusts:['trust','Preparing to talk about a trust?','Look through assets and decision-makers before meeting with a California estate attorney.'],
+ children:['family','Planning for a child’s future?','Try a transparent savings illustration alongside the legal family questions worth reviewing.'],
+ marriage:['family','Building a future together?','Explore connected family goals and how small planning decisions may change over time.'],
+ 'family-protection':['family','Thinking about the people who depend on you?','Explore family priorities alongside your savings, beneficiaries and household arrangements.'],
+ home:['estate','What would happen to your home?','Review property, decision-makers and estate questions before assuming a particular legal solution.'],
+ caregiving:['care','Helping an older loved one?','Identify the care preferences, permissions and support roles worth discussing together.'],
+ 'later-life':['care','Planning for your own care later?','Organize questions about trusted helpers, day-to-day needs and decision-making.'],
+ medicare:['medicare','Concerned about Medicare timing?','Identify which official enrollment questions to verify without guessing your eligibility or deadline.'],
+ retirement:['continuity','What could retirement look like?','Change simple income and expense assumptions to uncover questions for a real retirement conversation.'],
+ income:['continuity','What if income changes?','Explore continuity questions and the financial decisions that deserve a closer look.'],
+ business:['continuity','If you could not work tomorrow…','Map who could step in, what they need, and what requires legal authorization.'],
+ legacy:['estate','What should loved ones know?','Review the people, documents and instructions that may matter during an emergency.'],
+ foundations:['estate','Starting to get organized?','Use a practical estate-readiness check to identify meaningful first steps.'],
+ plan:['family','Wondering where to begin?','Explore a family future scenario and take away questions that fit your goals.'],
+ grow:['continuity','Thinking about a business idea?','See how decisions, backup responsibilities and family continuity connect.']
+};
+function addExperienceBridge(){
+ if(slug==='outreach-kit'||slug==='contact'||slug==='experiences'||slug==='index')return;
+ const def=experienceMap[slug],main=document.querySelector('main');
+ if(!def||!main||document.getElementById('cxTopicTeaser'))return;
+ const hero=main.querySelector('.journey-hero')||main.querySelector('.page-hero');
+ if(!hero)return;
+ const section=node('section','cx-topic-section');section.id='cxTopicTeaser';
+ const wrap=node('div','container cx-topic-teaser'),copy=node('div','cx-topic-copy');
+ copy.append(node('strong','',def[1]),node('p','',def[2]));
+ wrap.append(copy,link('Explore my situation ↗','btn gold','experiences.html?tool='+def[0]));section.append(wrap);hero.after(section);
+}
 function run(){
   addVerifiedContactChannels();
   addNavigation();
+  addExperienceBridge();
   addConversationPanel();
   addMobileQuickActions();
   addExampleJourneys();
