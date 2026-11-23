@@ -101,7 +101,7 @@ const tried=[
 let pageTopic=document.body.dataset.topic||'';
 const filename=location.pathname.split('/').pop()?.replace(/\.html$/,'')||'index';
 if(!profile[pageTopic])pageTopic=profile[filename]?filename:(filename==='grow'?'business':filename==='plan'?'foundations':'');
-let chosenTopic=pageTopic,contextHint='',step=0,answers=[],additional='';
+let chosenTopic=pageTopic,startedGeneral=!pageTopic,contextHint='',step=0,answers=[],additional='';
 const summary=el('summary');summary.textContent='Answer a few helpful questions before we talk';
 const optional=el('span','', 'Optional · tailored to this topic');summary.append(optional);
 details.replaceChildren(summary,host);
@@ -111,7 +111,7 @@ function normalizedTopic(topic){return profile[topic]?topic:''}
 function setContext(info={}){
  if(typeof info==='string')info={intent:info};
  const newTopic=normalizedTopic(info.topic);
- if(newTopic&&newTopic!==chosenTopic){chosenTopic=newTopic;step=0;answers=[];additional=''}
+ if(newTopic&&newTopic!==chosenTopic){chosenTopic=newTopic;startedGeneral=false;step=0;answers=[];additional=''}
  if(info.intent&&typeof info.intent==='string')contextHint=info.intent.slice(0,220);
  render();
 }
@@ -170,7 +170,7 @@ function addButton(label,cls,action){
 }
 function render(){
  holder.replaceChildren();
- const bank=current(),isGeneral=!chosenTopic&&step===0,done=step>=4;
+ const bank=current(),isGeneral=startedGeneral&&step===0,done=step>=4;
  const lead=el('div','smitha-qflow-eyebrow',done?'Ready to connect with Smitha':(step+1)+' of 4 · '+progressText[step]);
  const heading=el('h3','smitha-qflow-heading',done?'You have a useful starting point.':isGeneral?'What brings you here today?':stageNotes[step]);
  const desc=el('p','smitha-qflow-desc',done?'Here is what you can share if you wish. You can still call, text, email, or request a time without sending this note.':
@@ -210,7 +210,7 @@ function render(){
  opts.forEach((item,index)=>{
   const label=typeof item==='string'?item:item.label;
   const choice=addButton(label,'smitha-qflow-choice'+(answers[step]===label?' selected':''),()=>{
-   answers[step]=label;
+   answers[step]=label;answers.length=step+1;
    if(step===0&&isGeneral){chosenTopic=generalChoices[index].topic;contextHint='';}
    step++;render()
   });
