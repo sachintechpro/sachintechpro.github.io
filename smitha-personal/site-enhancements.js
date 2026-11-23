@@ -50,8 +50,10 @@ function link(text, className, href) {
   a.href = href; return a;
 }
 function talk() {
-  if (typeof window.openSmithaContact === 'function') window.openSmithaContact(introText());
-  else location.href = smsUrl(introText());
+  if(typeof window.smithaConversationBegin==='function')
+    window.smithaConversationBegin({topic:document.body.dataset.topic||'',intent:introText()});
+  else if(typeof window.openSmithaContact==='function')window.openSmithaContact(introText());
+  else location.href='contact.html';
 }
 function share() {
   const label = 'Smitha Rangaswamy — ' + topic;
@@ -169,7 +171,7 @@ function addConversationPanel(){
     actions.append(link('✉ Text Smitha','btn gold smitha-text-action',smsUrl(introText())));
   else actions.append(button('Copy my question','btn gold',()=>copy(introText(),'Conversation starter copied.')));
   actions.append(link('Book a 15-minute introduction ↗','btn outline','contact.html#smithaContactCalendar'));
-  actions.append(button('Share a STAR introduction ↗','btn outline',talk));
+  actions.append(button('Answer a few relevant questions ↗','btn outline',talk));
   const extra=node('div','smitha-conversion-related');
   const next=link(ctx.nextText+' ↗','smitha-suggested',ctx.nextHref);
   if(ctx.nextHref.startsWith('https:')){next.target='_blank';next.rel='noopener noreferrer';}
