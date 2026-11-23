@@ -1,7 +1,7 @@
 (() => {
 'use strict';
 const cfg = window.SMITHA_SITE_CONFIG || {};
-const phone = cfg.contact?.phone?.e164 || '+18186264474';
+const phone = /^\+[1-9]\d{7,14}$/.test(cfg.contact?.phone?.e164||'') ? cfg.contact.phone.e164 : '+18186264474';
 const displayPhone = cfg.contact?.phone?.display || '(818) 626-4474';
 const path = (location.pathname.split('/').pop() || 'index.html').replace(/\.html$/i,'');
 const slug = document.body.dataset.topic || path;
@@ -93,11 +93,24 @@ function addVerifiedContactChannels() {
   });
   const callTile=document.getElementById('callSmitha');
   const textTile=document.getElementById('sendSms');
+  const requestTime=document.getElementById('requestTime');
+  const textIntro=document.getElementById('sendSms2');
+  const enabledSms=c.phone?.verifiedForSms===true;
   if(callTile)callTile.querySelector('small')?.replaceChildren(document.createTextNode(displayPhone));
-  if(textTile){
-    const sm=textTile.querySelector('small');
-    if(sm)sm.textContent = c.phone?.verifiedForSms ? 'Prepare a message' : 'Opens a text draft · delivery unverified';
+  if(textTile){textTile.hidden=!enabledSms;textTile.style.display=enabledSms?'':'none';const small=textTile.querySelector('small');if(small)small.textContent='Opens a draft in your messaging app';}
+  if(textIntro){textIntro.hidden=!enabledSms;textIntro.style.display=enabledSms?'':'none';}
+  if(requestTime){
+    const calendar=verifiedLink(c.booking);
+    const label=requestTime.querySelector('span:not(.symbol)');
+    const small=requestTime.querySelector('small');
+    if(label)label.textContent=calendar?'Choose a time':enabledSms?'Request a time':'Arrange by phone';
+    if(small)small.textContent=calendar?'Opens the booking calendar':enabledSms?'Prepare a text request':'Call '+displayPhone;
   }
+  // Owner configuration is the single contact source, including links originally authored in HTML.
+  document.querySelectorAll('a[href^="tel:"]').forEach(a=>{
+    a.href='tel:'+phone;
+    if(/818[\s()\-]*626[\s\-]*4474/.test(a.textContent))a.textContent=a.textContent.replace(/\(?818\)?[\s\-]*626[\s\-]*4474/,displayPhone);
+  });
 }
 function addNavigation() {
   const nav=document.querySelector('#mainNav');
@@ -109,42 +122,65 @@ function addNavigation() {
   const foot=document.querySelector('.footlinks');
   if(foot && !foot.querySelector('[href="handouts.html"]')) foot.append(link('Shareable handouts','','handouts.html'));
 }
+const handoutMap = {
+ estate:'estate',trusts:'trusts',children:'children',caregiving:'caregiving',
+ 'later-life':'retirement',medicare:'retirement',retirement:'retirement',business:'business'
+};
+const contextualAdvice={
+ estate:{title:'Ready to organize your family’s decisions?',desc:'Bring your questions about decision-makers and beneficiaries to a conversation. A qualified California estate attorney should advise on legal documents.',nextText:'Explore living trusts and beneficiaries',nextHref:'trusts.html'},
+ trusts:{title:'Wondering whether a trust makes sense?',desc:'Review how assets, successor trustees and beneficiary instructions work together. A qualified California estate attorney is the right professional for trust formation.',nextText:'Start with estate-planning essentials',nextHref:'estate.html'},
+ children:{title:'Planning for a child’s future?',desc:'Consider education goals alongside guardianship, beneficiary updates, household responsibilities and an emergency plan.',nextText:'Review family protection',nextHref:'family-protection.html'},
+ caregiving:{title:'Helping someone you care about?',desc:'Start with the person’s wishes, daily care needs, decision-making authority and the support family members can realistically provide.',nextText:'Explore later-life care',nextHref:'later-life.html'},
+ medicare:{title:'Facing a Medicare enrollment decision?',desc:'Enrollment deadlines can have consequences. Check Medicare or Social Security guidance for your circumstances before making a coverage decision.',nextText:'Check official Part B enrollment timing',nextHref:'https://www.medicare.gov/basics/get-started-with-medicare/sign-up/when-can-i-sign-up-for-medicare'},
+ retirement:{title:'Thinking about life after work?',desc:'Start with your expected income sources, changing expenses, healthcare decisions and your need for flexibility.',nextText:'Review Medicare Part B timing',nextHref:'medicare.html'},
+ business:{title:'Who could step in if you were unavailable?',desc:'Think through business continuity, decision-making authority, ownership arrangements, and the costs of an interruption.',nextText:'Explore your continuity checklist',nextHref:'handouts.html?topic=business'},
+ 'family-protection':{title:'Who depends on your financial support?',desc:'Consider ongoing family needs, existing resources, coverage terms and the people who may need help.',nextText:'Explore children and education goals',nextHref:'children.html'},
+ 'later-life':{title:'How would you prefer to receive care?',desc:'Think about trusted helpers, daily support, expected costs and documents to discuss with a qualified professional.',nextText:'Explore caregiving essentials',nextHref:'caregiving.html'}
+};
 function addConversationPanel(){
-  const main=document.querySelector('main'), foot=document.querySelector('footer');
-  if(!main||!foot || document.getElementById('readyToConnect'))return;
+  if(slug==='outreach-kit')return; // Owner draft editor is separate from the visitor journey.
+  const main=document.querySelector('main'),foot=document.querySelector('footer');
+  if(!main||!foot||document.getElementById('readyToConnect'))return;
+  const ctx=contextualAdvice[slug]||{
+    title:'What would help you take the next step?',
+    desc:'You have been exploring '+topic.toLowerCase()+'. A focused conversation can clarify what to prepare and which professional should help.',
+    nextText:'Browse related life-stage topics',nextHref:'explore.html'
+  };
   const sec=node('section','section smitha-conversion-section');
   sec.id='readyToConnect';sec.setAttribute('aria-label','Next step: connect with Smitha');
-  const contain=node('div','container');
-  const panel=node('div','smitha-conversion-panel');
-  const copyBox=node('div','smitha-conversion-copy');
-  copyBox.append(node('div','eyebrow','When you are ready'),
-    node('h2','', 'A good conversation starts with one question.'),
-    node('p','', 'You’ve been exploring '+topic.toLowerCase()+'. We can begin with what matters, who is affected, and which decision you want to make. No account information is needed here.'));
+  const contain=node('div','container'),panel=node('div','smitha-conversion-panel'),copyBox=node('div','smitha-conversion-copy');
+  copyBox.append(node('div','eyebrow','Your next step'),node('h2','',ctx.title),node('p','',ctx.desc));
   const actions=node('div','smitha-conversion-actions');
-  actions.append(link('☎ Call '+displayPhone,'btn smitha-call-action','tel:'+phone),
-    link('✉ Text Smitha','btn gold smitha-text-action',smsUrl(introText())),
-    button('Write a STAR introduction ↗','btn outline',talk),
-    button('Share this guide','btn outline smitha-share-action',share));
+  actions.append(link('☎ Call '+displayPhone,'btn smitha-call-action','tel:'+phone));
+  if(cfg.contact?.phone?.verifiedForSms===true)
+    actions.append(link('✉ Text Smitha','btn gold smitha-text-action',smsUrl(introText())));
+  else actions.append(button('Copy my question','btn gold',()=>copy(introText(),'Conversation starter copied.')));
+  const booking=verifiedLink(cfg.contact?.booking);
+  if(booking)actions.append(link('Choose a conversation time','btn outline',booking));
+  actions.append(button('Share a STAR introduction ↗','btn outline',talk));
   const extra=node('div','smitha-conversion-related');
-  if(slug!=='estate'&&slug!=='trusts'){
-    const a=link('Estate readiness: decisions and documents ↗','smitha-suggested','estate.html');
-    extra.append(node('span','', 'A useful foundation for many families: '),a);
-  } else {
-    const a=link(slug==='estate'?'Explore living trusts & beneficiaries ↗':'Start with the estate essentials ↗',
-       'smitha-suggested',slug==='estate'?'trusts.html':'estate.html');
-    extra.append(a);
+  const next=link(ctx.nextText+' ↗','smitha-suggested',ctx.nextHref);
+  if(ctx.nextHref.startsWith('https:')){next.target='_blank';next.rel='noopener noreferrer';}
+  extra.append(next);
+  const handout=handoutMap[slug];
+  if(handout){
+    extra.append(document.createTextNode('  ·  '),
+      link('Save the related takeaway ↗','smitha-suggested','handouts.html?topic='+handout));
+  }else if(slug!=='handouts'){
+    extra.append(document.createTextNode('  ·  '),
+      link('Browse free educational takeaways ↗','smitha-suggested','handouts.html'));
   }
-  const kits=link('Save or print a free takeaway ↗','smitha-suggested',
-    'handouts.html?topic='+(slug==='trusts'?'trusts':slug==='caregiving'?'caregiving':slug==='children'?'children':slug==='medicare'||slug==='retirement'?'retirement':'estate'));
-  extra.append(document.createTextNode('  ·  '),kits);
   panel.append(copyBox,actions);contain.append(panel,extra);sec.append(contain);main.append(sec);
 }
 function addMobileQuickActions(){
-  if(document.getElementById('smithaQuickActions'))return;
+  if(slug==='outreach-kit'||document.getElementById('smithaQuickActions'))return;
   const rail=node('nav','smitha-mobile-actions');
-  rail.id='smithaQuickActions';rail.setAttribute('aria-label','Quick contact actions');
-  rail.append(link('☎ Call','','tel:'+phone),link('✉ Text','',smsUrl(introText())),
-    button('✦ Talk','',talk));
+  rail.id='smithaQuickActions';rail.setAttribute('aria-label','Quick ways to reach Smitha');
+  rail.append(link('☎ Call','','tel:'+phone));
+  if(cfg.contact?.phone?.verifiedForSms===true)rail.append(link('✉ Text','',smsUrl(introText())));
+  else rail.append(button('✎ Copy note','',()=>copy(introText(),'Conversation starter copied.')));
+  rail.append(button('✦ Ask','',()=>document.getElementById('chatLaunch')?.click()));
+  rail.append(button('Connect','',talk));
   document.body.append(rail);
 }
 function addExampleJourneys(){
