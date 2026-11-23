@@ -71,8 +71,8 @@
  .smitha-conversion-actions .btn{min-height:48px;font-size:12px;padding:10px 7px}
  .smitha-example-grid,.handout-options,.email-kit-options{grid-template-columns:1fr}
  .smitha-example{min-height:0}
- .smitha-mobile-actions{position:fixed;display:grid;grid-template-columns:repeat(3,1fr);left:12px;right:12px;bottom:calc(9px + env(safe-area-inset-bottom,0px));z-index:90;overflow:hidden;border-radius:16px;border:1px solid #d3dce7;background:white;box-shadow:0 8px 30px #0b24444f}
- .smitha-mobile-actions a,.smitha-mobile-actions button{min-height:54px;display:flex;align-items:center;justify-content:center;border:0;background:white;font-size:14px;font-weight:800;color:#142b50;text-decoration:none;cursor:pointer}
+ .smitha-mobile-actions{position:fixed;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));left:12px;right:12px;bottom:calc(9px + env(safe-area-inset-bottom,0px));z-index:90;overflow:hidden;border-radius:16px;border:1px solid #d3dce7;background:white;box-shadow:0 8px 30px #0b24444f}
+ .smitha-mobile-actions a,.smitha-mobile-actions button{min-height:54px;display:flex;align-items:center;justify-content:center;border:0;background:white;padding:6px 4px;font-size:12px;font-weight:800;color:#142b50;text-decoration:none;cursor:pointer}
  .smitha-mobile-actions a+a,.smitha-mobile-actions a+button{border-left:1px solid #e0e5eb}
  .smitha-mobile-actions a:nth-child(2){color:#9c6a1c}
  .smitha-mobile-actions button{background:#152c50;color:white}
@@ -100,3 +100,7 @@
  body[data-page="handouts"] .handout-preview h2{font-size:25px!important}
  body[data-page="handouts"] .handout-preview li{font-size:11pt;line-height:1.35;break-inside:avoid}
 }
+
+/* Keep four high-priority mobile actions legible and screen-reader friendly. */
+.smitha-mobile-actions [hidden],.channel[hidden]{display:none!important}
+@media(max-width:380px){.smitha-mobile-actions a,.smitha-mobile-actions button{font-size:11px}}
