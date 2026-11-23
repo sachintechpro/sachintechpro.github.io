@@ -22,8 +22,8 @@ from email.utils import formataddr
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 ORIGIN = "https://sachintechpro.github.io"
-EMAIL_RE = re.compile(r"^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$")
-PHONE_RE = re.compile(r"^\\+[1-9]\\d{7,14}$")
+EMAIL_RE = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
+PHONE_RE = re.compile(r"^\+[1-9]\d{7,14}$")
 SITE_URL = "https://sachintechpro.github.io/"
 BUCKETS = defaultdict(deque)
 CHALLENGES = {}
@@ -181,7 +181,7 @@ class Handler(BaseHTTPRequestHandler):
                 link = SITE_URL + "#verify-email=" + urllib.parse.quote(token, safe="._-")
                 person = html.escape(first_name(name))
                 safe_link = html.escape(link, quote=True)
-                text = f"Hi {first_name(name)},\\n\\nThanks for reaching out to SachinTechpro. Confirm your email to continue: {link}\\n\\nThis link expires in 20 minutes. If you didn’t request it, you can ignore this email.\\n\\nSachinTechpro"
+                text = f"Hi {first_name(name)},\n\nThanks for reaching out to SachinTechpro. Confirm your email to continue: {link}\n\nThis link expires in 20 minutes. If you didn’t request it, you can ignore this email.\n\nSachinTechpro"
                 body = f'<div style="font-family:Arial,sans-serif;max-width:560px;margin:auto;color:#29251f"><p>Hi {person},</p><p>Thanks for reaching out to SachinTechpro. Confirm your email to continue your inquiry.</p><p style="margin:28px 0"><a href="{safe_link}" style="background:#53796a;color:#fff;text-decoration:none;padding:14px 22px;border-radius:28px;font-weight:bold">Confirm my email</a></p><p style="color:#716b62;font-size:14px">This link expires in 20 minutes. If you didn’t request it, you can ignore this message.</p><p>Warmly,<br><strong>SachinTechpro</strong></p></div>'
                 mail_message(email, "SachinTechpro · Confirm your email", text, body)
             except Exception:
@@ -220,7 +220,7 @@ class Handler(BaseHTTPRequestHandler):
         if self.path == "/api/verify/phone/confirm":
             challenge_data = read_token(clean(data.get("challenge"), 3000), "phone-challenge")
             code = clean(data.get("code"), 6)
-            if not challenge_data or not re.fullmatch(r"\\d{6}", code):
+            if not challenge_data or not re.fullmatch(r"\d{6}", code):
                 return self.respond(400, {"error":"That code is invalid or expired. Request a new one and try again."})
             nonce = challenge_data["nonce"]
             record = CHALLENGES.get(nonce)
@@ -243,7 +243,6 @@ class Handler(BaseHTTPRequestHandler):
             phone_proof = read_token(clean(data.get("phoneProof"), 3000), "phone-proof")
             name = clean(data.get("name"), 120)
             email = clean(data.get("email"), 180).lower()
-            phone = clean(data.get("phoneProof"), 0)
             phone_number = clean(data.get("phone"), 24)
             company = clean(data.get("company"), 160)
             title = clean(data.get("companyTitle"), 160)
@@ -255,7 +254,7 @@ class Handler(BaseHTTPRequestHandler):
             visit_consent = bool(data.get("visitConsent"))
             sms_consent = bool(data.get("smsConsent"))
             whatsapp_consent = bool(data.get("whatsappConsent"))
-            url_ok = not company_website or bool(re.fullmatch(r"https?://[^\\s/]+(?:/[^\\s]*)?", company_website))
+            url_ok = not company_website or bool(re.fullmatch(r"https?://[^\s/]+(?:/[^\s]*)?", company_website))
             if not (email_proof and phone_proof and email_proof["email"] == email and phone_proof["email"] == email and phone_proof["phone"] == phone_number and phone_proof["name"].casefold() == name.casefold() and EMAIL_RE.fullmatch(email) and PHONE_RE.fullmatch(phone_number) and opportunity in OPPORTUNITIES and (not project or project in PROJECTS) and 15 <= len(message) <= 4000 and url_ok):
                 return self.respond(400, {"error":"Please check your details and complete both verification steps."})
             if not mail_configured():
@@ -263,10 +262,10 @@ class Handler(BaseHTTPRequestHandler):
             if not limited("inquiry:" + ip, 5, 3600):
                 return self.respond(429, {"error":"Too many inquiries. Please try again later."})
             first = html.escape(first_name(name))
-            safe_message = html.escape(message).replace("\\n", "<br>")
+            safe_message = html.escape(message).replace("\n", "<br>")
             safe = lambda value: html.escape(value or "Not provided")
             subject = f"SachinTechpro inquiry · {opportunity}"
-            details = (f"Name: {name}\\nEmail: {email}\\nMobile: {phone_number}\\nOrganization: {company or 'Not provided'}\\nTitle: {title or 'Not provided'}\\nWebsite: {company_website or 'Not provided'}\\nBusiness address: {address or 'Not provided'}\\nVisit request consent: {'Yes' if visit_consent else 'No'}\\nOpportunity: {opportunity}\\nProject: {project or 'Not specified'}\\nSMS follow-up consent: {'Yes' if sms_consent else 'No'}\\nWhatsApp follow-up consent: {'Yes' if whatsapp_consent else 'No'}\\n\\nMessage:\\n{message}")
+            details = (f"Name: {name}\nEmail: {email}\nMobile: {phone_number}\nOrganization: {company or 'Not provided'}\nTitle: {title or 'Not provided'}\nWebsite: {company_website or 'Not provided'}\nBusiness address: {address or 'Not provided'}\nVisit request consent: {'Yes' if visit_consent else 'No'}\nOpportunity: {opportunity}\nProject: {project or 'Not specified'}\nSMS follow-up consent: {'Yes' if sms_consent else 'No'}\nWhatsApp follow-up consent: {'Yes' if whatsapp_consent else 'No'}\n\nMessage:\n{message}")
             owner_html = f'<div style="font-family:Arial,sans-serif;color:#29251f"><h2>New verified inquiry</h2><p><strong>{safe(name)}</strong> · {safe(opportunity)}</p><p>Email: {safe(email)}<br>Mobile: {safe(phone_number)}<br>Organization: {safe(company)}<br>Title: {safe(title)}<br>Website: {safe(company_website)}<br>Business address: {safe(address)}</p><p>Visit request consent: {"Yes" if visit_consent else "No"}<br>SMS follow-up: {"Yes" if sms_consent else "No"}<br>WhatsApp follow-up: {"Yes" if whatsapp_consent else "No"}<br>Project: {safe(project)}</p><p>{safe_message}</p></div>'
             try:
                 mail_message(os.environ["INQUIRY_TO"], subject, details, owner_html, reply_to=email)
@@ -275,7 +274,7 @@ class Handler(BaseHTTPRequestHandler):
                 return self.respond(502, {"error":"I couldn’t deliver your inquiry right now. Please try again later."})
             email_receipt = True
             try:
-                receipt_text = f"Hi {first_name(name)},\\n\\nThank you for contacting SachinTechpro about {opportunity}. I’ve received your message and will review it personally.\\n\\nWarmly,\\nSachinTechpro"
+                receipt_text = f"Hi {first_name(name)},\n\nThank you for contacting SachinTechpro about {opportunity}. I’ve received your message and will review it personally.\n\nWarmly,\nSachinTechpro"
                 receipt_html = f'<div style="font-family:Arial,sans-serif;max-width:560px;margin:auto;color:#29251f"><p>Hi {first},</p><p>Thank you for contacting SachinTechpro about <strong>{html.escape(opportunity)}</strong>. I’ve received your note and will review it personally.</p><p>Warmly,<br><strong>SachinTechpro</strong></p></div>'
                 mail_message(email, f"SachinTechpro · Thanks for reaching out, {first_name(name)}", receipt_text, receipt_html)
             except Exception:
