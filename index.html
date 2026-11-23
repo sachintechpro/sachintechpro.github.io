@@ -221,6 +221,7 @@
       if(data.name)$("visitor-name").value=data.name;
       $("verified-email-label").textContent=verifiedEmail;
       history.replaceState(null,"",location.pathname+location.search+"#contact");
+      $("contact").scrollIntoView({behavior:"smooth",block:"start"});
       status(phoneStatus,"Email confirmed. Enter a mobile number to receive a one-time verification code.");
       renderFlow();
     }catch(e){history.replaceState(null,"",location.pathname+location.search+"#contact");$("contact").scrollIntoView({behavior:"smooth",block:"start"});show("email-stage");status(emailStatus,"That confirmation link is invalid or expired. Please request a fresh link.",true)}
