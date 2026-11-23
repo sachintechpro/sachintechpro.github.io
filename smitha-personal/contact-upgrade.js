@@ -33,9 +33,7 @@ const topic=document.body.dataset.topic||'';
 const subject=topic?topic.replace(/-/g,' '):pageTitle.toLowerCase();
 const showNotice=(message)=>window.smithaToast?.(message);
 function contextNote(){
- const rows=[['Situation','starSituation'],['Task','starTask'],['Action','starAction'],['Result','starResult']]
- .map(([n,id])=>{const s=document.getElementById(id)?.value?.trim();return s?n+': '+s.slice(0,300):null}).filter(Boolean);
- return rows.join('\n');
+ return typeof window.smithaConversationText==='function'?window.smithaConversationText():'';
 }
 function messageFor(preferred){
  const intro=preferred?'Hi Smitha, I would prefer to connect on '+preferred+'. Could you share your confirmed account link?':'Hello Smitha, I was exploring '+subject+' and would appreciate a friendly conversation.';
@@ -108,29 +106,15 @@ if(extra.length){
  const more=document.createElement('div');more.className='smitha-contact-extra';
  extra.forEach(item=>more.append(item));grid.after(more);
 }
+// Replace the old fixed four-field intake with a contextual, optional question flow.
 const existing=[...body.children].filter(x=>x!==grid&&!x.classList.contains('smitha-contact-extra'));
-const details=document.createElement('details');
-details.className='smitha-contact-details';
-const summary=document.createElement('summary');
-summary.textContent='Add a short note before reaching out';
-const optional=document.createElement('span');optional.textContent='Optional · about 30 seconds';summary.append(optional);
-details.append(summary);
-const inner=document.createElement('div');inner.className='smitha-contact-note-inner';
-existing.forEach(el=>{
- if(el.classList.contains('divider')){el.remove();return}
- if(el.classList.contains('status-note')){el.remove();return}
- if(el.matches('.eyebrow')){el.textContent='YOUR GOAL';}
- if(el.matches('h3'))el.textContent='What would you like to discuss?';
- if(el.matches('p'))el.textContent='Share only what you are comfortable discussing. You can leave every field blank.';
- inner.append(el);
-});
-details.append(inner);body.append(details);
-const sendNote=document.getElementById('sendSms2');
-if(sendNote){
- sendNote.removeAttribute('onclick');
- sendNote.textContent=smsEnabled?'Text my note':'Copy my note';
- sendNote.addEventListener('click',()=>{if(smsEnabled)textSmitha('');else copyText(messageFor(''))});
-}
+existing.forEach(x=>x.remove());
+const details=document.createElement('details');details.className='smitha-contact-details';
+const summary=document.createElement('summary');summary.textContent='A few helpful questions before we talk';
+const optional=document.createElement('span');optional.textContent='Optional · tailored to what you are exploring';
+summary.append(optional);details.append(summary);
+const guide=document.createElement('div');guide.id='smithaConversationGuide';
+guide.className='smitha-conversation-guide';details.append(guide);body.append(details);
 const privacy=document.createElement('p');privacy.className='smitha-contact-privacy';
 privacy.textContent='Calls and messages open in your own app; nothing is sent automatically.'+(contact.phone?.verifiedForSms===true?'':' Text delivery has not been confirmed.')+' Social links open directly only after ownership is confirmed. Please avoid private financial or medical details.';
 body.append(privacy);
