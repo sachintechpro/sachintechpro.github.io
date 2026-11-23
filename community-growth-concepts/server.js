@@ -33,6 +33,8 @@ const server=http.createServer(async(req,res)=>{
  const pathname=new URL(req.url,'http://localhost').pathname;
  if(req.method==='GET'&&pathname==='/health')return json(res,200,{ok:true,emailConfigured:!!(process.env.RESEND_API_KEY&&process.env.LEAD_FROM_EMAIL&&process.env.NISHA_NOTIFY_EMAIL),smsConfigured:!!(process.env.TWILIO_ACCOUNT_SID&&process.env.TWILIO_AUTH_TOKEN&&process.env.TWILIO_FROM_NUMBER&&process.env.NISHA_NOTIFY_PHONE)});
  if(req.method==='POST'&&pathname==='/api/leads'){
+   // Demo safety: reject API submissions unless production delivery is explicitly enabled.
+   if(process.env.LEADS_LIVE_ENABLED!=='true')return json(res,403,{ok:false,demo:true,error:'Demo mode: submissions are simulated in the browser; nothing is sent or stored.'});
    const ip=String(req.headers['x-forwarded-for']||req.socket.remoteAddress||'').split(',')[0].trim();
    const ipHash=crypto.createHash('sha256').update(ip).digest('hex');
    const now=Date.now(),prior=RATE_LIMIT.get(ipHash)||[];
