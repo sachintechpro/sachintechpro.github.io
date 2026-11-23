@@ -1,0 +1,28 @@
+/* Lightweight lifestyle illustrations with mobile-first crops */
+.smitha-lifestyle-figure{margin:0;min-width:0;overflow:hidden;border:1px solid #e5dfd4;border-radius:22px;background:#fbf7ed;box-shadow:0 10px 30px rgba(20,38,65,.07)}
+.smitha-lifestyle-figure img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;display:block}
+.journey-hero>.container.smitha-visual-hero{display:grid;grid-template-columns:minmax(0,1.28fr) minmax(0,.72fr);align-items:center;gap:clamp(20px,4vw,44px)}
+.smitha-visual-hero .smitha-hero-content{min-width:0}
+.smitha-visual-hero .smitha-hero-image{width:100%;max-width:390px;justify-self:end}
+.smitha-visual-hero .lead{max-width:660px}
+.smitha-welcome-guide .smitha-welcome-visual{width:100%;max-height:190px;margin:0 0 17px;border-radius:16px}
+.smitha-welcome-guide .smitha-welcome-visual img{max-height:190px;object-fit:cover}
+.smitha-essential-image{width:100%;max-width:440px;justify-self:center}
+.journey-card>.smitha-card-image{display:block;width:100%;height:112px;object-fit:cover;border-radius:13px;margin:0 0 12px}
+.experience>.smitha-business-image{display:block;width:100%;height:132px;object-fit:cover;border-radius:14px;margin-bottom:13px}
+.cx-story-card>.cx-story-illustration{width:100%;height:92px;object-fit:cover;border-radius:11px;display:block;margin-bottom:7px}
+.cx-hero-portrait>img{aspect-ratio:4/3;object-fit:cover}
+@media(max-width:760px){
+ .journey-hero>.container.smitha-visual-hero{grid-template-columns:1fr;gap:17px}
+ .smitha-visual-hero .smitha-hero-image{justify-self:center;max-width:430px}
+ .smitha-hero-image img{max-height:215px;object-fit:cover}
+ .smitha-essential-image{max-width:440px}
+ .journey-card>.smitha-card-image{height:100px}
+ .cx-story-card>.cx-story-illustration{height:80px}
+}
+@media(max-width:420px){
+ .smitha-hero-image img{max-height:176px}
+ .journey-card>.smitha-card-image{height:86px}
+ .cx-story-card>.cx-story-illustration{height:72px}
+ .experience>.smitha-business-image{height:105px}
+}
