@@ -1,0 +1,22 @@
+name: Hello Smitha release checks
+on:
+  push:
+    branches:
+      - demo/smitha-rangaswamy-personal-2026
+    paths:
+      - 'smitha-personal/**'
+      - '.github/workflows/smitha-release-checks.yml'
+      - '.github/scripts/smitha-release-checks.mjs'
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run frontend, API, and privacy checks
+        run: node .github/scripts/smitha-release-checks.mjs
