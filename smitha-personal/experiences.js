@@ -164,7 +164,7 @@ function summary(r){
 function copy(t){if(navigator.clipboard?.writeText)navigator.clipboard.writeText(t).then(()=>window.smithaToast?.('Your takeaway was copied.')).catch(()=>window.prompt('Copy this note:',t));else window.prompt('Copy this note:',t)}
 function message(t){const c=window.SMITHA_SITE_CONFIG?.contact||{},p=c.phone||{};if(!(p.smsDraftEnabled||p.verifiedForSms)||!/^\+[1-9]\d{7,14}$/.test(p.e164||'')){copy(t);return}location.href='sms:'+p.e164+(/iPhone|iPad|iPod/i.test(navigator.userAgent)?'&':'?')+'body='+encodeURIComponent(t)}
 function contact(r){
- if(typeof window.smithaConversationSetContext==='function')window.smithaConversationSetContext({topic:active==='trust'?'trusts':active==='family'?'children':active==='care'?'caregiving':active==='continuity'?(values().focus===1?'business':'retirement'):active,intent:'I have questions about '+active});
+ if(typeof window.smithaConversationSetContext==='function')window.smithaConversationSetContext({topic:active==='trust'?'trusts':active==='family'?'children':active==='care'?'caregiving':active==='continuity'?(values().focus===1?'business':'retirement'):active,intent:summary(r).slice(0,220)});
  if(typeof window.openSmithaContact==='function')window.openSmithaContact('I explored '+active+' and would like to discuss my next step.');
  else location.href='contact.html';
 }
