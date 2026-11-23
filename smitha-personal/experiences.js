@@ -57,6 +57,7 @@ let active='estate';
 function setTool(key){
  if(!data[key])return;
  active=key;area.replaceChildren();out.replaceChildren(el('div','cx-result-idle','Make a few choices, then select “See my takeaway.”'));
+ const sampleNote=$('cxExampleNote');if(sampleNote)sampleNote.hidden=true;
  $('cxToolTitle').textContent=data[key].title;$('cxToolIntro').textContent=data[key].intro;
  $('cxEyebrow').textContent={estate:'Estate readiness',trust:'Trust preparation',family:'Children and family',care:'Aging family care',medicare:'Medicare Part B',continuity:'Financial continuity'}[key];
  document.querySelectorAll('[data-journey]').forEach(btn=>{const isOn=btn.dataset.journey===key;btn.classList.toggle('active',isOn);btn.setAttribute('aria-pressed',String(isOn))});
@@ -188,5 +189,43 @@ function renderResult(r){
 form.addEventListener('submit',e=>{e.preventDefault();renderResult(evaluators[active](values()))});
 $('cxStartOver')?.addEventListener('click',()=>setTool(active));
 document.querySelectorAll('[data-journey]').forEach(b=>b.addEventListener('click',()=>{setTool(b.dataset.journey);$('cxWorkspace')?.scrollIntoView({behavior:'smooth',block:'start'})}));
+
+const storyExamples={
+ home:{tool:'estate',title:'A first home and two busy jobs',situation:'A couple bought a starter home and has never reviewed who could act for them.',goal:'Make key decisions easier for loved ones.',explore:'Check trusted decision-makers, beneficiaries and estate documents.',outcome:'A focused set of questions for the right professionals.',seeds:{financial:1,health:2,beneficiary:1,documents:2,property:2,instructions:1}},
+ baby:{tool:'family',title:'A new child and everyday expenses',situation:'Two working parents are balancing childcare bills and future education goals.',goal:'Start a sensible family conversation.',explore:'Try an illustrative monthly amount and check guardianship and beneficiaries.',outcome:'Questions about saving priorities and legal roles.',seeds:{purpose:0,start:0,monthly:100,years:15,rate:4,legal:1}},
+ parent:{tool:'care',title:'Coordinating care for Mom',situation:'Siblings work full time and an older parent needs more daily support.',goal:'Respect her wishes and share responsibilities.',explore:'Discuss care preferences, legal authority, helpers and possible costs.',outcome:'A family discussion checklist and gaps to clarify.',seeds:{wishes:0,medical:1,financial:1,help:1,costs:1}},
+ age65:{tool:'medicare',title:'Turning 65 while still employed',situation:'A professional nearing 65 has active employer health coverage.',goal:'Know which Part B timing rules to verify.',explore:'Check work coverage, employer size and when coverage may change.',outcome:'Specific questions for Medicare or Social Security.',seeds:{age:0,coverage:0,change:1,size:2}},
+ retiring:{tool:'continuity',title:'Looking ahead to retirement',situation:'A household wants to compare everyday expenses with possible future income.',goal:'Spot a hypothetical monthly difference.',explore:'Adjust example numbers; this is not a retirement forecast.',outcome:'Questions to bring to a qualified professional.',seeds:{focus:0,expenses:4500,income:3100}},
+ business:{tool:'continuity',title:'A small business with no backup',situation:'A local owner handles every customer call and important decision.',goal:'Think through a short absence or disruption.',explore:'Review who has authority and where key processes are documented.',outcome:'Practical continuity questions to discuss.',seeds:{focus:1,authority:2,operations:1}}
+};
+let selectedExample='';
+const storyPreview=$('cxStoryPreview');
+const storyButtons=[...document.querySelectorAll('[data-example]')];
+function openStory(key){
+ const e=storyExamples[key];if(!e||!storyPreview)return;
+ selectedExample=key;
+ storyButtons.forEach(b=>{const active=b.dataset.example===key;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});
+ $('cxStoryTitle').textContent=e.title;
+ for(const field of ['Situation','Goal','Explore','Outcome'])$('cxStory'+field).textContent=e[field.toLowerCase()];
+ storyPreview.hidden=false;
+ storyPreview.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+storyButtons.forEach(b=>b.addEventListener('click',()=>openStory(b.dataset.example)));
+function beginStory(sample){
+ const e=storyExamples[selectedExample];if(!e)return;
+ setTool(e.tool);
+ if(sample){
+   for(const [name,value] of Object.entries(e.seeds)){
+     const input=area.querySelector('[name="'+name+'"]');if(input)input.value=String(value)
+   }
+   if(e.tool==='continuity')showBranch();
+ }
+ const note=$('cxExampleNote');
+ if(note){note.hidden=!sample;note.textContent=sample?'Illustrative answers are filled in. Change any choice to fit your situation. Nothing is saved or sent.':''}
+ $('cxWorkspace')?.scrollIntoView({behavior:'smooth',block:'start'});
+}
+$('cxTryExample')?.addEventListener('click',()=>beginStory(true));
+$('cxStartOwn')?.addEventListener('click',()=>beginStory(false));
+
 const selected=new URLSearchParams(location.search).get('tool');setTool(data[selected]?selected:'estate');
 })();

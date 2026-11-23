@@ -92,3 +92,28 @@
 .cx-related-next strong{font-size:12px;color:#5e7083}
 .cx-next-experience{appearance:none;border:0;background:none;padding:4px 0;color:#1e527d;font-size:13px;font-weight:800;text-decoration:underline;text-underline-offset:3px;text-align:left;cursor:pointer}
 .cx-next-experience:focus-visible{outline:3px solid #b88938;outline-offset:2px}
+
+
+/* Concise situation -> goal -> exploration -> next step examples. */
+.cx-stories{padding-top:46px;padding-bottom:12px}
+.cx-stories .cx-section-intro{margin-bottom:15px}
+.cx-stories .cx-section-intro h2{font-size:clamp(26px,3.1vw,37px)}
+.cx-story-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px}
+.cx-story-card{appearance:none;text-align:left;min-width:0;min-height:106px;display:flex;flex-direction:column;gap:7px;padding:17px 18px;background:#fffdf9;border:1px solid #e4d9c5;border-radius:17px;color:#1d3756;cursor:pointer;transition:border-color .2s,box-shadow .2s}
+.cx-story-card strong{font-size:15px;line-height:1.32}
+.cx-story-card small{font-size:12px;line-height:1.4;color:#586b7e}
+.cx-story-card:hover,.cx-story-card.active{border-color:#bd8a39;box-shadow:0 5px 18px #20334b12;background:#fff7e9}
+.cx-story-card:focus-visible,.cx-story-actions button:focus-visible{outline:3px solid #bd8a39;outline-offset:3px}
+.cx-story-preview{padding:20px 22px;margin-top:14px;border-radius:18px;background:#f8f2e7;border:1px solid #e5d4b8;scroll-margin-top:105px}
+.cx-story-preview[hidden]{display:none}
+.cx-story-preview h3{font-size:21px;color:#183558;margin:6px 0 15px}
+.cx-story-steps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 22px}
+.cx-story-steps div{min-width:0}
+.cx-story-steps dt{font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:800;color:#946824;margin-bottom:4px}
+.cx-story-steps dd{font-size:13px;line-height:1.5;color:#344c65;margin:0}
+.cx-story-actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:17px}
+.cx-story-actions .btn{min-height:44px;font-size:13px;padding:10px 15px}
+.cx-example-note{margin:10px 0 0!important;padding:10px 13px;border-radius:9px;background:#fff3d8;color:#2b425d!important;font-size:12px!important;line-height:1.45!important}
+@media(max-width:850px){.cx-story-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:550px){.cx-stories{padding-top:30px}.cx-story-grid{gap:8px}.cx-story-card{min-height:110px;padding:13px 12px}.cx-story-card strong{font-size:13px}.cx-story-card small{font-size:11px}.cx-story-preview{padding:15px}.cx-story-steps{grid-template-columns:1fr;gap:10px}.cx-story-preview h3{font-size:19px}.cx-story-actions{flex-direction:column;align-items:stretch}.cx-story-actions .btn{width:100%;justify-content:center}}
+@media(max-width:355px){.cx-story-grid{grid-template-columns:1fr}.cx-story-card{min-height:76px}}
