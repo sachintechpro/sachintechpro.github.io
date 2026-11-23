@@ -31,10 +31,12 @@ async function newsletterSubscribe(req,res,origin){
    body:JSON.stringify({email_address:email,type:"unactivated"}),
    signal:AbortSignal.timeout(12000)
   });
-  if(response.ok||response.status===409||response.status===400){
+  if(response.ok||response.status===409){
    return json(res,202,{status:"check_inbox_if_eligible"});
   }
+  // Never report success for a rejected signup (400 can mean a provider limit or validation failure).
   console.error("Newsletter provider status",response.status);
+  if(response.status===429)return json(res,429,{error:"too_many_requests"});
   return json(res,502,{error:"newsletter_provider_unavailable"});
  }catch(error){console.error("Newsletter signup failed",error?.name||"error");return json(res,502,{error:"newsletter_provider_unavailable"})}
 }
