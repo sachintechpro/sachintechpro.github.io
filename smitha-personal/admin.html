@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="theme-color" content="#fffcf7"><title>Private Owner Settings | Smitha Rangaswamy</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="admin.css"><script src="https://accounts.google.com/gsi/client" async defer></script><script src="admin-console.js" defer></script></head>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="strict-origin-when-cross-origin"><meta name="theme-color" content="#fffcf7"><title>Private Owner Settings | Smitha Rangaswamy</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="admin.css"><script src="https://accounts.google.com/gsi/client" async defer></script><script src="admin-console.js" defer></script><script src="relationship-followups.js" defer></script></head>
 <body class="smitha-admin-page"><a class="skip" href="#main">Skip to settings</a>
 <header class="topbar"><div class="container"><a class="logo" href="index.html" aria-label="Return to Smitha's website"><svg viewBox="0 0 50 38" aria-hidden="true"><path d="M2 29 L14 17 L23 24 L33 9 L44 17" fill="none" stroke="#17345e" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M43 12 L47 2 L35 7" fill="none" stroke="#bf8c30" stroke-width="2.8"/><path d="M3 36 Q22 24 47 31" fill="none" stroke="#c18c2f" stroke-width="2.3"/></svg><span><strong>Smitha Rangaswamy</strong><small>Owner settings</small></span></a><a class="admin-back" href="index.html">← Visit website</a></div></header>
 <main class="container admin-main" id="main">
@@ -44,5 +44,23 @@
 <label class="admin-wide">Newsletter introduction <textarea name="newsletterDescription" rows="3" maxlength="320"></textarea></label>
 <label class="admin-wide">Frequency <select name="newsletterFrequency"><option>Occasional</option><option>Monthly</option><option>Twice a month</option></select></label>
 <div class="admin-newsletter-status"><h3>Recent newsletter subscriptions</h3><button type="button" class="admin-text-button" id="adminLoadSubscribers">Refresh subscriber list</button><div id="adminSubscriberSummary" role="status"></div><div id="adminSubscribers"></div></div></section>
+<section class="admin-panel admin-relationships" aria-labelledby="adminRelationshipsTitle">
+<div class="eyebrow">Thoughtful community connections</div><h2 id="adminRelationshipsTitle">People I’d like to stay in touch with</h2>
+<p>Find public profiles, confirm they belong to the right person, and revisit their posts when something genuinely interests you. Following and liking happen in your own social app; this page never clicks for you.</p>
+<p class="admin-note">This list is saved only in this browser on your device—not in your subscriber list or on the public site. Don’t add sensitive personal details.</p>
+<div class="admin-relationship-form" id="adminRelationshipTool">
+ <div class="admin-grid">
+ <label>Public name <input id="leadPublicName" type="text" maxlength="90" autocomplete="off" placeholder="Name on public profile"></label>
+ <label>Business or location context <input id="leadPublicContext" type="text" maxlength="100" autocomplete="off" placeholder="Company or city, for matching profiles"></label>
+ <label>Public LinkedIn URL <input id="leadLinkedIn" type="url" autocomplete="off" placeholder="https://www.linkedin.com/in/…"></label>
+ <label>Public Facebook URL <input id="leadFacebook" type="url" autocomplete="off" placeholder="https://www.facebook.com/…"></label>
+ <label>Public Instagram URL <input id="leadInstagram" type="url" autocomplete="off" placeholder="https://www.instagram.com/…"></label>
+ <label>Public X profile URL <input id="leadX" type="url" autocomplete="off" placeholder="https://x.com/…"></label>
+ <label>Review again <select id="leadReviewFrequency"><option value="7">In 7 days</option><option value="14">In 14 days</option><option value="30">In 30 days</option></select></label>
+ </div>
+ <div class="admin-save"><button class="btn outline" id="leadSave" type="button">Save public profiles</button><span id="leadFeedback" role="status" aria-live="polite"></span></div>
+</div>
+<div class="admin-relations-queue"><h3>Connections to revisit</h3><div id="leadList" aria-live="polite"></div></div>
+</section>
 <div class="admin-save"><button type="submit" class="btn gold" id="adminSave">Save settings</button><span id="adminSaveStatus" role="status" aria-live="polite"></span></div>
 </form></div></main></body></html>
