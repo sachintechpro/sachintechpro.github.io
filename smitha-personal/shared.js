@@ -46,3 +46,15 @@ return 'Use Find my path to connect your life stage with estate essentials, fami
 async function ask(question){const text=String(question||'').trim().slice(0,500);if(!text)return;msg('user',text);chatInput.value='';msg('assistant',localAnswer(text));const bubble=chatMessages.lastElementChild;const endpoint=document.body.dataset.aiEndpoint||'';if(endpoint){try{const state={page,topic:document.body.dataset.topic||'',topicTitle,guideTitle:document.querySelector('#resultTitle')?.textContent||'',currentGuide:document.querySelector('#guideResult')?.classList.contains('active')?'complete':'in progress'};const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),12000);const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({page,state,history:chatHistory.slice(-6),message:text}),signal:controller.signal});clearTimeout(timer);if(res.ok){const data=await res.json();if(data.answer){bubble.textContent=data.answer}}}catch{ /* Immediate browser answer remains visible if AI unavailable. */ }}}
 $('chatForm')?.addEventListener('submit',e=>{e.preventDefault();ask(chatInput.value)});
 })();
+
+/* Load owner-editable contact settings and contextual actions after the core site. */
+(() => {
+  const cfg=document.createElement('script');
+  cfg.src='site-config.js';cfg.defer=true;
+  cfg.addEventListener('load',()=>{
+    const enhancements=document.createElement('script');enhancements.src='site-enhancements.js';enhancements.defer=true;
+    document.body.append(enhancements);
+  });
+  cfg.addEventListener('error',()=>console.warn('Optional contact configuration unavailable.'));
+  document.body.append(cfg);
+})();
