@@ -10,7 +10,8 @@ Required for email confirmation and inquiry delivery:
 
 - `SMTP_HOST`
 - `SMTP_PORT` (usually `587`)
-- `SMTP_USER` (the authorized sender address; defaults in code to `Sachin.techpro@gmail.com`)
+- `SMTP_USER` (SMTP authentication account; defaults to the configured sender if omitted)
+- `SMTP_FROM_EMAIL` is not needed: outbound mail uses `Sachin.techpro@gmail.com` as the sender address and `SachinTechpro` as its display name. The SMTP provider must authorize that sender.
 - `SMTP_PASSWORD`
 - `INQUIRY_TO` (defaults to `Sachin.techpro@gmail.com`)
 - `VERIFY_SECRET` (a random secret with at least 32 characters)
