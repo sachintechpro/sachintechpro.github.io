@@ -35,6 +35,6 @@ WhatsApp follow-up is sent only when the visitor explicitly opts in. Twilio requ
 - Health check: `GET /health`
 - Browser origin allowed: `https://sachintechpro.github.io`
 
-The sender display name is `SachinTechpro`; the underlying SMTP address must be authorized by the email provider. The verification link expires after 20 minutes; SMS codes expire after 10 minutes. The inquiry notification and personalized receipt are sent after both checks pass.
+The email display name is `SachinTechpro`; the underlying SMTP address must be authorized by the email provider. SMS messages begin with `SachinTechpro`; the recipient will see the configured Twilio phone number as the sender. Set the WhatsApp Business sender profile name to `SachinTechpro` through the provider. The verification link expires after 20 minutes; SMS codes expire after 10 minutes. The inquiry notification and personalized receipt are sent after both checks pass.
 
 The public static website calls `https://sachintechpro-inquiries.onrender.com`. The Render service must be deployed and configured with the variables above before live verification can succeed. This lightweight service uses per-process rate limits and ephemeral verification state; use a persistent store and distributed rate limiting before scaling to multiple service instances.
