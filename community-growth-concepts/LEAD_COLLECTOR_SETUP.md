@@ -1,53 +1,25 @@
-# Current operating mode: DEMO (November 23, 2026)
+# Hello, Nisha — lead collection status
 
-The contact and subscription forms are local browser simulations: after a valid form submission they show an explicit demo-success notice and immediately clear entered values. **No request is sent to the server, no email/SMS is sent, and no information is saved.** The server also refuses /api/leads submissions unless LEADS_LIVE_ENABLED=true is explicitly set in a future production rollout. Direct email/call/text contact links remain genuine device handoffs and are separate from the demo forms.
+**Operating mode: demonstration only.** Render publishes static HTML pages. Each has one expandable contact/subscription preview near the bottom. The preview forms validate locally, clear entered values, and display a clearly labeled simulation confirmation. No lead record, email, SMS, subscription, or calendar entry is created; the preview forms make **no network request**.
 
-Do not claim real lead delivery or subscription during a demonstration. Live configuration below is retained for a future separately approved launch.
+The separate AI digital guide **does make a network request** to its dedicated Render API when someone asks a question. This is different from lead capture. Visitors must not enter sensitive personal information. Direct `sms:`, `tel:` and `mailto:` links open the visitor's own device applications and can result in a genuine message only if the visitor chooses to send it.
 
----
+## Current deployment
 
-# Nisha lead collector — production setup
-The HTML pages now contain a contact lead form and a newsletter **subscription request** form. The Node web server exposes POST /api/leads and sends both email (Resend) and text (Twilio) notifications server-to-server.
+- Site: `hello-nisha-personal` — Render **Static Site**, branch `demo/hello-nisha-personal-2026`, publishes `index.html`, `coverage.html`, and `valleycircle.html`.
+- Chat service: `hello-nisha-guide-api` — separate Render web service, same branch.
+- Files `server.js`, `lead.js` and `package.json` under this project root are **dormant legacy prototypes** and are **not used by the current static deployment**. Do not assume those files deliver leads or provide live newsletter subscription.
 
-## Render service configuration
-Deploy this directory as a **Node Web Service** (not a Render Static Site):
-- Repository: sachintechpro/sachintechpro.github.io
-- Branch: demo/hello-nisha-personal-2026
-- Root directory: community-growth-concepts
-- Build command: npm install
-- Start command: npm start
-- Health: /health
-- Render sets PORT automatically.
+## Production integration, only by separate approval
 
-Required secret environment variables (set in Render; **never commit values to GitHub**):
-- RESEND_API_KEY — active Resend API key
-- LEAD_FROM_EMAIL — verified sender e.g. "Nisha Website <leads@your-verified-domain>"
-- NISHA_NOTIFY_EMAIL — Nisha's approved destination email
-- TWILIO_ACCOUNT_SID
-- TWILIO_AUTH_TOKEN
-- TWILIO_FROM_NUMBER — Twilio number authorized for outbound SMS (E.164)
-- NISHA_NOTIFY_PHONE — Nisha's authorized text-message number (E.164)
+Before activation, confirm Nisha's agency permissions and appropriate insurance advertising requirements; set up an approved website/business email domain and phone number; implement secure form handling, opt-in and unsubscribe, abuse prevention, duplicate management, verified notifications through the chosen email/SMS providers, and a genuine scheduling system. Test both delivery channels and never simulate delivery success in production.
 
-Existing live service may need to be migrated from Static Site to a Web Service; updating a static build alone does not run server.js. Do not route production traffic to the form until both channels are configured and an end-to-end submission test confirms receipt.
+## Demo release checks
 
-## Form behavior and limitations
-- Only the visitor's deliberate form submit sends a lead. Page visits, button clicks, and chat messages alone do not.
-- Email is required; phone is optional. Subscription consent is separate from contact consent.
-- The API never tells the visitor that both notifications succeeded unless both providers accepted their respective API requests.
-- If one provider succeeds and the other fails, the response reports a partial-delivery warning; a user retry could cause a duplicate. Production deduplication and persistent retry queue require a durable database.
-- This version does **not** store leads in its own database, manage newsletter membership, automatically send newsletters, verify visitor emails, confirm meetings, or implement unsubscribe processing. Notifications in Nisha's inbox are the current lead record.
-- A newsletter form submits a subscription **request**, not an activated mailing-list membership. Use a mailing-list provider with consent records, double opt-in, and unsubscribe mechanisms before sending ongoing marketing emails.
-- Limit and validate data, do not send policy numbers, SSNs, payment info, or other sensitive details.
-- Use only an approved phone destination; verify compliance with Twilio sender registration and applicable messaging rules.
-- GET /health reports booleans for email/sms configuration but never reveals credentials.
-
-## Manual production UAT
-1. Ensure GET /health shows both channels configured.
-2. From Home, submit a contact inquiry and check Nisha receives both the Resend email and Twilio SMS.
-3. On Coverage and Valley pages, repeat with another address and topic.
-4. Submit a subscription request with affirmative consent; verify a distinct email and SMS.
-5. Test missing consent, malformed email, empty inquiry message, and repeated requests.
-6. Confirm browser displays a failure if secrets/provider configuration is missing.
-7. Test 375px mobile Safari and 1440px desktop, keyboard access, and real phone messaging receipts.
-
-Never use fabricated delivery success for production.
+1. Home, Good Questions, and Our Valley load on desktop and narrow mobile.
+2. Six homepage topic links map to the expected question-guide topics.
+3. Each page can open/close the *single* digital guide; email scheduling is a draft only.
+4. Footer mobile `+18182063016` and office `+18182064600` work as device handoffs.
+5. Contact and newsletter previews require email/consent, display explicit simulation confirmation, and clear fields.
+6. The page explains that chat questions go to an AI backend and should not contain sensitive data.
+7. The independent demo, fictional partnerships, and licensing/authorization caveats remain visible.
