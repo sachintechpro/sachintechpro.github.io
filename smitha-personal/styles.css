@@ -75,7 +75,11 @@
  .smitha-mobile-actions a,.smitha-mobile-actions button{min-height:54px;display:flex;align-items:center;justify-content:center;border:0;background:white;padding:6px 4px;font-size:12px;font-weight:800;color:#142b50;text-decoration:none;cursor:pointer}
  .smitha-mobile-actions a+a,.smitha-mobile-actions a+button{border-left:1px solid #e0e5eb}
  .smitha-mobile-actions a:nth-child(2){color:#9c6a1c}
- .smitha-mobile-actions button{background:#152c50;color:white}
+ .smitha-mobile-actions button{background:white;color:#142b50}
+ .smitha-mobile-actions > * + *{border-left:1px solid #e0e5eb}
+ .smitha-mobile-actions button:last-child{background:#152c50;color:white}
+ .smitha-mobile-actions button:last-child:hover{background:#1e426d}
+ .smitha-mobile-actions button:focus-visible,.smitha-mobile-actions a:focus-visible{outline:3px solid #b7842e;outline-offset:-3px}
  .connect-launch,.chat-launch{display:none!important}
  .handout-preview{padding:19px}
  .kit-control input,.kit-control select{width:min(100%,350px)}
