@@ -121,12 +121,15 @@
     <article class="step"><b>01</b><h3>Understand</h3><p>Clarify the business need and desired outcome.</p></article><article class="step"><b>02</b><h3>Align</h3><p>Connect people, priorities and dependencies.</p></article><article class="step"><b>03</b><h3>Navigate</h3><p>Surface risks and decisions early.</p></article><article class="step"><b>04</b><h3>Deliver</h3><p>Maintain focus and accountability.</p></article><article class="step"><b>05</b><h3>Improve</h3><p>Use outcomes to strengthen what comes next.</p></article>
   </div></div></section>
   <section class="content"><div class="background"><div class="eyebrow">Professional background</div><h2>Experience across complex technology environments.</h2><p>My work has spanned enterprise technology delivery, business analysis, engineering and quality leadership, and systems transformation. I bring a practical understanding of how business goals, people, platforms and delivery decisions intersect across industries.</p></div></section>
-  <section class="content" id="contact"><div class="contact"><div><div class="eyebrow">Let’s connect</div><h2>Have an opportunity or project in mind?</h2><p>Share a few details and I’ll get back to you. No account, email confirmation, or phone verification needed.</p></div>
+  <section class="content" id="contact"><div class="contact"><div><div class="eyebrow">Let’s connect</div><h2>Have an opportunity or project in mind?</h2><p>Share a few details and I’ll get back to you. No email or phone verification needed.</p></div>
     <form id="inquiry-form" novalidate>
       <div class="field"><label for="first-name">First name *</label><input id="first-name" name="first_name" autocomplete="given-name" required maxlength="80" placeholder="First name"></div>
       <div class="field"><label for="last-name">Last name *</label><input id="last-name" name="last_name" autocomplete="family-name" required maxlength="80" placeholder="Last name"></div>
       <div class="field full"><label for="company">Company name *</label><input id="company" name="company" autocomplete="organization" required maxlength="160" placeholder="Company or organization"></div>
-      <div class="field full"><label for="visitor-message">Message *</label><textarea id="visitor-message" name="message" required minlength="10" maxlength="4000" placeholder="What would you like to discuss? Please include an email address or phone number in your message if you’d like me to reply directly."></textarea></div>
+      <div class="field"><label for="visitor-email">Email *</label><input id="visitor-email" name="email" type="email" autocomplete="email" required maxlength="180" placeholder="you@company.com"></div>
+      <div class="field"><label for="visitor-phone">Mobile number <span class="optional">(optional)</span></label><input id="visitor-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" placeholder="(555) 123-4567"></div>
+      <div class="field full"><label for="collaboration-type">What are you interested in? *</label><select id="collaboration-type" name="collaboration_type" required><option value="">Choose one</option><option>Full-time role</option><option>Independent project / contract</option><option>Other collaboration</option></select></div>
+      <div class="field full"><label for="visitor-message">Message *</label><textarea id="visitor-message" name="message" required minlength="10" maxlength="4000" placeholder="What would you like to discuss?"></textarea></div>
       <input type="hidden" name="_subject" value="New portfolio inquiry for Sachin Suyamindra">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_captcha" value="false">
@@ -135,7 +138,7 @@
       <button class="send full" id="submit-inquiry" type="submit">Send message</button>
       <p class="form-note full" id="submit-status" aria-live="polite" hidden></p>
     </form>
-    <div class="contact-success" id="contact-success" role="status" aria-live="polite" hidden><h3 id="success-title">Thanks. Your message was sent.</h3><p>I’ll review your note and follow up. If you’d like a reply, please include your email or phone number in the message.</p></div>
+    <div class="contact-success" id="contact-success" role="status" aria-live="polite" hidden><h3 id="success-title">Thanks. Your message was sent.</h3><p>I’ll review your note and follow up. I’ll reply to your email. Your mobile number is optional.</p></div>
   </div></section></main>
 <footer><div class="wrap">Professional portfolio · © 2026 Sachin Suyamindra</div></footer>
 <script>
