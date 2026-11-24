@@ -4,7 +4,7 @@
    Do not publish customer records, credentials, or private keys here. */
 window.SMITHA_SITE_CONFIG = Object.freeze({
   identity: {
-    name: "Smitha Rangaswamy",
+    name: "Smitha",
     displayTitle: "Licensed Financial Professional & Entrepreneur Builder",
     city: "Los Angeles, California",
     tagline: "Plan Today | Build Tomorrow",
