@@ -213,6 +213,14 @@ function addExampleJourneys(){
   const grid=node('div','smitha-example-grid');
   cfg.sampleJourneys.slice(0,4).forEach(item=>{
     const a=link('','smitha-example',''+item.topic+'.html');
+    if(item.topic==='caregiving'){
+      const img=document.createElement('img');
+      img.src='assets/smitha-care.webp';
+      img.className='smitha-example-image';
+      img.width=640;img.height=480;img.loading='lazy';img.decoding='async';
+      img.alt='A daughter and her mother review care preferences together at home.';
+      a.append(img);
+    }
     a.append(node('strong','',item.label),node('p','',item.situation),
       node('span','', 'Explore questions ↗'));
     grid.append(a);
