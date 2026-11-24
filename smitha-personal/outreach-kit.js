@@ -4,7 +4,7 @@ const templates=[{"id":"estate","category":"ESTATE READINESS","title":"A useful 
 const select=document.getElementById('emailTopic'), body=document.getElementById('emailBody');
 if(!select||!body)return;
 const site=location.origin+'/';
-const signature=()=>"Smitha Rangaswamy\nLos Angeles, California\nPlan Today | Build Tomorrow\nContact or request a 15-minute introduction: "+site+"contact.html";
+const signature=()=>"Smitha\nLos Angeles, California\nPlan Today | Build Tomorrow\nContact or request a 15-minute introduction: "+site+"contact.html";
 templates.forEach(t=>{const o=document.createElement('option');o.value=t.id;o.textContent=t.title;select.append(o)});
 const $=id=>document.getElementById(id);
 const val=id=>$(id)?.value?.trim()||'';
