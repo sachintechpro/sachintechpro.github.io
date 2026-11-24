@@ -71,15 +71,13 @@
  .smitha-conversion-actions .btn{min-height:48px;font-size:12px;padding:10px 7px}
  .smitha-example-grid,.handout-options,.email-kit-options{grid-template-columns:1fr}
  .smitha-example{min-height:0}
- .smitha-mobile-actions{position:fixed;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));left:12px;right:12px;bottom:calc(9px + env(safe-area-inset-bottom,0px));z-index:90;overflow:hidden;border-radius:16px;border:1px solid #d3dce7;background:white;box-shadow:0 8px 30px #0b24444f}
- .smitha-mobile-actions a,.smitha-mobile-actions button{min-height:54px;display:flex;align-items:center;justify-content:center;border:0;background:white;padding:6px 4px;font-size:12px;font-weight:800;color:#142b50;text-decoration:none;cursor:pointer}
- .smitha-mobile-actions a+a,.smitha-mobile-actions a+button{border-left:1px solid #e0e5eb}
- .smitha-mobile-actions a:nth-child(2){color:#9c6a1c}
- .smitha-mobile-actions button{background:white;color:#142b50}
- .smitha-mobile-actions > * + *{border-left:1px solid #e0e5eb}
- .smitha-mobile-actions button:last-child{background:#152c50;color:white}
- .smitha-mobile-actions button:last-child:hover{background:#1e426d}
- .smitha-mobile-actions button:focus-visible,.smitha-mobile-actions a:focus-visible{outline:3px solid #b7842e;outline-offset:-3px}
+ .smitha-mobile-actions{position:fixed;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));left:12px;right:12px;bottom:calc(9px + env(safe-area-inset-bottom,0px));z-index:90;overflow:hidden;border-radius:18px;border:1px solid #e3e9df;background:rgba(255,254,250,.97);box-shadow:0 8px 28px rgba(35,70,59,.16);backdrop-filter:blur(14px)}
+ .smitha-mobile-actions a,.smitha-mobile-actions button{min-height:54px;display:flex;align-items:center;justify-content:center;border:0;background:transparent;padding:6px 4px;font-size:12px;font-weight:800;color:#23463b;text-decoration:none;cursor:pointer}
+ .smitha-mobile-actions a:nth-child(2){color:#b96543}
+ .smitha-mobile-actions > * + *{border-left:1px solid #e3e9df}
+ .smitha-mobile-actions button:last-child{background:#23463b;color:#fff}
+ .smitha-mobile-actions button:last-child:hover{background:#315a4d}
+ .smitha-mobile-actions button:focus-visible,.smitha-mobile-actions a:focus-visible{outline:3px solid #d27c54;outline-offset:-3px}
  .connect-launch,.chat-launch{display:none!important}
  .handout-preview{padding:19px}
  .kit-control input,.kit-control select{width:min(100%,350px)}
