@@ -18,7 +18,7 @@ document.querySelectorAll('[data-open-contact]').forEach(el=>el.addEventListener
 const contactModal=$('connectModal');const chatPanel=$('chatPanel');const connectLaunch=$('connectLaunch');const chatLaunch=$('chatLaunch');let previousFocus=null;let inertBefore=[];
 function openContact(intent=''){if(!contactModal)return;previousFocus=document.activeElement;if(intent){const s=$('starSituation');if(s&&!s.value)s.value=intent;}contactModal.classList.add('open');contactModal.setAttribute('aria-hidden','false');inertBefore=[...document.querySelectorAll('main,header,footer')].filter(x=>!x.inert);inertBefore.forEach(x=>x.inert=true);document.body.style.overflow='hidden';$('closeConnect')?.focus();document.dispatchEvent(new CustomEvent('smitha-contact-open',{detail:{intent}}))}
 function closeContact(){if(!contactModal)return;contactModal.classList.remove('open');contactModal.setAttribute('aria-hidden','true');inertBefore.forEach(x=>x.inert=false);inertBefore=[];document.body.style.overflow='';previousFocus?.focus?.()}
-window.openSmithaContact=openContact;connectLaunch?.addEventListener('click',()=>openContact());$('closeConnect')?.addEventListener('click',closeContact);contactModal?.addEventListener('click',e=>{if(e.target===contactModal)closeContact()});
+window.openSmithaContact=openContact;window.closeSmithaContact=closeContact;connectLaunch?.addEventListener('click',()=>openContact());$('closeConnect')?.addEventListener('click',closeContact);contactModal?.addEventListener('click',e=>{if(e.target===contactModal)closeContact()});
 document.addEventListener('keydown',e=>{
  if(e.key==='Escape'){if(contactModal?.classList.contains('open'))closeContact();if(chatPanel?.classList.contains('open'))closeChat();return}
  if(e.key!=='Tab'||!contactModal?.classList.contains('open'))return;
@@ -29,10 +29,10 @@ document.addEventListener('keydown',e=>{
  else if(!e.shiftKey&&(document.activeElement===last||!contactModal.contains(document.activeElement))){e.preventDefault();first.focus()}
 });
 function starText(){return typeof window.smithaConversationText==='function'?window.smithaConversationText():''}
-function composeText(kind){const star=starText();let intro=kind==='time'?"Hello Smitha, I'd appreciate a convenient time for a friendly conversation about my goals.":"Hello Smitha, I have a question about my next financial or family-planning decision.";return intro+(star?'\n\n'+star:'')}
+function composeText(kind){const star=starText();let intro=kind==='email'?"Hello Smitha, may I have your confirmed email address to follow up about my question?":kind==='time'?"Hello Smitha, I'd appreciate a convenient time for a friendly conversation about my goals.":"Hello Smitha, I have a question about my next financial or family-planning decision.";return intro+(star?'\n\n'+star:'')}
 function smsHref(msg){const sep=/iPhone|iPad|iPod/i.test(navigator.userAgent)?'&':'?';return `sms:${activePhone()}${sep}body=${encodeURIComponent(msg)}`}
 function openSms(kind){if(!smsDraftAllowed()){toast('Texting is not connected; please choose Call instead.');return}location.href=smsHref(composeText(kind));toast('Your messaging app will open a draft. Delivery has not been verified.')}
-$('sendSms')?.addEventListener('click',()=>openSms('connect'));
+$('sendSms')?.addEventListener('click',()=>openSms('connect')); $('emailSmitha')?.addEventListener('click',()=>{const email=contactCfg().email||{};if(email.verified&&/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email.address||'')){location.href='mailto:'+email.address;return}openSms('email')}); $('chatStuVI')?.addEventListener('click',()=>{closeContact();openChat()});
 $('requestTime')?.addEventListener('click',()=>{const calendar=verifiedUrl(contactCfg().booking);if(calendar){window.open(calendar,'_blank','noopener,noreferrer');return}if(smsDraftAllowed())openSms('time');else location.href='tel:'+activePhone()});
 $('callSmitha')?.addEventListener('click',()=>{location.href='tel:'+activePhone()});
 $('copyIntro')?.addEventListener('click',async()=>{const msg=composeText('connect');try{await navigator.clipboard.writeText(msg);toast('Your introduction is copied.')}catch{const txt=document.createElement('textarea');txt.value=msg;document.body.append(txt);txt.select();document.execCommand('copy');txt.remove();toast('Your introduction is ready to paste.')}});
@@ -41,20 +41,21 @@ function toast(t){const el=$('toast');if(!el)return;el.textContent=t;el.classLis
 window.smithaToast=toast;
 const chatMessages=$('chatMessages');const suggestions=$('chatSuggestions');const chatInput=$('chatInput');let chatHistory=[];
 const topicTitle=document.querySelector('main h1')?.textContent.trim().replace(/\s+/g,' ')||'this topic';
-const firstMessage=page==='topic'?`Hello! I’m Smitha’s illustrated guide. This page is about ${topicTitle.toLowerCase()}. Ask about the checklist, the questions, or the next topic to explore.`:page==='plan'?"Hello! I’m Smitha’s digital guide. Have a life change or financial priority in mind? I can help you start with five useful questions.":page==='grow'?"Hello! I’m Smitha’s digital guide. We can talk through your business idea, possible costs, or a first small test.":"Hello! I’m Smitha’s illustrated guide. Are you thinking about family, estate plans, protection, retirement, or another life stage?";
+const firstMessage=page==='topic'?`Hello! I’m StuVI, Smitha’s Virtual Intelligence guide. This page is about ${topicTitle.toLowerCase()}. Ask about the checklist, the questions, or the next topic to explore.`:page==='plan'?"Hello! I’m StuVI, Smitha’s Virtual Intelligence guide. Have a life change or financial priority in mind? I can help you start with five useful questions.":page==='grow'?"Hello! I’m StuVI, Smitha’s Virtual Intelligence guide. We can talk through your business idea, possible costs, or a first small test.":"Hello! I’m StuVI, Smitha’s Virtual Intelligence guide. Are you thinking about family, estate plans, protection, retirement, or another life stage?";
 const chips=page==='topic'?['Where should I start?','What should I ask?','How do I connect?']:page==='plan'?['How do I begin?','What if my goals change?','How can I contact Smitha?']:page==='grow'?['How do I test an idea?','What should a partner do?','How can I connect?']:['What should I start with?','Why plan an estate?','Can I call Smitha?'];
 function msg(role,text){const div=document.createElement('div');div.className='bubble '+(role==='user'?'user':'bot');div.textContent=text;chatMessages.append(div);chatMessages.scrollTop=chatMessages.scrollHeight;chatHistory.push({role,text});chatHistory=chatHistory.slice(-8)}
 function openChat(){if(!chatPanel)return;chatPanel.classList.add('open');chatLaunch.setAttribute('aria-expanded','true');if(!chatMessages.children.length)msg('assistant',firstMessage);suggestions.replaceChildren();chips.forEach(q=>{const b=document.createElement('button');b.type='button';b.textContent=q;b.addEventListener('click',()=>ask(q));suggestions.append(b)});chatInput.focus()}
 function closeChat(){chatPanel?.classList.remove('open');chatLaunch?.setAttribute('aria-expanded','false');chatLaunch?.focus()}
+window.openStuVI=openChat;
 chatLaunch?.addEventListener('click',()=>chatPanel.classList.contains('open')?closeChat():openChat());$('closeChat')?.addEventListener('click',closeChat);
 const chatSubtitle=chatPanel?.querySelector('.chat-head small');
-if(chatSubtitle)chatSubtitle.textContent='Digital guide · I may make mistakes';
+if(chatSubtitle)chatSubtitle.textContent='Virtual Intelligence · Short, page-aware help';
 const chatFooter=chatPanel?.querySelector('.chat-note');
-if(chatFooter)chatFooter.textContent="I may make mistakes here. Please book a free 15-minute call with Smitha to discuss. Don't share private financial or medical details.";
+if(chatFooter)chatFooter.textContent="StuVI may make mistakes. Don’t share private financial or medical details. Use the contact options to reach Smitha directly.";
 if(chatFooter&&!chatFooter.querySelector('.smitha-chat-contact')){
   const action=document.createElement('button');
   action.type='button';action.className='smitha-chat-contact';
-  action.textContent='Contact Smitha ↗';
+  action.textContent='Contact options';
   action.addEventListener('click',()=>{closeChat();openContact('I have a question about '+topicTitle.toLowerCase()+'.')});
   chatFooter.append(action);
   const explore=document.createElement('a');explore.href='experiences.html';explore.className='smitha-chat-contact';
@@ -63,8 +64,8 @@ if(chatFooter&&!chatFooter.querySelector('.smitha-chat-contact')){
 }
 function localAnswer(question){
  const q=String(question||'').toLowerCase();
- if(/are you (really|actually) smitha|human|real smitha|who are you/.test(q))return 'I’m a digital educational guide, not Smitha herself. You can use Connect for a private conversation with her.';
- if(/call|phone|sms|contact|schedule|appointment|whatsapp|facebook|instagram|direct message/.test(q))return 'You can call, prepare a text, request 15 minutes, or use Smitha’s verified social profiles from Connect. An appointment is not booked until Smitha or the booking provider confirms it.';
+ if(/are you (really|actually) smitha|human|real smitha|who are you/.test(q))return 'I’m StuVI, Smitha’s Virtual Intelligence guide—not Smitha herself. I can explain this page and help you choose a next step.';
+ if(/call|phone|sms|contact|schedule|appointment|whatsapp|facebook|instagram|direct message/.test(q))return 'Use Call, Text, or Email in the contact options, or ask me a quick question here. A requested time is not an appointment until Smitha or the booking provider confirms it.';
  if(/\biul\b|indexed universal life|cash.value|policy loans?|indexed policy/.test(q))return 'If you’re comparing protection with possible policy cash value, ask which figures are guaranteed, which are illustrated, what charges apply, and how loans or a lapse can affect benefits. A licensed professional can explain a specific policy’s terms. Our long-term protection guide is a useful starting point.';
  if(/medicare|part b|enroll|coverage gap|turning 65/.test(q))return 'Medicare Part B enrollment can depend on your age, current-employment coverage and employer size. Check your exact timing with Medicare or Social Security before delaying enrollment. The Medicare guide and Explore Together help organize the questions.';
  if(/trust|estate|\bwill\b|beneficiar|power of attorney|legal document/.test(q))return 'Start by reviewing decision-makers, account beneficiaries, property titles, wills and health-care wishes. A living trust may help some families but is not required for everyone; a California estate attorney should handle legal recommendations and formation.';

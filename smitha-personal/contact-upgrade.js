@@ -36,7 +36,7 @@ function contextNote(){
  return typeof window.smithaConversationText==='function'?window.smithaConversationText():'';
 }
 function messageFor(preferred){
- const intro=preferred?'Hi Smitha, I would prefer to connect on '+preferred+'. Could you share your confirmed account link?':'Hello Smitha, I was exploring '+subject+' and would appreciate a friendly conversation.';
+ const intro=preferred==='email'?'Hello Smitha, may I have your confirmed email address to follow up about '+subject+'?':preferred?'Hi Smitha, I would prefer to connect on '+preferred+'. Could you share your confirmed account link?':'Hello Smitha, I was exploring '+subject+' and would appreciate a friendly conversation.';
  const note=contextNote();
  return intro+(note?'\n\n'+note:'');
 }
@@ -83,7 +83,7 @@ grid.append(
  action('Call Smitha','☎','Opens a private phone call',()=>{location.href='tel:'+phone},null,'primary'),
  action('Send a text','✉',contact.phone?.verifiedForSms===true?'Opens your Messages app':'Draft only · receipt not confirmed',()=>textSmitha(''),null,'primary')
 );
-const messaging=[
+const emailAddress=String(contact.email?.address||'').trim(); const emailReady=contact.email?.verified===true&&/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(emailAddress); const emailHref=emailReady?'mailto:'+emailAddress+'?subject='+encodeURIComponent('A question from the '+subject+' page'):null; grid.append( action('Email','✉',emailReady?'Opens an email draft':'Request the confirmed address by text',emailReady?null:()=>textSmitha('email'),emailHref,emailReady?'connected':'pending'), action('Chat with StuVI','✦','Brief, page-aware help',()=>{window.closeSmithaContact?.();window.openStuVI?.()},null,'primary') ); const messaging=[
  ['WhatsApp','◉',contact.whatsapp,['wa.me','api.whatsapp.com'],'WhatsApp'],
  ['Instagram','◎',contact.instagram,['ig.me','instagram.com'],'Instagram'],
  ['Facebook Messenger','f',contact.facebook,['m.me','messenger.com','facebook.com'],'Facebook Messenger'],
