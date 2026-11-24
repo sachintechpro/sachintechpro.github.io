@@ -122,7 +122,7 @@ function show(key,scroll){current=Object.hasOwn(topics,key)?key:'estate';const t
  const a=$('takeawaySource');a.href=t.source;a.textContent=t.sourceLabel;
  if(scroll)preview.scrollIntoView({block:'start',behavior:'smooth'});
 }
-function plainText(){const t=topics[current];return [t.title,t.intro,'A practical checklist:',...t.checklist.map((s,i)=>(i+1)+'. '+s),'Questions to discuss:',...t.questions.map((s,i)=>(i+1)+'. '+s),'Source: '+t.source, 'Smitha | Book a 15-minute introduction: '+location.origin+'/contact.html',t.note].join('\n');}
+function plainText(){const t=topics[current];return [t.title,t.intro,'A practical checklist:',...t.checklist.map((s,i)=>(i+1)+'. '+s),'Questions to discuss:',...t.questions.map((s,i)=>(i+1)+'. '+s),'Source: '+t.source, 'Smitha Rangaswamy | Book a 15-minute introduction: '+location.origin+'/contact.html',t.note].join('\n');}
 $('printTakeaway')?.addEventListener('click',()=>window.print());
 $('copyTakeaway')?.addEventListener('click',async()=>{
  const text=plainText();
