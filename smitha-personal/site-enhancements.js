@@ -59,7 +59,7 @@ function guidedTalk(){
   else talk();
 }
 function share() {
-  const label = 'Smitha Rangaswamy — ' + topic;
+  const label = 'Smitha — ' + topic;
   const detail = 'A practical checklist and questions to consider: ' + location.href;
   if (navigator.share) navigator.share({title:label,text:detail,url:location.href})
     .catch(e => { if(e?.name !== 'AbortError') copy(location.href,'Guide link copied.'); });
@@ -193,15 +193,33 @@ function addConversationPanel(){
   panel.append(copyBox,actions);contain.append(panel,extra);sec.append(contain);main.append(sec);
 }
 function addMobileQuickActions(){
-  if(slug==='outreach-kit'||document.getElementById('smithaQuickActions'))return;
-  const rail=node('nav','smitha-mobile-actions');
-  rail.id='smithaQuickActions';rail.setAttribute('aria-label','Quick ways to reach Smitha');
-  rail.append(link('☎ Call','','tel:'+phone));
-  if(cfg.contact?.phone?.verifiedForSms===true||cfg.contact?.phone?.smsDraftEnabled===true)rail.append(link('✉ Text','',smsUrl(introText())));
-  else rail.append(button('✎ Copy note','',()=>copy(introText(),'Conversation starter copied.')));
-  rail.append(button('✦ Ask','',()=>document.getElementById('chatLaunch')?.click()));
-  rail.append(button('Connect','',talk));
-  document.body.append(rail);
+  if(slug==='outreach-kit'||document.getElementById('smithaContactWidget'))return;
+  const widget=node('div','smitha-contact-widget');
+  widget.id='smithaContactWidget';
+  const toggle=node('button','smitha-contact-toggle');
+  toggle.type='button';toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-controls','smithaContactMenu');toggle.setAttribute('aria-label','Open contact options for Smitha');
+  const face=document.createElement('img');face.src=cfg.identity?.illustration||'assets/smitha-watercolor.webp';face.alt='';
+  toggle.append(face,node('span','','Smitha'),node('span','smitha-contact-chevron','⌃'));
+  const menu=node('div','smitha-contact-menu');menu.id='smithaContactMenu';menu.hidden=true;menu.setAttribute('role','group');menu.setAttribute('aria-label','Contact Smitha');
+  const closeMenu=()=>{menu.hidden=true;toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Open contact options for Smitha')};
+  const openMenu=()=>{menu.hidden=false;toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','Close contact options for Smitha')};
+  toggle.addEventListener('click',()=>menu.hidden?openMenu():closeMenu());
+  const call=link('Call','smitha-contact-option','tel:'+phone);
+  const emailAddress=cfg.contact?.email?.address&&cfg.contact?.email?.verified===true?cfg.contact.email.address:'';
+  const emailHref=emailAddress?'mailto:'+emailAddress+'?subject='+encodeURIComponent('A question for Smitha'):'contact.html#smithaMessageForm';
+  const email=link('Email','smitha-contact-option',emailHref);
+  let textOption;
+  if(cfg.contact?.phone?.verifiedForSms===true||cfg.contact?.phone?.smsDraftEnabled===true){
+    textOption=link('Text','smitha-contact-option',smsUrl(introText()));
+  }else{
+    textOption=button('Text','smitha-contact-option',()=>copy(introText(),'Text message copied.'));
+  }
+  [call,textOption,email].forEach(item=>item.addEventListener('click',()=>closeMenu()));
+  menu.append(call,textOption,email);
+  widget.append(menu,toggle);
+  document.body.append(widget);
+  document.addEventListener('click',e=>{if(!widget.contains(e.target))closeMenu()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!menu.hidden){closeMenu();toggle.focus()}});
 }
 function addExampleJourneys(){
   if(slug!=='index'||!cfg.sampleJourneys?.length)return;
