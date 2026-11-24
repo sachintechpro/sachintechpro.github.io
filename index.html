@@ -88,6 +88,19 @@
     .contact-success p{color:#716b62;margin:0}
     [hidden]{display:none!important}
     @media(max-width:600px){form .field.full,.send.full,.form-note.full{grid-column:1}.contact-success{grid-column:1}}
+    .contact-success .btn{margin-top:18px}
+    .newsletter{display:grid;grid-template-columns:.85fr 1.15fr;gap:28px;align-items:center;padding:30px;background:#eee8d9;border:1px solid #e5dac8;border-radius:20px}
+    .newsletter h2{font-size:clamp(27px,3vw,36px);line-height:1.2;margin:8px 0}
+    .newsletter p{color:#716b62;margin:0}
+    .newsletter form{border:1px solid #e8ddc9}
+    .optional{font-weight:500;color:#716b62}
+    .newsletter-consent{grid-column:1/-1;display:flex;align-items:flex-start;gap:10px;font-size:12px;line-height:1.5;color:#514d45}
+    .newsletter-consent input{flex:0 0 auto;width:17px;height:17px;margin:2px 0 0;accent-color:#53796a}
+    .newsletter-success{grid-column:2;padding:24px;background:#fffdf8;border:1px solid #e8ddc9;border-radius:15px}
+    .newsletter-success h3{font:600 25px "Fraunces",Georgia,serif;margin:0 0 8px}
+    .newsletter-success p{color:#716b62}
+    @media(max-width:850px){.newsletter{grid-template-columns:1fr}}
+    @media(max-width:600px){.newsletter{padding:21px}.newsletter-consent{grid-column:1}.newsletter-success{grid-column:1}}
     </style>
 </head>
 <body>
@@ -138,7 +151,25 @@
       <button class="send full" id="submit-inquiry" type="submit">Send message</button>
       <p class="form-note full" id="submit-status" aria-live="polite" hidden></p>
     </form>
-    <div class="contact-success" id="contact-success" role="status" aria-live="polite" hidden><h3 id="success-title">Thanks. Your message was sent.</h3><p>I’ll review your note and follow up. I’ll reply to your email. Your mobile number is optional.</p></div>
+    <div class="contact-success" id="contact-success" role="status" aria-live="polite" hidden><h3 id="success-title">Thanks. Your message was submitted.</h3><p>I’ll review your note and follow up. I’ll reply to your email. Your mobile number is optional.</p><a class="btn primary" href="#newsletter">Subscribe to the newsletter</a></div>
+  </div></section>
+  <section class="content" id="newsletter"><div class="newsletter"><div><div class="eyebrow">SachinTechpro newsletter</div><h2>New demos across many business areas.</h2><p>Get occasional updates when I launch a new demo application or explore a different business workflow.</p></div>
+    <form id="newsletter-form" novalidate>
+      <div class="field"><label for="newsletter-first-name">First name *</label><input id="newsletter-first-name" name="first_name" autocomplete="given-name" required maxlength="80" placeholder="First name"></div>
+      <div class="field"><label for="newsletter-last-name">Last name *</label><input id="newsletter-last-name" name="last_name" autocomplete="family-name" required maxlength="80" placeholder="Last name"></div>
+      <div class="field full"><label for="newsletter-company">Company name <span class="optional">(optional)</span></label><input id="newsletter-company" name="company" autocomplete="organization" maxlength="160" placeholder="Company or organization"></div>
+      <div class="field"><label for="newsletter-email">Email *</label><input id="newsletter-email" name="email" type="email" autocomplete="email" required maxlength="180" placeholder="you@company.com"></div>
+      <div class="field"><label for="newsletter-phone">Mobile number <span class="optional">(optional)</span></label><input id="newsletter-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" placeholder="(555) 123-4567"></div>
+      <label class="newsletter-consent full"><input type="checkbox" name="newsletter_consent" value="yes" required><span>I’d like to receive occasional SachinTechpro newsletter updates. I can ask to be removed at any time.</span></label>
+      <input type="hidden" name="_subject" value="Newsletter Subscriber">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_url" value="https://sachintechpro.github.io/#newsletter">
+      <label class="trap" aria-hidden="true">Leave blank<input name="_honey" tabindex="-1" autocomplete="off"></label>
+      <button class="send full" id="newsletter-submit" type="submit">Subscribe</button>
+      <p class="form-note full" id="newsletter-status" aria-live="polite" hidden></p>
+    </form>
+    <div class="newsletter-success" id="newsletter-success" role="status" aria-live="polite" hidden><h3 id="newsletter-success-title">Thanks for subscribing.</h3><p>Your newsletter subscription has been submitted to SachinTechpro.</p></div>
   </div></section></main>
 <footer><div class="wrap">Professional portfolio · © 2026 Sachin Suyamindra</div></footer>
 <script>
@@ -177,6 +208,41 @@
     }finally{
       submit.disabled=false;
       submit.textContent=buttonText;
+    }
+  });
+
+  const newsletterForm=document.getElementById("newsletter-form");
+  newsletterForm.addEventListener("submit",async(event)=>{
+    event.preventDefault();
+    if(!newsletterForm.reportValidity())return;
+    const fields=Object.fromEntries(new FormData(newsletterForm).entries());
+    const firstName=String(fields.first_name||"").trim();
+    const button=document.getElementById("newsletter-submit");
+    const status=document.getElementById("newsletter-status");
+    const success=document.getElementById("newsletter-success");
+    button.disabled=true;
+    button.textContent="Subscribing…";
+    status.hidden=false;
+    status.classList.remove("error");
+    status.textContent="Submitting your subscription…";
+    try{
+      const response=await fetch("https://formsubmit.co/ajax/sachin.techpro@gmail.com",{
+        method:"POST",
+        headers:{"Accept":"application/json","Content-Type":"application/json"},
+        body:JSON.stringify(fields)
+      });
+      let result={};
+      try{result=await response.json()}catch{}
+      if(!response.ok||!result.success)throw new Error(result.message||"I couldn’t submit your subscription right now.");
+      newsletterForm.hidden=true;
+      success.hidden=false;
+      document.getElementById("newsletter-success-title").textContent="Thanks, "+firstName+". You’re subscribed.";
+    }catch(error){
+      status.textContent=(error&&error.message?error.message:"Something went wrong.")+" Please try again or email Sachin.techpro@gmail.com.";
+      status.classList.add("error");
+    }finally{
+      button.disabled=false;
+      button.textContent="Subscribe";
     }
   });
 })();
