@@ -1,4 +1,4 @@
-# Smitha Rangaswamy | Client-ready educational MVP
+# Smitha | Client-ready educational MVP
 **Proposed package price:** $2,000 one-time initial MVP (business proposal, not an invoice or a signed agreement)
 
 ## Purpose

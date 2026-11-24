@@ -4,7 +4,7 @@
 
 This is a personalized preview awaiting Smitha's approval. The live website should **not** assert that an unrelated social profile belongs to Smitha based only on a shared name.
 
-Public searches for "Smitha Rangaswamy" and her stated financial-professional title did not establish an authenticated Instagram, Facebook, WhatsApp, LinkedIn, X, or TikTok account associated with the specific business card. Those channels therefore remain **unverified**.
+The available profile details do not establish ownership of any Instagram, Facebook, WhatsApp, LinkedIn, X, or TikTok account. Keep those channels **unverified** until Smitha confirms the exact links.
 
 ## Configure channels
 

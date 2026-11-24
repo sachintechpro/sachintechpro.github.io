@@ -1,6 +1,6 @@
 # Hello, Smitha — Personal Life-Stage Education Site
 
-Independent, client-personalized **educational preview** for Smitha Rangaswamy (Los Angeles, California), pending her approval. Not an official financial institution, insurance agency or Medicare website. The watercolor portrait is illustrative, not a photograph.
+Independent, client-personalized **educational preview** for Smitha (Los Angeles, California), pending her approval. Not an official financial institution, insurance agency or Medicare website. The watercolor portrait is illustrative, not a photograph.
 
 ## Visitor experience
 - Personal welcome page with conversational call and text CTAs.

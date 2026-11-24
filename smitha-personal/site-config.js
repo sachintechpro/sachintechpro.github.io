@@ -5,7 +5,7 @@
 window.SMITHA_SITE_CONFIG = Object.freeze({
   identity: {
     name: "Smitha",
-    displayTitle: "Licensed Financial Professional & Entrepreneur Builder",
+    displayTitle: "Hi from Smitha",
     city: "Los Angeles, California",
     tagline: "Plan Today | Build Tomorrow",
     illustration: "assets/smitha-watercolor.webp",
