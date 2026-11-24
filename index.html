@@ -82,6 +82,7 @@
     form .field.full,.send.full,.form-note.full{grid-column:1/-1}
     .form-note{font-size:13px;line-height:1.5;color:#716b62;margin:0}
     .send:disabled{opacity:.65;cursor:wait}
+    .form-note.error{color:#a34235!important}
     .contact-success{grid-column:2;background:#fffdf8;color:#29251f;border-radius:15px;padding:24px}
     .contact-success h3{font:600 25px "Fraunces",Georgia,serif;margin:0 0 8px}
     .contact-success p{color:#716b62;margin:0}
@@ -166,7 +167,7 @@
       if(!response.ok||!result.success)throw new Error(result.message||"I couldn’t send your message right now.");
       form.hidden=true;
       success.hidden=false;
-      document.getElementById("success-title").textContent="Thanks, "+firstName+". Your message was sent.";
+      document.getElementById("success-title").textContent="Thanks, "+firstName+". Your message was submitted.";
     }catch(error){
       status.textContent=(error&&error.message?error.message:"Something went wrong.")+" Please try again or email Sachin.techpro@gmail.com.";
       status.classList.add("error");
