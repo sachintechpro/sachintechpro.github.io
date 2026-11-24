@@ -59,7 +59,7 @@ function guidedTalk(){
   else talk();
 }
 function share() {
-  const label = 'Smitha — ' + topic;
+  const label = 'Smitha Rangaswamy — ' + topic;
   const detail = 'A practical checklist and questions to consider: ' + location.href;
   if (navigator.share) navigator.share({title:label,text:detail,url:location.href})
     .catch(e => { if(e?.name !== 'AbortError') copy(location.href,'Guide link copied.'); });
